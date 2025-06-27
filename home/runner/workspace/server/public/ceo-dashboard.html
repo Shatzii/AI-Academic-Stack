@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShatziiOS CEO Dashboard</title>
+  <style>
+    :root {
+      --primary-color: #512DA8;
+      --secondary-color: #673AB7;
+      --accent-color: #7E57C2;
+      --text-color: #212121;
+      --light-text: #f5f5f5;
+      --background-color: #f0f2f5;
+      --card-color: #ffffff;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --success-color: #4CAF50;
+      --warning-color: #FFC107;
+      --danger-color: #F44336;
+      --info-color: #2196F3;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    }
+    
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar styles */
+    .sidebar {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      padding: 1.5rem;
+      position: fixed;
+      width: 260px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    
+    .logo img {
+      width: 40px;
+      margin-right: 10px;
+    }
+    
+    .nav-list {
+      list-style: none;
+    }
+    
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+    
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: var(--light-text);
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      transition: background-color 0.3s;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: var(--secondary-color);
+    }
+    
+    .nav-link i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .nav-category {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin: 1.5rem 0 0.5rem;
+      padding-left: 0.5rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    /* Main content styles */
+    .main-content {
+      grid-column: 2;
+      padding: 2rem;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    /* Overview Section */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .overview-card {
+      background-color: var(--card-color);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .overview-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .overview-card-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .overview-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(81, 45, 168, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    
+    .overview-card-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .overview-card-comparison {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    
+    .comparison-positive {
+      color: var(--success-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    .comparison-negative {
+      color: var(--danger-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    .comparison-text {
+      color: #666;
+      margin-left: 0.5rem;
+    }
+    
+    /* School Performance Section */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    .section-actions {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .section-action-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .section-action-button:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .performance-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: var(--card-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    
+    .performance-table th {
+      background-color: rgba(81, 45, 168, 0.05);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #444;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .performance-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .performance-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .school-name {
+      display: flex;
+      align-items: center;
+    }
+    
+    .school-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--border-radius);
+      margin-right: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .school-icon.elementary {
+      background-color: #FF5722;
+    }
+    
+    .school-icon.middle {
+      background-color: #FF9800;
+    }
+    
+    .school-icon.high {
+      background-color: #2196F3;
+    }
+    
+    .school-icon.college {
+      background-color: #4CAF50;
+    }
+    
+    .school-icon.law {
+      background-color: #9C27B0;
+    }
+    
+    .school-icon.language {
+      background-color: #00BCD4;
+    }
+    
+    .school-details h3 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .school-details p {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    
+    .progress-bar-container {
+      height: 8px;
+      background-color: #eee;
+      border-radius: 4px;
+      width: 100%;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      border-radius: 4px;
+    }
+    
+    .status-badge {
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .status-badge.active {
+      background-color: rgba(76, 175, 80, 0.1);
+      color: var(--success-color);
+    }
+    
+    .status-badge.pending {
+      background-color: rgba(255, 193, 7, 0.1);
+      color: var(--warning-color);
+    }
+    
+    .status-badge.maintenance {
+      background-color: rgba(33, 150, 243, 0.1);
+      color: var(--info-color);
+    }
+    
+    .action-menu {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background-color 0.3s;
+    }
+    
+    .action-menu:hover {
+      background-color: #eee;
+    }
+    
+    /* Analytics Section */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .analytics-chart {
+      background-color: var(--card-color);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .chart-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .chart-filters {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .chart-filter {
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 20px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .chart-filter.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+    
+    .placeholder-chart {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(81, 45, 168, 0.05);
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-style: italic;
+    }
+    
+    .top-metrics {
+      background-color: var(--card-color);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .metrics-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .metrics-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .metrics-list {
+      list-style-type: none;
+    }
+    
+    .metric-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .metric-item:last-child {
+      border-bottom: none;
+    }
+    
+    .metric-label {
+      display: flex;
+      align-items: center;
+    }
+    
+    .metric-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: rgba(81, 45, 168, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.75rem;
+      font-size: 0.9rem;
+    }
+    
+    .metric-value {
+      font-weight: 600;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        display: none;
+      }
+      
+      .main-content {
+        grid-column: 1;
+      }
+      
+      .performance-table {
+        overflow-x: auto;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="/images/logo.svg" alt="ShatziiOS Logo">
+        <span>ShatziiOS</span>
+      </div>
+      
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="/ceo-dashboard" class="nav-link active">
+            <i>📊</i> Dashboard
+          </a>
+        </li>
+        
+        <li class="nav-category">Management</li>
+        <li class="nav-item">
+          <a href="/schools-management" class="nav-link">
+            <i>🏫</i> Schools
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/students-management" class="nav-link">
+            <i>👥</i> Students
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/faculty-management" class="nav-link">
+            <i>👩‍🏫</i> Faculty
+          </a>
+        </li>
+        
+        <li class="nav-category">Content</li>
+        <li class="nav-item">
+          <a href="/curriculum-management" class="nav-link">
+            <i>📚</i> Curriculum
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/ai-integration-hub" class="nav-link">
+            <i>🤖</i> AI Integration Hub
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/ai-teachers-management" class="nav-link">
+            <i>🧠</i> AI Teachers
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/resources-management" class="nav-link">
+            <i>🛠️</i> Resources
+          </a>
+        </li>
+        
+        <li class="nav-category">System</li>
+        <li class="nav-item">
+          <a href="/analytics-dashboard" class="nav-link">
+            <i>📈</i> Analytics
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/security-dashboard" class="nav-link">
+            <i>🔒</i> Security
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/system-settings" class="nav-link">
+            <i>⚙️</i> Settings
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="/sitemap" class="nav-link">
+            <i>🗺️</i> Site Map
+          </a>
+        </li>
+      </ul>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="header">
+        <h1 class="page-title">CEO Dashboard</h1>
+        
+        <div class="user-profile">
+          <img src="https://i.pravatar.cc/150?img=68" alt="CEO Avatar">
+          <span>Dr. Eleanor Chen</span>
+        </div>
+      </header>
+      
+      <!-- Overview Section -->
+      <section class="overview-grid">
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <h2 class="overview-card-title">Total Students</h2>
+            <div class="overview-card-icon">👥</div>
+          </div>
+          <div class="overview-card-value">24,586</div>
+          <div class="overview-card-comparison">
+            <div class="comparison-positive">▲ 12.8%</div>
+            <div class="comparison-text">vs last quarter</div>
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <h2 class="overview-card-title">Active Schools</h2>
+            <div class="overview-card-icon">🏫</div>
+          </div>
+          <div class="overview-card-value">6</div>
+          <div class="overview-card-comparison">
+            <div class="comparison-positive">▲ 2</div>
+            <div class="comparison-text">since last update</div>
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <h2 class="overview-card-title">AI Tutoring Sessions</h2>
+            <div class="overview-card-icon">🧠</div>
+          </div>
+          <div class="overview-card-value">15,842</div>
+          <div class="overview-card-comparison">
+            <div class="comparison-positive">▲ 26.4%</div>
+            <div class="comparison-text">vs last month</div>
+          </div>
+        </div>
+        
+        <div class="overview-card">
+          <div class="overview-card-header">
+            <h2 class="overview-card-title">Student Success Rate</h2>
+            <div class="overview-card-icon">📈</div>
+          </div>
+          <div class="overview-card-value">92.8%</div>
+          <div class="overview-card-comparison">
+            <div class="comparison-positive">▲ 3.2%</div>
+            <div class="comparison-text">vs last quarter</div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- School Performance Section -->
+      <section>
+        <div class="section-header">
+          <h2 class="section-title">School Performance</h2>
+          <div class="section-actions">
+            <button class="section-action-button">Generate Report</button>
+            <button class="section-action-button" style="background-color: var(--secondary-color);">Add School</button>
+          </div>
+        </div>
+        
+        <table class="performance-table">
+          <thead>
+            <tr>
+              <th>School</th>
+              <th>Students</th>
+              <th>Engagement</th>
+              <th>Success Rate</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="school-name">
+                  <div class="school-icon elementary">E</div>
+                  <div class="school-details">
+                    <h3><a href="/elementary-dashboard" style="text-decoration: none; color: inherit;">Neurodivergent Elementary</a></h3>
+                    <p>K-6 | 8 AI Teachers</p>
+                  </div>
+                </div>
+              </td>
+              <td>8,452</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 95%; background-color: var(--success-color);"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem; margin-top: 0.25rem;">95%</div>
+              </td>
+              <td>94.2%</td>
+              <td><span class="status-badge active">Active</span></td>
+              <td><div class="action-menu">•••</div></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <div class="school-name">
+                  <div class="school-icon middle">M</div>
+                  <div class="school-details">
+                    <h3><a href="/middle-dashboard" style="text-decoration: none; color: inherit;">Neurodivergent Middle School</a></h3>
+                    <p>7-8 | 6 AI Teachers</p>
+                  </div>
+                </div>
+              </td>
+              <td>5,218</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 88%; background-color: var(--success-color);"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem; margin-top: 0.25rem;">88%</div>
+              </td>
+              <td>91.8%</td>
+              <td><span class="status-badge active">Active</span></td>
+              <td><div class="action-menu">•••</div></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <div class="school-name">
+                  <div class="school-icon high">H</div>
+                  <div class="school-details">
+                    <h3><a href="/high-dashboard" style="text-decoration: none; color: inherit;">Neurodivergent High School</a></h3>
+                    <p>9-12 | 10 AI Teachers</p>
+                  </div>
+                </div>
+              </td>
+              <td>6,745</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 82%; background-color: var(--success-color);"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem; margin-top: 0.25rem;">82%</div>
+              </td>
+              <td>89.5%</td>
+              <td><span class="status-badge active">Active</span></td>
+              <td><div class="action-menu">•••</div></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <div class="school-name">
+                  <div class="school-icon college">C</div>
+                  <div class="school-details">
+                    <h3><a href="/neurodivergent-college-dashboard" style="text-decoration: none; color: inherit;">Neurodivergent College</a></h3>
+                    <p>Undergraduate | 12 AI Teachers</p>
+                  </div>
+                </div>
+              </td>
+              <td>2,184</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 78%; background-color: var(--warning-color);"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem; margin-top: 0.25rem;">78%</div>
+              </td>
+              <td>86.3%</td>
+              <td><span class="status-badge active">Active</span></td>
+              <td><div class="action-menu">•••</div></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <div class="school-name">
+                  <div class="school-icon law">L</div>
+                  <div class="school-details">
+                    <h3><a href="/law-dashboard" style="text-decoration: none; color: inherit;">Shatzii School of Law</a></h3>
+                    <p>Professional | 6 AI Teachers</p>
+                  </div>
+                </div>
+              </td>
+              <td>1,254</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 91%; background-color: var(--success-color);"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem; margin-top: 0.25rem;">91%</div>
+              </td>
+              <td>92.7%</td>
+              <td><span class="status-badge maintenance">Updating</span></td>
+              <td><div class="action-menu">•••</div></td>
+            </tr>
+            
+            <tr>
+              <td>
+                <div class="school-name">
+                  <div class="school-icon language">L</div>
+                  <div class="school-details">
+                    <h3><a href="/language-dashboard" style="text-decoration: none; color: inherit;">Shatzii Language School</a></h3>
+                    <p>Multi-level | 8 AI Teachers</p>
+                  </div>
+                </div>
+              </td>
+              <td>733</td>
+              <td>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" style="width: 72%; background-color: var(--warning-color);"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9rem; margin-top: 0.25rem;">72%</div>
+              </td>
+              <td>84.1%</td>
+              <td><span class="status-badge pending">Beta</span></td>
+              <td><div class="action-menu">•••</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      
+      <!-- Analytics Section -->
+      <section class="analytics-grid">
+        <div class="analytics-chart">
+          <div class="chart-header">
+            <h2 class="chart-title">Student Growth & Retention</h2>
+            <div class="chart-filters">
+              <button class="chart-filter">1M</button>
+              <button class="chart-filter active">3M</button>
+              <button class="chart-filter">6M</button>
+              <button class="chart-filter">1Y</button>
+              <button class="chart-filter">All</button>
+            </div>
+          </div>
+          
+          <div class="chart-container">
+            <div class="placeholder-chart">
+              Student growth and retention chart will be displayed here
+            </div>
+          </div>
+        </div>
+        
+        <div class="top-metrics">
+          <div class="metrics-header">
+            <h2 class="metrics-title">Key Performance Metrics</h2>
+          </div>
+          
+          <ul class="metrics-list">
+            <li class="metric-item">
+              <div class="metric-label">
+                <div class="metric-icon">📚</div>
+                <span>Course Completion Rate</span>
+              </div>
+              <div class="metric-value">89.5%</div>
+            </li>
+            
+            <li class="metric-item">
+              <div class="metric-label">
+                <div class="metric-icon">⏱️</div>
+                <span>Avg. Session Duration</span>
+              </div>
+              <div class="metric-value">42 min</div>
+            </li>
+            
+            <li class="metric-item">
+              <div class="metric-label">
+                <div class="metric-icon">🔄</div>
+                <span>Retention Rate</span>
+              </div>
+              <div class="metric-value">94.3%</div>
+            </li>
+            
+            <li class="metric-item">
+              <div class="metric-label">
+                <div class="metric-icon">📱</div>
+                <span>Mobile Engagement</span>
+              </div>
+              <div class="metric-value">68.7%</div>
+            </li>
+            
+            <li class="metric-item">
+              <div class="metric-label">
+                <div class="metric-icon">🌟</div>
+                <span>Student Satisfaction</span>
+              </div>
+              <div class="metric-value">4.8/5</div>
+            </li>
+            
+            <li class="metric-item">
+              <div class="metric-label">
+                <div class="metric-icon">🚀</div>
+                <span>Skill Improvement Rate</span>
+              </div>
+              <div class="metric-value">+32.5%</div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      
+      <!-- Alerts & Notifications -->
+      <section style="background-color: var(--card-color); border-radius: var(--border-radius); padding: 1.5rem; box-shadow: var(--shadow);">
+        <div class="section-header" style="margin-bottom: 1rem;">
+          <h2 class="section-title">System Alerts & Updates</h2>
+          <a href="/alerts-dashboard" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">View All</a>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+          <div style="border-left: 4px solid var(--info-color); padding: 0.75rem 1rem; background-color: rgba(33, 150, 243, 0.05);">
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">AI Model Update Complete</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">All AI teachers have been updated to the latest Claude 3.5 version.</p>
+            <div style="font-size: 0.8rem; color: #888;">Today, 09:45 AM</div>
+          </div>
+          
+          <div style="border-left: 4px solid var(--warning-color); padding: 0.75rem 1rem; background-color: rgba(255, 193, 7, 0.05);">
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Database Maintenance</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Scheduled database optimization will occur tonight at 2 AM UTC.</p>
+            <div style="font-size: 0.8rem; color: #888;">Today, 11:20 AM</div>
+          </div>
+          
+          <div style="border-left: 4px solid var(--success-color); padding: 0.75rem 1rem; background-color: rgba(76, 175, 80, 0.05);">
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">New Feature Released</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Enhanced neurodivergent assessment tools deployed to all schools.</p>
+            <div style="font-size: 0.8rem; color: #888;">Yesterday, 3:15 PM</div>
+          </div>
+          
+          <div style="border-left: 4px solid var(--danger-color); padding: 0.75rem 1rem; background-color: rgba(244, 67, 54, 0.05);">
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Security Alert</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Unusual login attempt blocked. Security team investigating.</p>
+            <div style="font-size: 0.8rem; color: #888;">Yesterday, 8:32 PM</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

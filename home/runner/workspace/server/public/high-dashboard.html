@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShatziiOS - High School Dashboard</title>
+    <style>
+        :root {
+            --primary: #008080; /* Teal for High School */
+            --primary-light: #80CBC4;
+            --secondary: #FF4081; /* Pink */
+            --background: #121212;
+            --card-bg: #1E1E1E;
+            --sidebar-bg: #262626;
+            --text: #FFFFFF;
+            --text-muted: #BBBBBB;
+            --danger: #F44336;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            padding: 2rem 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text);
+        }
+        
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text);
+        }
+        
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(0, 128, 128, 0.1);
+            color: var(--primary-light);
+        }
+        
+        .nav-link.active {
+            background-color: rgba(0, 128, 128, 0.2);
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+        
+        .nav-icon {
+            font-size: 1.25rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin: 0;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text);
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        .user-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .button, button {
+            background-color: var(--primary);
+            color: var(--text);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .button:hover, button:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .button.secondary:hover {
+            background-color: rgba(0, 128, 128, 0.1);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin: 0;
+        }
+        
+        .progress-wrapper {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-title {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .progress-value {
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        
+        .course-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 1.25rem;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            border: 1px solid var(--border);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-4px);
+            background-color: rgba(0, 128, 128, 0.1);
+            border-color: rgba(0, 128, 128, 0.3);
+        }
+        
+        .course-subject {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .course-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: rgba(0, 128, 128, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .course-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .course-teacher {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .course-progress {
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .course-progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .course-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .schedule-item {
+            display: flex;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+        
+        .schedule-time {
+            min-width: 100px;
+            font-size: 0.9rem;
+            color: var(--primary-light);
+        }
+        
+        .schedule-details {
+            flex: 1;
+        }
+        
+        .schedule-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .schedule-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        
+        .task-status {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            margin-top: 0.25rem;
+        }
+        
+        .task-details {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+        
+        .task-course {
+            color: var(--primary-light);
+        }
+        
+        .task-due {
+            color: var(--warning);
+        }
+        
+        .announcement-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .announcement-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .announcement-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+        }
+        
+        .announcement-source {
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+        
+        .announcement-date {
+            color: var(--text-muted);
+        }
+        
+        .announcement-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .footer {
+            margin-top: 1.5rem;
+            padding: 1.5rem 0 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">HS</div>
+                <div class="logo-text">ND High School</div>
+            </div>
+            
+            <nav>
+                <div class="nav-section">
+                    <div class="nav-section-title">School Navigation</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">
+                                <span class="nav-icon">🏠</span>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/elementary-dashboard" class="nav-link">
+                                <span class="nav-icon">🚀</span>
+                                Elementary School
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/middle-dashboard" class="nav-link">
+                                <span class="nav-icon">📘</span>
+                                Middle School
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/high-dashboard" class="nav-link active">
+                                <span class="nav-icon">🎓</span>
+                                High School
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/neurodivergent-college-dashboard" class="nav-link">
+                                <span class="nav-icon">🏛️</span>
+                                College
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <span class="nav-icon">📊</span>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">📚</span>
+                                Courses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">✅</span>
+                                Assignments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">📆</span>
+                                Calendar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">🎓</span>
+                                College Prep
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">📝</span>
+                                Study Guides
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">📚</span>
+                                Library
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Support</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">🛠️</span>
+                                Learning Tools
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">💬</span>
+                                Academic Support
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">❓</span>
+                                Help Center
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">👨‍💻</span>
+                                Professor Brown
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="nav-section" style="margin-top: 2rem;">
+                <a href="/" class="button secondary" style="width: 100%; justify-content: center;">
+                    <span>Exit to Home</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <h1 class="page-title">Student Dashboard</h1>
+                
+                <div class="user-menu">
+                    <div class="login-section" style="margin-right: 1rem;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <a href="#" class="button">Student</a>
+                            <a href="#" class="button secondary">Parent</a>
+                            <a href="#" class="button secondary">Teacher</a>
+                        </div>
+                    </div>
+                    
+                    <button class="button secondary">
+                        <span>📝</span>
+                        New Note
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">JD</div>
+                        <div class="user-info">
+                            <div class="user-name">Jordan Davis</div>
+                            <div class="user-role">11th Grade Student</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="dashboard-grid">
+                <div class="main-column">
+                    <!-- Progress Overview Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Academic Progress</h2>
+                            <button class="button secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">View Details</button>
+                        </div>
+                        
+                        <div class="progress-wrapper">
+                            <div class="progress-header">
+                                <div class="progress-title">Overall GPA</div>
+                                <div class="progress-value">3.7/4.0</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92.5%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-wrapper">
+                            <div class="progress-header">
+                                <div class="progress-title">Current Semester Completion</div>
+                                <div class="progress-value">78%</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-wrapper" style="margin-bottom: 0;">
+                            <div class="progress-header">
+                                <div class="progress-title">College Readiness</div>
+                                <div class="progress-value">85%</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Courses Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Current Courses</h2>
+                            <button class="button secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">View All</button>
+                        </div>
+                        
+                        <div class="course-list">
+                            <div class="course-card">
+                                <div class="course-subject">
+                                    <div class="course-icon">📐</div>
+                                    <div>Math</div>
+                                </div>
+                                <div class="course-title">Advanced Algebra II</div>
+                                <div class="course-teacher">Dr. Maxwell</div>
+                                <div class="course-progress">
+                                    <div class="course-progress-fill" style="width: 86%"></div>
+                                </div>
+                                <div class="course-stats">
+                                    <div>Grade: A</div>
+                                    <div>86% Complete</div>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card">
+                                <div class="course-subject">
+                                    <div class="course-icon">🧪</div>
+                                    <div>Science</div>
+                                </div>
+                                <div class="course-title">Chemistry</div>
+                                <div class="course-teacher">Mrs. Thompson</div>
+                                <div class="course-progress">
+                                    <div class="course-progress-fill" style="width: 72%"></div>
+                                </div>
+                                <div class="course-stats">
+                                    <div>Grade: B+</div>
+                                    <div>72% Complete</div>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card">
+                                <div class="course-subject">
+                                    <div class="course-icon">📚</div>
+                                    <div>English</div>
+                                </div>
+                                <div class="course-title">American Literature</div>
+                                <div class="course-teacher">Mr. Anderson</div>
+                                <div class="course-progress">
+                                    <div class="course-progress-fill" style="width: 80%"></div>
+                                </div>
+                                <div class="course-stats">
+                                    <div>Grade: A-</div>
+                                    <div>80% Complete</div>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card">
+                                <div class="course-subject">
+                                    <div class="course-icon">🌎</div>
+                                    <div>History</div>
+                                </div>
+                                <div class="course-title">World History</div>
+                                <div class="course-teacher">Dr. Richardson</div>
+                                <div class="course-progress">
+                                    <div class="course-progress-fill" style="width: 75%"></div>
+                                </div>
+                                <div class="course-stats">
+                                    <div>Grade: B+</div>
+                                    <div>75% Complete</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Instructors Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Your AI Study Partners</h2>
+                            <button class="button secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">Customize</button>
+                        </div>
+                        
+                        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">These specialized AI instructors are personalized to your learning style:</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.25rem;">
+                            <div style="text-align: center;">
+                                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(0, 128, 128, 0.2); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">📐</div>
+                                <h3 style="margin: 0.75rem 0 0.25rem; font-size: 1rem;">Math Mentor</h3>
+                                <p style="margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted);">Advanced algebra specialist</p>
+                                <button class="button" style="width: 100%; padding: 0.5rem; font-size: 0.85rem;">Start Session</button>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(0, 128, 128, 0.2); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">🧪</div>
+                                <h3 style="margin: 0.75rem 0 0.25rem; font-size: 1rem;">Science Guide</h3>
+                                <p style="margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted);">Chemistry expert</p>
+                                <button class="button" style="width: 100%; padding: 0.5rem; font-size: 0.85rem;">Start Session</button>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(0, 128, 128, 0.2); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">📚</div>
+                                <h3 style="margin: 0.75rem 0 0.25rem; font-size: 1rem;">Literature Coach</h3>
+                                <p style="margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted);">Writing & analysis tutor</p>
+                                <button class="button" style="width: 100%; padding: 0.5rem; font-size: 0.85rem;">Start Session</button>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(0, 128, 128, 0.2); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">🎓</div>
+                                <h3 style="margin: 0.75rem 0 0.25rem; font-size: 1rem;">College Advisor</h3>
+                                <p style="margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted);">SAT prep & applications</p>
+                                <button class="button" style="width: 100%; padding: 0.5rem; font-size: 0.85rem;">Start Session</button>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(96, 125, 139, 0.3); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 1.75rem;">👨‍💻</div>
+                                <h3 style="margin: 0.75rem 0 0.25rem; font-size: 1rem;">Professor Brown</h3>
+                                <p style="margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--text-muted);">Dean of IT</p>
+                                <button class="button" style="width: 100%; padding: 0.5rem; font-size: 0.85rem;">Start Session</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="side-column">
+                    <!-- Today's Schedule Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Today's Schedule</h2>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">April 13</span>
+                        </div>
+                        
+                        <ul class="schedule-list">
+                            <li class="schedule-item">
+                                <div class="schedule-time">8:30 AM</div>
+                                <div class="schedule-details">
+                                    <div class="schedule-title">Advanced Algebra II</div>
+                                    <div class="schedule-meta">Room 302 • Dr. Maxwell</div>
+                                </div>
+                            </li>
+                            
+                            <li class="schedule-item">
+                                <div class="schedule-time">10:15 AM</div>
+                                <div class="schedule-details">
+                                    <div class="schedule-title">American Literature</div>
+                                    <div class="schedule-meta">Room 215 • Mr. Anderson</div>
+                                </div>
+                            </li>
+                            
+                            <li class="schedule-item">
+                                <div class="schedule-time">12:00 PM</div>
+                                <div class="schedule-details">
+                                    <div class="schedule-title">Lunch Break</div>
+                                    <div class="schedule-meta">Cafeteria</div>
+                                </div>
+                            </li>
+                            
+                            <li class="schedule-item">
+                                <div class="schedule-time">1:15 PM</div>
+                                <div class="schedule-details">
+                                    <div class="schedule-title">Chemistry</div>
+                                    <div class="schedule-meta">Lab 103 • Mrs. Thompson</div>
+                                </div>
+                            </li>
+                            
+                            <li class="schedule-item">
+                                <div class="schedule-time">3:00 PM</div>
+                                <div class="schedule-details">
+                                    <div class="schedule-title">World History</div>
+                                    <div class="schedule-meta">Room 207 • Dr. Richardson</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Upcoming Tasks Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Upcoming Tasks</h2>
+                            <button class="button secondary" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">View All</button>
+                        </div>
+                        
+                        <ul class="task-list">
+                            <li class="task-item">
+                                <div class="task-status"></div>
+                                <div class="task-details">
+                                    <div class="task-title">Chemistry Lab Report</div>
+                                    <div class="task-meta">
+                                        <span class="task-course">Chemistry</span>
+                                        <span class="task-due">Due Apr 15</span>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="task-item">
+                                <div class="task-status"></div>
+                                <div class="task-details">
+                                    <div class="task-title">Algebra Problem Set #12</div>
+                                    <div class="task-meta">
+                                        <span class="task-course">Advanced Algebra II</span>
+                                        <span class="task-due">Due Apr 14</span>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="task-item">
+                                <div class="task-status"></div>
+                                <div class="task-details">
+                                    <div class="task-title">Essay: The Great Gatsby</div>
+                                    <div class="task-meta">
+                                        <span class="task-course">American Literature</span>
+                                        <span class="task-due">Due Apr 20</span>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li class="task-item">
+                                <div class="task-status"></div>
+                                <div class="task-details">
+                                    <div class="task-title">World War I Presentation</div>
+                                    <div class="task-meta">
+                                        <span class="task-course">World History</span>
+                                        <span class="task-due">Due Apr 22</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Announcements Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Announcements</h2>
+                        </div>
+                        
+                        <ul class="announcement-list">
+                            <li class="announcement-item">
+                                <div class="announcement-meta">
+                                    <span class="announcement-source">Administration</span>
+                                    <span class="announcement-date">Apr 13</span>
+                                </div>
+                                <div class="announcement-title">College Fair Next Week</div>
+                                <p style="font-size: 0.9rem; margin: 0;">College representatives will be available in the gym next Tuesday.</p>
+                            </li>
+                            
+                            <li class="announcement-item">
+                                <div class="announcement-meta">
+                                    <span class="announcement-source">Chemistry</span>
+                                    <span class="announcement-date">Apr 12</span>
+                                </div>
+                                <div class="announcement-title">Lab Safety Refresher</div>
+                                <p style="font-size: 0.9rem; margin: 0;">All students must review the lab safety guidelines before Wednesday.</p>
+                            </li>
+                            
+                            <li class="announcement-item">
+                                <div class="announcement-meta">
+                                    <span class="announcement-source">Student Council</span>
+                                    <span class="announcement-date">Apr 10</span>
+                                </div>
+                                <div class="announcement-title">Spring Dance Tickets</div>
+                                <p style="font-size: 0.9rem; margin: 0;">Tickets for the Spring Dance are now available in the Student Center.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Neurodivergent High School • ShatziiOS Education Platform • &copy; 2025</p>
+                <p style="margin-top: 0.25rem;">Need help? Contact the <a href="#" style="color: var(--primary); text-decoration: none;">Support Team</a></p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Teacher Creator - ShatziiOS</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/ai-integration.css">
+</head>
+<body class="ai-page">
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo-container">
+      <a href="/">
+        <img src="/img/logos/shatzii-logo.png" alt="ShatziiOS Logo" class="logo">
+      </a>
+    </div>
+    <h1>AI Teacher Creator</h1>
+    <div class="nav-links">
+      <a href="/sitemap.html">Sitemap</a>
+      <a href="/ai-integration-hub.html">AI Hub</a>
+      <a href="/dashboard-selector.html">Dashboards</a>
+    </div>
+  </header>
+  
+  <main class="container">
+    <!-- API Status Indicator -->
+    <div class="api-status-container">
+      <span id="api-status" class="status-unknown">Connecting to AI API...</span>
+    </div>
+    
+    <!-- Introduction -->
+    <section class="intro-section">
+      <h2>Create Your Perfect AI Teacher</h2>
+      <p>Use the power of AI to create a personalized teacher tailored to your specific subject, grade level, and teaching preferences. Our AI teachers are designed to provide effective and engaging educational experiences for all students.</p>
+    </section>
+    
+    <!-- Teacher Creator Form -->
+    <section class="form-section">
+      <form id="create-teacher-form" class="ai-form">
+        <div class="form-group">
+          <label for="subject">Subject Area *</label>
+          <input type="text" id="subject" name="subject" required placeholder="e.g., Mathematics, History, Science">
+        </div>
+        
+        <div class="form-group">
+          <label for="grade-level">Grade Level *</label>
+          <select id="grade-level" name="grade-level" required>
+            <option value="">Select Grade Level</option>
+            <option value="Preschool">Preschool</option>
+            <option value="Elementary (K-5)">Elementary (K-5)</option>
+            <option value="Middle School (6-8)">Middle School (6-8)</option>
+            <option value="High School (9-12)">High School (9-12)</option>
+            <option value="College">College</option>
+            <option value="Graduate Level">Graduate Level</option>
+            <option value="Adult Education">Adult Education</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="teaching-style">Teaching Style *</label>
+          <select id="teaching-style" name="teaching-style" required>
+            <option value="">Select Teaching Style</option>
+            <option value="Socratic">Socratic (Question-based)</option>
+            <option value="Direct Instruction">Direct Instruction (Explicit teaching)</option>
+            <option value="Exploratory">Exploratory (Discovery-based)</option>
+            <option value="Project-based">Project-based Learning</option>
+            <option value="Gamified">Gamified Learning</option>
+            <option value="Visual-Spatial">Visual-Spatial Learning</option>
+            <option value="Cooperative">Cooperative Learning</option>
+            <option value="Customized">Customized Approach</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="neurotype-support">Neurodivergent Support (Optional)</label>
+          <select id="neurotype-support" name="neurotype-support">
+            <option value="">No Specialized Support</option>
+            <option value="ADHD">ADHD Support</option>
+            <option value="Autism">Autism Support</option>
+            <option value="Dyslexia">Dyslexia Support</option>
+            <option value="Dyscalculia">Dyscalculia Support</option>
+            <option value="Executive Function">Executive Function Support</option>
+            <option value="Sensory Processing">Sensory Processing Support</option>
+            <option value="Multiple">Multiple Neurodivergent Supports</option>
+          </select>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" id="create-teacher-button" class="primary-button" disabled>
+            Create AI Teacher
+          </button>
+        </div>
+      </form>
+    </section>
+    
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="loading-spinner" style="display: none;">
+      <div class="spinner"></div>
+      <p>Creating your AI teacher... This may take a moment.</p>
+    </div>
+    
+    <!-- Error Message -->
+    <div id="error-message" class="error-container" style="display: none;"></div>
+    
+    <!-- Result Container -->
+    <section id="teacher-result" class="result-container"></section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>&copy; 2025 ShatziiOS Educational Platform</p>
+  </footer>
+
+  <script>
+    // Random teacher last names
+    const lastNames = [
+      'Einstein', 'Curie', 'Newton', 'Hawking', 'Tesla', 'Goodall',
+      'Turing', 'Darwin', 'Sagan', 'Lovelace', 'Franklin', 'Faraday',
+      'Bohr', 'Feynman', 'Heisenberg', 'Maxwell', 'Pasteur', 'Planck',
+      'Dawkins', 'Hopper', 'Germain', 'Bell', 'Kaku', 'Tyson'
+    ];
+    
+    function getRandomLastName() {
+      return lastNames[Math.floor(Math.random() * lastNames.length)];
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Element References
+      const apiStatusElement = document.getElementById('api-status');
+      const createTeacherForm = document.getElementById('create-teacher-form');
+      const subjectInput = document.getElementById('subject');
+      const gradeLevelInput = document.getElementById('grade-level');
+      const teachingStyleInput = document.getElementById('teaching-style');
+      const neurodivergentSupportInput = document.getElementById('neurotype-support');
+      const createTeacherButton = document.getElementById('create-teacher-button');
+      const resultContainer = document.getElementById('teacher-result');
+      const loadingIndicator = document.getElementById('loading-indicator');
+      const errorContainer = document.getElementById('error-message');
+      
+      // Check API status when page loads
+      checkAPIStatus();
+      
+      // Add event listener to the form
+      if (createTeacherForm) {
+        createTeacherForm.addEventListener('submit', handleFormSubmit);
+      }
+      
+      /**
+       * Check the status of the AI API
+       */
+      async function checkAPIStatus() {
+        if (!apiStatusElement) return;
+        
+        try {
+          apiStatusElement.textContent = 'Checking API connection...';
+          apiStatusElement.className = 'status-checking';
+          
+          // Use the direct integration endpoint
+          const statusResponse = await fetch('/api/ai/integration/status');
+          
+          if (!statusResponse.ok) {
+            throw new Error(`API server returned status ${statusResponse.status}`);
+          }
+          
+          const statusData = await statusResponse.json();
+          
+          // Check if Anthropic API is available
+          if (statusData.anthropic && statusData.anthropic.available) {
+            apiStatusElement.textContent = '✅ AI API Connected';
+            apiStatusElement.className = 'status-connected';
+            
+            // Enable the form
+            if (createTeacherButton) {
+              createTeacherButton.disabled = false;
+            }
+          } else {
+            apiStatusElement.textContent = '⚠️ AI API Connected, but Anthropic API Key Missing';
+            apiStatusElement.className = 'status-warning';
+            showError('The AI API is running, but the Anthropic API key is missing or invalid. ' +
+                      'AI teacher creation will not work until this is resolved.');
+          }
+        } catch (error) {
+          apiStatusElement.textContent = '❌ Failed to connect to AI API';
+          apiStatusElement.className = 'status-error';
+          showError(`Could not connect to the AI API server: ${error.message}. ` + 
+                    `Make sure the API server is running.`);
+        }
+      }
+      
+      /**
+       * Handle form submission
+       * @param {Event} event - Form submit event
+       */
+      async function handleFormSubmit(event) {
+        event.preventDefault();
+        
+        // Get form values
+        const formData = {
+          subject: subjectInput?.value,
+          gradeLevel: gradeLevelInput?.value,
+          teachingStyle: teachingStyleInput?.value,
+          supportTypes: neurodivergentSupportInput?.value ? [neurodivergentSupportInput?.value] : [],
+          personalityTraits: ["Encouraging", "Patient", "Enthusiastic"],
+          formalityLevel: 3,
+          description: `An expert in ${subjectInput?.value} for ${gradeLevelInput?.value} students using a ${teachingStyleInput?.value} teaching approach.`,
+          expertise: subjectInput?.value
+        };
+        
+        // Validate required fields
+        if (!formData.subject || !formData.gradeLevel || !formData.teachingStyle) {
+          showError('Please fill in all required fields (Subject, Grade Level, and Teaching Style).');
+          return;
+        }
+        
+        // Show loading indicator
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+        if (resultContainer) resultContainer.innerHTML = '';
+        if (errorContainer) errorContainer.style.display = 'none';
+        
+        try {
+          // Disable form while submitting
+          if (createTeacherButton) createTeacherButton.disabled = true;
+          
+          console.log("Sending request with data:", JSON.stringify(formData));
+          
+          // Use the direct integration endpoint
+          const response = await fetch('/api/ai/integration/create-teacher', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          });
+          
+          // Process response
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("API Error Response:", errorText);
+            try {
+              const errorData = JSON.parse(errorText);
+              throw new Error(`API Error (${response.status}): ${errorData.error || 'Unknown error'}`);
+            } catch (e) {
+              throw new Error(`API Error (${response.status}): Could not parse error response`);
+            }
+          }
+          
+          const result = await response.json();
+          console.log("API Response:", result);
+          
+          // For now create a teacher object from the system prompt
+          if (result.success && result.systemPrompt) {
+            const teacherName = formData.subject.includes("Professor") ? 
+                                formData.subject : 
+                                `Professor ${getRandomLastName()} (${formData.subject})`;
+                                
+            // Create a teacher object from the form data and system prompt
+            const teacher = {
+              name: teacherName,
+              bio: `An expert AI teacher specializing in ${formData.subject} for ${formData.gradeLevel} students.`,
+              philosophy: `Using a ${formData.teachingStyle} approach to make learning engaging and effective.`,
+              strategies: [
+                "Clear explanations adapted to student level",
+                "Regular comprehension checks",
+                "Real-world examples and applications",
+                "Breaking complex topics into manageable parts"
+              ],
+              specializations: [
+                formData.subject,
+                `${formData.gradeLevel} Education`,
+                `${formData.teachingStyle} Instruction`,
+                formData.supportTypes.length > 0 ? `${formData.supportTypes.join(', ')} Support` : "Inclusive Teaching"
+              ],
+              config: {
+                subject: formData.subject,
+                gradeLevel: formData.gradeLevel,
+                teachingStyle: formData.teachingStyle,
+                neurotype: formData.supportTypes.length > 0 ? formData.supportTypes[0] : null
+              },
+              systemPrompt: result.systemPrompt
+            };
+            
+            // Display the teacher profile
+            displayTeacherProfile(teacher);
+          } else {
+            throw new Error('Invalid response format from AI teacher creation API');
+          }
+          
+        } catch (error) {
+          showError(`Error creating AI teacher: ${error.message}`);
+          console.error("Creation error:", error);
+        } finally {
+          // Hide loading indicator and enable form
+          if (loadingIndicator) loadingIndicator.style.display = 'none';
+          if (createTeacherButton) createTeacherButton.disabled = false;
+        }
+      }
+      
+      /**
+       * Display the AI teacher profile in the result container
+       * @param {Object} teacher - Teacher profile data
+       */
+      function displayTeacherProfile(teacher) {
+        if (!resultContainer) return;
+        
+        const html = `
+          <div class="teacher-profile">
+            <h2 class="teacher-name">${teacher.name}</h2>
+            
+            <div class="teacher-section">
+              <h3>About</h3>
+              <p>${teacher.bio}</p>
+            </div>
+            
+            <div class="teacher-section">
+              <h3>Teaching Philosophy</h3>
+              <p>${teacher.philosophy}</p>
+            </div>
+            
+            <div class="teacher-section">
+              <h3>Teaching Strategies</h3>
+              <ul>
+                ${teacher.strategies.map(strategy => `<li>${strategy}</li>`).join('')}
+              </ul>
+            </div>
+            
+            <div class="teacher-section">
+              <h3>Specialization Areas</h3>
+              <ul>
+                ${teacher.specializations.map(spec => `<li>${spec}</li>`).join('')}
+              </ul>
+            </div>
+            
+            <div class="teacher-section">
+              <h3>Teacher Configuration</h3>
+              <ul>
+                <li><strong>Subject:</strong> ${teacher.config.subject}</li>
+                <li><strong>Grade Level:</strong> ${teacher.config.gradeLevel}</li>
+                <li><strong>Teaching Style:</strong> ${teacher.config.teachingStyle}</li>
+                ${teacher.config.neurotype ? `<li><strong>Neurodivergent Support:</strong> ${teacher.config.neurotype}</li>` : ''}
+              </ul>
+            </div>
+            
+            <div class="teacher-actions">
+              <button class="action-button" onclick="startTutoringSession('${encodeURIComponent(JSON.stringify(teacher))}')">
+                Start Tutoring Session
+              </button>
+              
+              <button class="action-button" onclick="generateLearningPlan('${encodeURIComponent(JSON.stringify(teacher))}')">
+                Generate Learning Plan
+              </button>
+            </div>
+          </div>
+        `;
+        
+        resultContainer.innerHTML = html;
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      /**
+       * Show an error message
+       * @param {string} message - Error message to display
+       */
+      function showError(message) {
+        if (errorContainer) {
+          errorContainer.textContent = message;
+          errorContainer.style.display = 'block';
+        } else {
+          console.error('Error:', message);
+        }
+        
+        if (loadingIndicator) {
+          loadingIndicator.style.display = 'none';
+        }
+      }
+    });
+    
+    /**
+     * Start a tutoring session with the created teacher
+     * @param {string} teacherJson - JSON string of teacher profile
+     */
+    function startTutoringSession(teacherJson) {
+      try {
+        const teacher = JSON.parse(decodeURIComponent(teacherJson));
+        
+        // Store teacher data in localStorage
+        localStorage.setItem('current_teacher', JSON.stringify(teacher));
+        
+        // Redirect to tutoring session page
+        window.location.href = '/ai-tutoring-session.html';
+      } catch (error) {
+        console.error('Error starting tutoring session:', error);
+        alert('Failed to start tutoring session: ' + error.message);
+      }
+    }
+    
+    /**
+     * Generate a learning plan with the created teacher
+     * @param {string} teacherJson - JSON string of teacher profile
+     */
+    function generateLearningPlan(teacherJson) {
+      try {
+        const teacher = JSON.parse(decodeURIComponent(teacherJson));
+        
+        // Store teacher data in localStorage
+        localStorage.setItem('current_teacher', JSON.stringify(teacher));
+        
+        // Redirect to learning plan page
+        window.location.href = '/learning-plan-generator.html';
+      } catch (error) {
+        console.error('Error navigating to learning plan generator:', error);
+        alert('Failed to navigate to learning plan generator: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shatzii Version Control</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .nav button.active {
+            background: #764ba2;
+        }
+
+        .section {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .repo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .repo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .repo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .repo-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .repo-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .commit-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .commit-item {
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .commit-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .commit-message {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload {
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .file-upload.dragover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #764ba2;
+        }
+
+        .branch-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .branch-item.current {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+        }
+
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔧 Shatzii Version Control</h1>
+        <p>Self-hosted version control system for your projects</p>
+    </div>
+
+    <div class="container">
+        <nav class="nav">
+            <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+            <button class="nav-btn" data-section="create-repo">Create Repository</button>
+            <button class="nav-btn" data-section="commit">Make Commit</button>
+            <button class="nav-btn" data-section="history">View History</button>
+            <button class="nav-btn" data-section="branches">Branches</button>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section active">
+            <h2>Repository Dashboard</h2>
+            <div class="loading" id="dashboard-loading">
+                <div class="spinner"></div>
+                <p>Loading repositories...</p>
+            </div>
+            <div id="repos-container" class="repo-grid"></div>
+        </div>
+
+        <!-- Create Repository Section -->
+        <div id="create-repo" class="section">
+            <h2>Create New Repository</h2>
+            <form id="create-repo-form">
+                <div class="form-group">
+                    <label for="repo-name">Repository Name:</label>
+                    <input type="text" id="repo-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="repo-description">Description:</label>
+                    <textarea id="repo-description" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn">Create Repository</button>
+            </form>
+        </div>
+
+        <!-- Commit Section -->
+        <div id="commit" class="section">
+            <h2>Make Commit</h2>
+            <form id="commit-form">
+                <div class="form-group">
+                    <label for="repo-select">Repository:</label>
+                    <select id="repo-select" name="repository" required>
+                        <option value="">Select repository...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="commit-message">Commit Message:</label>
+                    <input type="text" id="commit-message" name="message" required>
+                </div>
+                <div class="form-group">
+                    <label for="commit-author">Author:</label>
+                    <input type="text" id="commit-author" name="author" value="Shatzii Developer">
+                </div>
+                <div class="form-group">
+                    <label>Files:</label>
+                    <div class="file-upload" id="file-upload">
+                        <p>📁 Drag & drop files here or click to select</p>
+                        <input type="file" id="files-input" multiple style="display: none;">
+                    </div>
+                    <div id="selected-files"></div>
+                </div>
+                <button type="submit" class="btn">Create Commit</button>
+            </form>
+        </div>
+
+        <!-- History Section -->
+        <div id="history" class="section">
+            <h2>Commit History</h2>
+            <div class="form-group">
+                <label for="history-repo-select">Repository:</label>
+                <select id="history-repo-select" required>
+                    <option value="">Select repository...</option>
+                </select>
+            </div>
+            <div class="loading" id="history-loading">
+                <div class="spinner"></div>
+                <p>Loading history...</p>
+            </div>
+            <div id="history-container" class="commit-list"></div>
+        </div>
+
+        <!-- Branches Section -->
+        <div id="branches" class="section">
+            <h2>Branch Management</h2>
+            <div class="form-group">
+                <label for="branches-repo-select">Repository:</label>
+                <select id="branches-repo-select" required>
+                    <option value="">Select repository...</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+                <div style="flex: 1;">
+                    <h3>Create New Branch</h3>
+                    <form id="create-branch-form">
+                        <div class="form-group">
+                            <label for="branch-name">Branch Name:</label>
+                            <input type="text" id="branch-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="from-commit">From Commit (optional):</label>
+                            <input type="text" id="from-commit" name="fromCommit" placeholder="Leave empty for current HEAD">
+                        </div>
+                        <button type="submit" class="btn">Create Branch</button>
+                    </form>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Existing Branches</h3>
+                    <div id="branches-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="status-message" class="status" style="position: fixed; top: 20px; right: 20px; display: none;"></div>
+
+    <script>
+        const API_BASE = '/api';
+        let currentRepo = null;
+        let selectedFiles = [];
+
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sectionId = btn.dataset.section;
+                showSection(sectionId);
+                
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Load data when switching to certain sections
+            if (sectionId === 'dashboard') {
+                loadRepositories();
+            } else if (sectionId === 'commit' || sectionId === 'history' || sectionId === 'branches') {
+                loadRepoSelects();
+            }
+        }
+
+        // Load repositories
+        async function loadRepositories() {
+            const loading = document.getElementById('dashboard-loading');
+            const container = document.getElementById('repos-container');
+            
+            loading.style.display = 'block';
+            container.innerHTML = '';
+            
+            try {
+                const response = await fetch(`${API_BASE}/repos`);
+                const repos = await response.json();
+                
+                if (repos.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #666;">No repositories found. Create your first repository!</p>';
+                } else {
+                    repos.forEach(repo => {
+                        const card = createRepoCard(repo);
+                        container.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                showStatus('Error loading repositories: ' + error.message, 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function createRepoCard(repo) {
+            const card = document.createElement('div');
+            card.className = 'repo-card';
+            card.innerHTML = `
+                <h3>${repo.name}</h3>
+                <div class="repo-stats">
+                    <span>📝 ${repo.totalCommits} commits</span>
+                    <span>🌿 ${repo.totalBranches} branches</span>
+                </div>
+                <div class="repo-stats">
+                    <span>📊 ${formatSize(repo.repositorySize)}</span>
+                    <span>🔄 ${repo.currentBranch}</span>
+                </div>
+                ${repo.latestCommit ? `
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                        <small><strong>Latest:</strong> ${repo.latestCommit.message}</small><br>
+                        <small>${new Date(repo.latestCommit.timestamp).toLocaleString()}</small>
+                    </div>
+                ` : ''}
+                <div style="margin-top: 1rem;">
+                    <button class="btn" onclick="downloadRepo('${repo.name}')">📥 Download</button>
+                </div>
+            `;
+            return card;
+        }
+
+        // Create repository
+        document.getElementById('create-repo-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch(`${API_BASE}/repos`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Repository created successfully!', 'success');
+                    e.target.reset();
+                    loadRepositories();
+                } else {
+                    showStatus('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showStatus('Error creating repository: ' + error.message, 'error');
+            }
+        });
+
+        // File upload handling
+        const fileUpload = document.getElementById('file-upload');
+        const filesInput = document.getElementById('files-input');
+        const selectedFilesDiv = document.getElementById('selected-files');
+
+        fileUpload.addEventListener('click', () => filesInput.click());
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.classList.add('dragover');
+        });
+        fileUpload.addEventListener('dragleave', () => fileUpload.classList.remove('dragover'));
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        filesInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            selectedFiles = Array.from(files);
+            updateSelectedFiles();
+        }
+
+        function updateSelectedFiles() {
+            selectedFilesDiv.innerHTML = selectedFiles.map((file, index) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: #f8f9fa; margin: 0.5rem 0; border-radius: 4px;">
+                    <span>📄 ${file.name} (${formatSize(file.size)})</span>
+                    <button type="button" onclick="removeFile(${index})" style="background: #dc3545; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateSelectedFiles();
+        }
+
+        // Commit form
+        document.getElementById('commit-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (selectedFiles.length === 0) {
+                showStatus('Please select at least one file', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('message', document.getElementById('commit-message').value);
+            formData.append('author', document.getElementById('commit-author').value);
+            
+            selectedFiles.forEach(file => {
+                formData.append('files', file);
+            });
+            
+            const repoName = document.getElementById('repo-select').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/repos/${repoName}/commit`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Commit created successfully!', 'success');
+                    e.target.reset();
+                    selectedFiles = [];
+                    updateSelectedFiles();
+                } else {
+                    showStatus('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showStatus('Error creating commit: ' + error.message, 'error');
+            }
+        });
+
+        // Load repo selects
+        async function loadRepoSelects() {
+            try {
+                const response = await fetch(`${API_BASE}/repos`);
+                const repos = await response.json();
+                
+                const selects = [
+                    document.getElementById('repo-select'),
+                    document.getElementById('history-repo-select'),
+                    document.getElementById('branches-repo-select')
+                ];
+                
+                selects.forEach(select => {
+                    const currentValue = select.value;
+                    select.innerHTML = '<option value="">Select repository...</option>';
+                    repos.forEach(repo => {
+                        const option = document.createElement('option');
+                        option.value = repo.name;
+                        option.textContent = repo.name;
+                        select.appendChild(option);
+                    });
+                    select.value = currentValue;
+                });
+            } catch (error) {
+                console.error('Error loading repositories:', error);
+            }
+        }
+
+        // History
+        document.getElementById('history-repo-select').addEventListener('change', (e) => {
+            if (e.target.value) {
+                loadHistory(e.target.value);
+            }
+        });
+
+        async function loadHistory(repoName) {
+            const loading = document.getElementById('history-loading');
+            const container = document.getElementById('history-container');
+            
+            loading.style.display = 'block';
+            container.innerHTML = '';
+            
+            try {
+                const response = await fetch(`${API_BASE}/repos/${repoName}/history`);
+                const commits = await response.json();
+                
+                if (commits.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #666;">No commits found.</p>';
+                } else {
+                    commits.forEach(commit => {
+                        const item = createCommitItem(commit, repoName);
+                        container.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                showStatus('Error loading history: ' + error.message, 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function createCommitItem(commit, repoName) {
+            const item = document.createElement('div');
+            item.className = 'commit-item';
+            item.innerHTML = `
+                <div class="commit-meta">
+                    <strong>${commit.author}</strong> • ${new Date(commit.timestamp).toLocaleString()} • ${commit.id}
+                </div>
+                <div class="commit-message">${commit.message}</div>
+                <div style="margin-top: 0.5rem;">
+                    <span style="font-size: 0.9rem; color: #666;">📁 ${commit.files.length} files</span>
+                    <button class="btn btn-secondary" onclick="revertToCommit('${repoName}', '${commit.id}')" style="margin-left: 1rem; padding: 0.25rem 0.75rem; font-size: 0.9rem;">Revert</button>
+                </div>
+            `;
+            return item;
+        }
+
+        // Branches
+        document.getElementById('branches-repo-select').addEventListener('change', (e) => {
+            if (e.target.value) {
+                loadBranches(e.target.value);
+            }
+        });
+
+        document.getElementById('create-branch-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const repoName = document.getElementById('branches-repo-select').value;
+            if (!repoName) {
+                showStatus('Please select a repository', 'error');
+                return;
+            }
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch(`${API_BASE}/repos/${repoName}/branches`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Branch created successfully!', 'success');
+                    e.target.reset();
+                    loadBranches(repoName);
+                } else {
+                    showStatus('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showStatus('Error creating branch: ' + error.message, 'error');
+            }
+        });
+
+        async function loadBranches(repoName) {
+            try {
+                const response = await fetch(`${API_BASE}/repos/${repoName}/branches`);
+                const branches = await response.json();
+                
+                const container = document.getElementById('branches-list');
+                container.innerHTML = '';
+                
+                branches.forEach(branch => {
+                    const item = document.createElement('div');
+                    item.className = `branch-item ${branch.current ? 'current' : ''}`;
+                    item.innerHTML = `
+                        <div>
+                            <strong>${branch.name}</strong> ${branch.current ? '(current)' : ''}
+                            <br><small>${branch.commits} commits</small>
+                        </div>
+                        <div>
+                            ${!branch.current ? `<button class="btn btn-secondary" onclick="switchBranch('${repoName}', '${branch.name}')" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">Switch</button>` : ''}
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            } catch (error) {
+                showStatus('Error loading branches: ' + error.message, 'error');
+            }
+        }
+
+        // Actions
+        async function revertToCommit(repoName, commitId) {
+            if (!confirm(`Are you sure you want to revert ${repoName} to commit ${commitId}?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/repos/${repoName}/revert`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ commitId })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus('Repository reverted successfully!', 'success');
+                } else {
+                    showStatus('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showStatus('Error reverting: ' + error.message, 'error');
+            }
+        }
+
+        async function switchBranch(repoName, branchName) {
+            try {
+                const response = await fetch(`${API_BASE}/repos/${repoName}/checkout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ branch: branchName })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus(`Switched to branch ${branchName}`, 'success');
+                    loadBranches(repoName);
+                } else {
+                    showStatus('Error: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showStatus('Error switching branch: ' + error.message, 'error');
+            }
+        }
+
+        function downloadRepo(repoName) {
+            window.open(`${API_BASE}/repos/${repoName}/download`, '_blank');
+        }
+
+        // Utilities
+        function formatSize(bytes) {
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            if (bytes === 0) return '0 B';
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadRepositories();
+        });
+    </script>
+</body>
+</html>

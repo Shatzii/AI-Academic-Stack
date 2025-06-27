@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShatziiOS - Site Map</title>
+    <style>
+        :root {
+            --primary: #04FFFF;
+            --primary-dark: #00CCCC;
+            --secondary: #7B68EE;
+            --background: #121212;
+            --card-bg: #1E1E1E;
+            --text: #FFFFFF;
+            --text-muted: #B0B0B0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            margin-top: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .sitemap-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .sitemap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .sitemap-node {
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .sitemap-home {
+            background-color: var(--primary);
+            color: var(--background);
+            font-weight: bold;
+        }
+        
+        .sitemap-level {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .sitemap-branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .sitemap-branch::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            width: 2px;
+            height: 1rem;
+            background-color: var(--text-muted);
+        }
+        
+        .sitemap-branches {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .sitemap-branches::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 1rem;
+            background-color: var(--text-muted);
+        }
+        
+        .sitemap-branches::after {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background-color: var(--text-muted);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: var(--card-bg);
+            color: var(--primary);
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+        }
+        
+        .status-complete {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .status-partial {
+            background-color: #FFC107;
+            color: black;
+        }
+        
+        .status-pending {
+            background-color: #F44336;
+            color: white;
+        }
+        
+        .path {
+            font-family: monospace;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ShatziiOS Site Map & Structure</h1>
+        
+        <div class="section">
+            <h2>Visual Site Map</h2>
+            
+            <div class="sitemap-container">
+                <div class="sitemap">
+                    <!-- Home Node -->
+                    <div class="sitemap-node sitemap-home">Home / Landing Page</div>
+                    
+                    <!-- Main Dashboards Level -->
+                    <div class="sitemap-level">
+                        <div class="sitemap-branch">
+                            <div class="sitemap-node">School Dashboard (CEO)</div>
+                            
+                            <!-- School Dashboard Children -->
+                            <div class="sitemap-branches">
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">Elementary School</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">Middle School</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">High School</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">College</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">Law School</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">Language School</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="sitemap-branch">
+                            <div class="sitemap-node">Student Dashboard</div>
+                            
+                            <!-- Student Dashboard Children -->
+                            <div class="sitemap-branches">
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">My Courses</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">Learning Path</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">AI Tutors</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">Progress Reports</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sitemap-branch">
+                            <div class="sitemap-node">AI Integration Hub</div>
+                            
+                            <!-- AI Integration Children -->
+                            <div class="sitemap-branches">
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">AI Teacher Creator</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">AI Tutoring Session</div>
+                                </div>
+                                <div class="sitemap-branch">
+                                    <div class="sitemap-node">AI Tutor Config</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Site Structure & URL Paths</h2>
+            
+            <h3>Main Navigation</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>URL Path</th>
+                        <th>File</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Home / Landing Page</td>
+                        <td><span class="path">/</span></td>
+                        <td>index.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>School Dashboard (CEO)</td>
+                        <td><span class="path">/ceo-dashboard</span></td>
+                        <td>ceo-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Student Dashboard</td>
+                        <td><span class="path">/student-dashboard</span></td>
+                        <td>student-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Teacher Dashboard</td>
+                        <td><span class="path">/teacher-dashboard</span></td>
+                        <td>teacher-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Parent Dashboard</td>
+                        <td><span class="path">/parent-dashboard</span></td>
+                        <td>parent-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Site Map</td>
+                        <td><span class="path">/sitemap</span></td>
+                        <td>sitemap.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>School Dashboards</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>URL Path</th>
+                        <th>File</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Elementary School</td>
+                        <td><span class="path">/elementary-dashboard</span></td>
+                        <td>elementary-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Middle School</td>
+                        <td><span class="path">/middle-dashboard</span></td>
+                        <td>middle-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>High School</td>
+                        <td><span class="path">/high-dashboard</span></td>
+                        <td>high-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Neurodivergent College</td>
+                        <td><span class="path">/neurodivergent-college-dashboard</span></td>
+                        <td>neurodivergent-college-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Law School</td>
+                        <td><span class="path">/law-dashboard</span></td>
+                        <td>law-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Language School</td>
+                        <td><span class="path">/language-dashboard</span></td>
+                        <td>language-dashboard.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Student-Specific Dashboards</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>URL Path</th>
+                        <th>File</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Neurodivergent Elementary</td>
+                        <td><span class="path">/neurodivergent-elementary-dashboard</span></td>
+                        <td>neurodivergent-elementary-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Neurodivergent Middle</td>
+                        <td><span class="path">/neurodivergent-middle-dashboard</span></td>
+                        <td>neurodivergent-middle-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Neurodivergent High</td>
+                        <td><span class="path">/neurodivergent-high-dashboard</span></td>
+                        <td>neurodivergent-high-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Law School Student</td>
+                        <td><span class="path">/law-school-dashboard</span></td>
+                        <td>law-school-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Bar Exam Dashboard</td>
+                        <td><span class="path">/bar-exam-dashboard</span></td>
+                        <td>bar-exam-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Language School Student</td>
+                        <td><span class="path">/language-school-dashboard</span></td>
+                        <td>language-school-dashboard.html</td>
+                        <td><span class="status status-partial">Partial</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Management Pages</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>URL Path</th>
+                        <th>File</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Schools Management</td>
+                        <td><span class="path">/schools-management</span></td>
+                        <td>schools-management.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Students Management</td>
+                        <td><span class="path">/students-management</span></td>
+                        <td>students-management.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Faculty Management</td>
+                        <td><span class="path">/faculty-management</span></td>
+                        <td>faculty-management.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Curriculum Management</td>
+                        <td><span class="path">/curriculum-management</span></td>
+                        <td>curriculum-management.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Teachers Management</td>
+                        <td><span class="path">/ai-teachers-management</span></td>
+                        <td>ai-teachers-management.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Resources Management</td>
+                        <td><span class="path">/resources-management</span></td>
+                        <td>resources-management.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Other Dashboards</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>URL Path</th>
+                        <th>File</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Analytics Dashboard</td>
+                        <td><span class="path">/analytics-dashboard</span></td>
+                        <td>analytics-dashboard.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Security Dashboard</td>
+                        <td><span class="path">/security-dashboard</span></td>
+                        <td>security-dashboard.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Alerts Dashboard</td>
+                        <td><span class="path">/alerts-dashboard</span></td>
+                        <td>alerts-dashboard.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>System Settings</td>
+                        <td><span class="path">/system-settings</span></td>
+                        <td>system-settings.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>AI Integration Pages</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>URL Path</th>
+                        <th>File</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Integration Hub</td>
+                        <td><span class="path">/ai-integration-hub</span></td>
+                        <td>ai-integration-hub.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Tutor Configuration</td>
+                        <td><span class="path">/ai-tutor-config</span></td>
+                        <td>ai-tutor-config.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Teacher Creator</td>
+                        <td><span class="path">/ai-teacher-creator</span></td>
+                        <td>ai-teacher-creator.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Tutoring Session</td>
+                        <td><span class="path">/ai-tutoring-session</span></td>
+                        <td>ai-tutoring-session.html</td>
+                        <td><span class="status status-complete">Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td>Curriculum Generator</td>
+                        <td><span class="path">/curriculum-generator</span></td>
+                        <td>curriculum-generator.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Learning Style Assessment</td>
+                        <td><span class="path">/learning-style-assessment</span></td>
+                        <td>learning-style-assessment.html</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>File Structure</h2>
+            <p>All HTML files are stored in the <span class="path">server/public</span> directory. The clean URL middleware maps the URL paths to their corresponding HTML files.</p>
+            
+            <h3>Key Middleware</h3>
+            <p>The <span class="path">server/middleware/clean-urls.ts</span> file handles mapping clean URLs to their corresponding HTML files.</p>
+            
+            <h3>API Endpoints</h3>
+            <ul>
+                <li><span class="path">/api/auth</span> - Authentication endpoints</li>
+                <li><span class="path">/api/users</span> - User management endpoints</li>
+                <li><span class="path">/api/schools</span> - School management endpoints</li>
+                <li><span class="path">/api/courses</span> - Course management endpoints</li>
+                <li><span class="path">/api/analytics</span> - Analytics endpoints</li>
+            </ul>
+            
+            <h3>AI Integration Endpoints (Active)</h3>
+            <ul>
+                <li><span class="path">/api/ai/integration/status</span> - Check AI services status</li>
+                <li><span class="path">/api/ai/integration/create-teacher</span> - Create an AI teacher system prompt</li>
+                <li><span class="path">/api/ai/integration/teacher-response</span> - Generate a response from an AI teacher</li>
+                <li><span class="path">/api/ai/integration/learning-plan</span> - Generate a learning plan for a student</li>
+                <li><span class="path">/api/ai/integration/curriculum-content</span> - Generate curriculum content</li>
+                <li><span class="path">/api/ai/integration/learning-style-assessment</span> - Assess a student's learning style</li>
+            </ul>
+        </div>
+        
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>

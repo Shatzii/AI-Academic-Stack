@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShatziiOS Educational Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%230066FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z'%3E%3C/path%3E%3Cline x1='4' y1='22' x2='4' y2='15'%3E%3C/line%3E%3C/svg%3E" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: white;
+    }
+    
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    .loader {
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .school-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .school-card {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .school-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .school-card-header {
+      padding: 20px;
+      background-color: #222;
+    }
+    
+    .school-card-body {
+      padding: 20px;
+    }
+    
+    .school-card-footer {
+      padding: 15px 20px;
+      background-color: #2a2a2a;
+      text-align: center;
+    }
+    
+    .school-button {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .school-button:hover {
+      background-color: #2980b9;
+    }
+    
+    .law-school {
+      --school-color: #e67e22;
+    }
+    
+    .neurodivergent-school {
+      --school-color: #2ecc71;
+    }
+    
+    .language-school {
+      --school-color: #9b59b6;
+    }
+    
+    .ndash {
+      --school-color: #1abc9c;
+    }
+    
+    .law-school .school-button {
+      background-color: #e67e22;
+    }
+    
+    .law-school .school-button:hover {
+      background-color: #d35400;
+    }
+    
+    .neurodivergent-school .school-button {
+      background-color: #2ecc71;
+    }
+    
+    .neurodivergent-school .school-button:hover {
+      background-color: #27ae60;
+    }
+    
+    .language-school .school-button {
+      background-color: #9b59b6;
+    }
+    
+    .language-school .school-button:hover {
+      background-color: #8e44ad;
+    }
+    
+    .ndash .school-button {
+      background-color: #1abc9c;
+    }
+    
+    .ndash .school-button:hover {
+      background-color: #16a085;
+    }
+    
+    h1 {
+      text-align: center;
+      margin: 40px 0;
+      font-size: 2.5rem;
+    }
+    
+    h2 {
+      margin-top: 0;
+      color: var(--school-color);
+    }
+    
+    .icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ShatziiOS Educational Platform</h1>
+  
+  <div class="school-container">
+    <div class="school-card law-school">
+      <div class="school-card-header">
+        <div class="icon">⚖️</div>
+        <h2>Shatzii School of Law</h2>
+      </div>
+      <div class="school-card-body">
+        <p>Legal education with UAE Bar Exam preparation, designed for aspiring legal professionals with a focus on accessible learning methods.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/law-dashboard.html" class="school-button">Enter Law School</a>
+      </div>
+    </div>
+    
+    <div class="school-card neurodivergent-school">
+      <div class="school-card-header">
+        <div class="icon">🦸</div>
+        <h2>Neurodivergent School</h2>
+      </div>
+      <div class="school-card-body">
+        <p>Specialized education for neurodivergent students with emphasis on dyslexia-specific curriculum from kindergarten through college.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/elementary-dashboard.html" class="school-button">Enter Elementary</a>
+        <a href="/middle-dashboard.html" class="school-button" style="margin-top: 5px;">Enter Middle School</a>
+        <a href="/high-dashboard.html" class="school-button" style="margin-top: 5px;">Enter High School</a>
+      </div>
+    </div>
+    
+    <div class="school-card language-school">
+      <div class="school-card-header">
+        <div class="icon">🗣️</div>
+        <h2>Language Learning School</h2>
+      </div>
+      <div class="school-card-body">
+        <p>AI-powered language acquisition courses across multiple languages including Spanish, German, French, Italian, Japanese, Chinese and Russian.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/language-dashboard.html" class="school-button">Enter Language School</a>
+      </div>
+    </div>
+    
+    <div class="school-card ndash">
+      <div class="school-card-header">
+        <div class="icon">🧠</div>
+        <h2>NDASH Platform</h2>
+      </div>
+      <div class="school-card-body">
+        <p>Advanced education for neurodivergent learners with adaptive technologies and personalized learning experiences.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/ndash-dashboard.html" class="school-button">Enter NDASH</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to handle navigation
+    function navigateToApp(path) {
+      const mainContainer = document.querySelector('.school-container');
+      const loaderContainer = document.createElement('div');
+      loaderContainer.className = 'loader-container';
+      
+      const loader = document.createElement('div');
+      loader.className = 'loader';
+      
+      const message = document.createElement('div');
+      message.textContent = 'Loading application...';
+      
+      loaderContainer.appendChild(loader);
+      loaderContainer.appendChild(message);
+      
+      document.body.innerHTML = '';
+      document.body.appendChild(loaderContainer);
+      
+      // Redirect to the appropriate path
+      window.location.href = path;
+      
+      return false;
+    }
+    
+    // Set up click handlers for all school buttons
+    document.querySelectorAll('.school-button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const path = this.getAttribute('href');
+        navigateToApp(path);
+      });
+    });
+  </script>
+  
+  <!-- Footer with Executive Access Link -->
+  <div style="text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #333; font-size: 0.9rem; color: #666;">
+    <p>ShatziiOS Educational Platform &copy; 2025. All rights reserved.</p>
+    <div style="margin-top: 15px;">
+      <a href="/ceo-dashboard.html" style="color: #3498db; text-decoration: none; margin: 0 10px;">Executive Control Panel</a>
+      <a href="/admin.html" style="color: #666; text-decoration: none; margin: 0 10px;">Admin Access</a>
+    </div>
+  </div>
+</body>
+</html>

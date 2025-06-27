@@ -1,0 +1,83 @@
+# Build and Cache
+.next/
+.vscode/
+.vscode-server/
+.config/
+.cache/
+dist/
+build/
+out/
+
+# Node and Logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+logs/
+
+# Runtime and Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# System Files
+.DS_Store
+*.swp
+*~
+.tmp/
+.temp/
+
+# Package manager lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Version Control and Deployment
+.git/
+.svn/
+.hg/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Backup and archive files
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.tar.gz
+*.zip
+
+# Uploads and user content
+uploads/
+tmp/
+.tmp/
+
+# Testing and coverage
+coverage/
+.nyc_output/
+.coverage
+htmlcov/
+
+# Database
+*.sqlite
+*.db
+
+# Large binary files
+*.pack
+*.idx
+
+# PM2 logs
+pm2.log

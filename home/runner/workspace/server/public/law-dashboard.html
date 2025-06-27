@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Law School - ShatziiOS</title>
+  <style>
+    :root {
+      /* Law School Theme Colors */
+      --primary-color: #2E7D32;
+      --secondary-color: #B0BEC5;
+      --accent-color: #FBC02D;
+      --success-color: #4CAF50;
+      --warning-color: #FF9800;
+      --error-color: #F44336;
+      --dark-bg: #112015;
+      --card-bg: #1E2D22;
+      --card-hover: #293D2E;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B8C9BC;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      --border-radius: 8px;
+      --font-dyslexic: 'Arial', 'Helvetica', sans-serif;
+      --font-spacing: 0.03em;
+      --line-height: 1.7;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-dyslexic);
+      background-color: var(--dark-bg);
+      background-image: 
+        linear-gradient(135deg, rgba(46, 125, 50, 0.07) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(251, 192, 45, 0.05) 0%, transparent 50%);
+      color: var(--text-primary);
+      line-height: var(--line-height);
+      letter-spacing: var(--font-spacing);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header and Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-top: 1rem;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      letter-spacing: 1px;
+      margin-right: 1rem;
+    }
+    
+    .school-name {
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+    
+    /* Main Navigation */
+    .main-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0 2rem;
+      background-color: rgba(30, 45, 34, 0.8);
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+    
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+    
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .nav-icon {
+      font-size: 1.1rem;
+    }
+    
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--card-bg), var(--card-hover));
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent, rgba(46, 125, 50, 0.1));
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
+    
+    .welcome-content {
+      max-width: 70%;
+      position: relative;
+      z-index: 5;
+    }
+    
+    .welcome-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.2rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .welcome-text {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 90%;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .primary-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .primary-btn:hover {
+      background-color: var(--accent-color);
+      color: #333;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+    }
+    
+    .secondary-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .secondary-btn:hover {
+      background-color: rgba(46, 125, 50, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    /* Dashboard Sections */
+    .dashboard-section {
+      margin-bottom: 2.5rem;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .section-title-icon {
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+    }
+    
+    .section-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .view-all-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+    
+    .view-all-link:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    /* Card Grid Layout */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    /* Bar Exam Cards */
+    .exam-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid rgba(46, 125, 50, 0.1);
+    }
+    
+    .exam-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary-color);
+    }
+    
+    .exam-card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .exam-subject {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .exam-subject-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(46, 125, 50, 0.1);
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+    
+    .exam-difficulty {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .exam-card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .exam-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .exam-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      flex-grow: 1;
+    }
+    
+    .exam-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .exam-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .exam-detail-icon {
+      color: var(--accent-color);
+      font-size: 1rem;
+    }
+    
+    .exam-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .exam-tag {
+      padding: 0.3rem 0.7rem;
+      background-color: rgba(46, 125, 50, 0.1);
+      color: var(--primary-color);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .exam-card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .exam-date {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .exam-btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .exam-btn:hover {
+      background-color: var(--accent-color);
+      color: #333;
+      transform: translateY(-2px);
+    }
+    
+    /* Dashboard Rows - For wider content */
+    .dashboard-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 992px) {
+      .dashboard-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Study Progress Tracking */
+    .progress-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(46, 125, 50, 0.1);
+    }
+    
+    .progress-card-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .progress-card-icon {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+    
+    .progress-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .progress-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    
+    .progress-item-title {
+      font-weight: 500;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .progress-item-icon {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+    
+    .progress-percentage {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .progress-bar-bg {
+      height: 8px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    
+    .progress-bar-fill.constitutional {
+      background: linear-gradient(90deg, #2E7D32, #4CAF50);
+    }
+    
+    .progress-bar-fill.civil {
+      background: linear-gradient(90deg, #1976D2, #42A5F5);
+    }
+    
+    .progress-bar-fill.criminal {
+      background: linear-gradient(90deg, #D32F2F, #EF5350);
+    }
+    
+    .progress-bar-fill.procedure {
+      background: linear-gradient(90deg, #7B1FA2, #BA68C8);
+    }
+    
+    /* Memory Aids Section */
+    .memory-aids-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--accent-color);
+    }
+    
+    .memory-aids-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    
+    .memory-aid {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: rgba(30, 45, 34, 0.6);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    
+    .memory-aid:hover {
+      transform: translateY(-3px);
+      background-color: rgba(30, 45, 34, 0.9);
+      border-color: var(--primary-color);
+    }
+    
+    .memory-aid-icon {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      border-radius: 50%;
+      background-color: rgba(251, 192, 45, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-color);
+      font-size: 1.5rem;
+    }
+    
+    .memory-aid-content {
+      flex-grow: 1;
+    }
+    
+    .memory-aid-title {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .memory-aid-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .memory-aid-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .memory-aid-type {
+      font-size: 0.85rem;
+      color: var(--accent-color);
+    }
+    
+    .memory-aid-link {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.3s ease;
+    }
+    
+    .memory-aid-link:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    /* Study Schedule */
+    .study-schedule-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(46, 125, 50, 0.1);
+    }
+    
+    .schedule-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .schedule-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .schedule-today {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    .schedule-date {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .session-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: rgba(30, 45, 34, 0.6);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .session-item:hover {
+      background-color: rgba(30, 45, 34, 0.9);
+    }
+    
+    .session-time {
+      min-width: 70px;
+      text-align: center;
+      padding: 0.5rem;
+      background-color: rgba(46, 125, 50, 0.1);
+      border-radius: 6px;
+      color: var(--primary-color);
+      font-weight: 500;
+      height: fit-content;
+    }
+    
+    .session-content {
+      flex-grow: 1;
+    }
+    
+    .session-title {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+    
+    .session-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .session-tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background-color: rgba(251, 192, 45, 0.1);
+      color: var(--accent-color);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    /* Case Studies Section */
+    .case-studies-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .case-studies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .case-study-card {
+      background-color: rgba(30, 45, 34, 0.6);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid rgba(46, 125, 50, 0.1);
+    }
+    
+    .case-study-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      border-color: var(--accent-color);
+    }
+    
+    .case-study-header {
+      padding: 1.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .case-study-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 8px;
+      background-color: rgba(46, 125, 50, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .case-study-title {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .case-study-body {
+      padding: 1.2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .case-study-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+    
+    .case-study-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    
+    .case-study-topics {
+      font-size: 0.85rem;
+      color: var(--accent-color);
+    }
+    
+    .case-study-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.85rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .case-study-btn:hover {
+      background-color: var(--accent-color);
+      color: #333;
+    }
+    
+    /* UAE Legal Resources */
+    .resources-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .resource-card {
+      background-color: rgba(30, 45, 34, 0.6);
+      border-radius: var(--border-radius);
+      padding: 1.2rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(46, 125, 50, 0.1);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-5px);
+      background-color: rgba(30, 45, 34, 0.9);
+      border-color: var(--primary-color);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .resource-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 8px;
+      background-color: rgba(46, 125, 50, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .resource-title {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    .resource-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+    
+    .resource-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    
+    .resource-type {
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+      background-color: rgba(251, 192, 45, 0.1);
+      color: var(--accent-color);
+      border-radius: 20px;
+    }
+    
+    .resource-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .resource-link:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+    }
+    
+    .profile-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      flex: 1;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(46, 125, 50, 0.1);
+    }
+    
+    .profile-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      height: 80px;
+      position: relative;
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      border: 4px solid var(--card-bg);
+      position: absolute;
+      bottom: -40px;
+      left: 1.5rem;
+    }
+    
+    .profile-content {
+      padding: 3rem 1.5rem 1.5rem;
+    }
+    
+    .profile-name {
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    
+    .profile-role {
+      color: var(--accent-color);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .profile-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .profile-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .profile-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    /* Accessibility Controls */
+    .accessibility-toolbar {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: rgba(30, 45, 34, 0.9);
+      padding: 0.7rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      border: 1px solid rgba(46, 125, 50, 0.3);
+    }
+    
+    .accessibility-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .accessibility-btn:hover {
+      background-color: rgba(46, 125, 50, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .accessibility-btn-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--card-bg);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      color: var(--text-secondary);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      margin-bottom: 0.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .accessibility-btn:hover .accessibility-btn-tooltip {
+      opacity: 1;
+    }
+    
+    /* Focus Mode Toggle */
+    .focus-mode-toggle {
+      position: fixed;
+      top: 5rem;
+      right: 1.5rem;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: rgba(30, 45, 34, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(46, 125, 50, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .focus-mode-toggle:hover {
+      transform: translateY(-3px);
+    }
+    
+    .focus-mode-icon {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+    
+    .focus-mode-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .focus-mode-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin-left: 0.5rem;
+    }
+    
+    .focus-mode-switch-handle {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--text-secondary);
+      transition: all 0.3s ease;
+    }
+    
+    body.focus-mode-on .focus-mode-switch {
+      background-color: var(--primary-color);
+    }
+    
+    body.focus-mode-on .focus-mode-switch-handle {
+      left: 22px;
+      background-color: white;
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 2rem 0 1rem;
+      text-align: center;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    
+    .footer-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .footer-text {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    
+    /* Responsive Adaptations */
+    @media (max-width: 992px) {
+      .profile-section {
+        flex-direction: column;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .main-nav {
+        overflow-x: auto;
+        padding: 0.5rem 1rem;
+      }
+      
+      .welcome-content {
+        max-width: 100%;
+      }
+      
+      .focus-mode-toggle, .accessibility-toolbar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <div class="logo">ShatziiOS</div>
+        <div class="school-name">Law School</div>
+      </div>
+      
+      <div class="profile-container">
+        <div class="profile-avatar">S</div>
+      </div>
+    </header>
+    
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+      <a href="#" class="nav-link active">
+        <span class="nav-icon">📊</span>
+        Dashboard
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">📚</span>
+        Courses
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">⚖️</span>
+        UAE Bar Exam
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">📝</span>
+        Case Studies
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🧠</span>
+        Memory Aids
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">📅</span>
+        Schedule
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">⚙️</span>
+        Settings
+      </a>
+    </nav>
+    
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div class="welcome-content">
+        <h1 class="welcome-title">Welcome to Law School</h1>
+        <h2 class="welcome-subtitle">Specialized Education for UAE Bar Exam</h2>
+        <p class="welcome-text">This law school platform is specifically designed to support neurodivergent learners with specialized tools, memory aids, and adaptive learning methods to help you succeed in your legal education.</p>
+        <div class="cta-buttons">
+          <button class="primary-btn">
+            <span>Continue Bar Exam Prep</span>
+            <span>→</span>
+          </button>
+          <button class="secondary-btn">
+            <span>View Study Plan</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bar Exam Preparation Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">⚖️</span>
+          UAE Bar Exam Preparation
+        </h2>
+        <a href="#" class="view-all-link">
+          View All Exam Modules
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Structured learning modules designed specifically for neurodivergent students preparing for the UAE Bar Exam</p>
+      
+      <div class="card-grid">
+        <!-- Constitutional Law Card -->
+        <div class="exam-card">
+          <div class="exam-card-header">
+            <div class="exam-subject">
+              <div class="exam-subject-icon">📜</div>
+              <span>Constitutional Law</span>
+            </div>
+            <div class="exam-difficulty">Advanced</div>
+          </div>
+          <div class="exam-card-body">
+            <h3 class="exam-title">UAE Constitutional Framework</h3>
+            <p class="exam-desc">Study the foundational principles of UAE constitutional law, federal system, and governmental structure with specialized memory aids for complex concepts.</p>
+            <div class="exam-details">
+              <div class="exam-detail">
+                <span class="exam-detail-icon">📊</span>
+                <span>Progress: 75%</span>
+              </div>
+              <div class="exam-detail">
+                <span class="exam-detail-icon">⏱️</span>
+                <span>15 hours</span>
+              </div>
+            </div>
+            <div class="exam-tags">
+              <span class="exam-tag">Federal Structure</span>
+              <span class="exam-tag">Executive Authority</span>
+              <span class="exam-tag">Judicial Powers</span>
+            </div>
+          </div>
+          <div class="exam-card-footer">
+            <div class="exam-date">
+              <span>Last studied:</span>
+              <span>Yesterday</span>
+            </div>
+            <button class="exam-btn">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Civil Law Card -->
+        <div class="exam-card">
+          <div class="exam-card-header">
+            <div class="exam-subject">
+              <div class="exam-subject-icon">📝</div>
+              <span>Civil Law</span>
+            </div>
+            <div class="exam-difficulty">Intermediate</div>
+          </div>
+          <div class="exam-card-body">
+            <h3 class="exam-title">UAE Civil Code</h3>
+            <p class="exam-desc">Comprehensive study of UAE Civil Code with visual aids, multi-modal explanations, and interactive case studies to reinforce understanding of civil obligations.</p>
+            <div class="exam-details">
+              <div class="exam-detail">
+                <span class="exam-detail-icon">📊</span>
+                <span>Progress: 45%</span>
+              </div>
+              <div class="exam-detail">
+                <span class="exam-detail-icon">⏱️</span>
+                <span>20 hours</span>
+              </div>
+            </div>
+            <div class="exam-tags">
+              <span class="exam-tag">Contracts</span>
+              <span class="exam-tag">Property Rights</span>
+              <span class="exam-tag">Legal Capacity</span>
+            </div>
+          </div>
+          <div class="exam-card-footer">
+            <div class="exam-date">
+              <span>Last studied:</span>
+              <span>3 days ago</span>
+            </div>
+            <button class="exam-btn">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Criminal Law Card -->
+        <div class="exam-card">
+          <div class="exam-card-header">
+            <div class="exam-subject">
+              <div class="exam-subject-icon">⚖️</div>
+              <span>Criminal Law</span>
+            </div>
+            <div class="exam-difficulty">Advanced</div>
+          </div>
+          <div class="exam-card-body">
+            <h3 class="exam-title">UAE Penal Code</h3>
+            <p class="exam-desc">Study of UAE criminal law system with specialized focus on concept mapping, color-coding, and spatial organization of complex legal relationships.</p>
+            <div class="exam-details">
+              <div class="exam-detail">
+                <span class="exam-detail-icon">📊</span>
+                <span>Progress: 60%</span>
+              </div>
+              <div class="exam-detail">
+                <span class="exam-detail-icon">⏱️</span>
+                <span>18 hours</span>
+              </div>
+            </div>
+            <div class="exam-tags">
+              <span class="exam-tag">Criminal Intent</span>
+              <span class="exam-tag">Defenses</span>
+              <span class="exam-tag">Sentencing</span>
+            </div>
+          </div>
+          <div class="exam-card-footer">
+            <div class="exam-date">
+              <span>Last studied:</span>
+              <span>Today</span>
+            </div>
+            <button class="exam-btn">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Study Progress Row -->
+    <div class="dashboard-row">
+      <!-- Progress Tracking Card -->
+      <div class="progress-card">
+        <h3 class="progress-card-title">
+          <span class="progress-card-icon">📊</span>
+          Your Bar Exam Progress
+        </h3>
+        
+        <div class="progress-items">
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">📜</span>
+                Constitutional Law
+              </div>
+              <div class="progress-percentage">75%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill constitutional" style="width: 75%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">📝</span>
+                Civil Law
+              </div>
+              <div class="progress-percentage">45%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill civil" style="width: 45%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">⚖️</span>
+                Criminal Law
+              </div>
+              <div class="progress-percentage">60%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill criminal" style="width: 60%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">📋</span>
+                Procedure & Evidence
+              </div>
+              <div class="progress-percentage">35%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill procedure" style="width: 35%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Today's Study Schedule -->
+      <div class="study-schedule-section">
+        <h3 class="schedule-title">
+          <span class="progress-card-icon">📅</span>
+          Today's Study Plan
+        </h3>
+        
+        <h4 class="schedule-today">Monday</h4>
+        <p class="schedule-date">April 26, 2025</p>
+        
+        <div class="session-list">
+          <div class="session-item">
+            <div class="session-time">9:00 AM</div>
+            <div class="session-content">
+              <div class="session-title">Constitutional Law Review</div>
+              <div class="session-desc">Focus on federal structure and powers</div>
+              <span class="session-tag">Critical Concept</span>
+            </div>
+          </div>
+          
+          <div class="session-item">
+            <div class="session-time">11:30 AM</div>
+            <div class="session-content">
+              <div class="session-title">Case Analysis Workshop</div>
+              <div class="session-desc">Practical application of legal principles</div>
+              <span class="session-tag">Interactive</span>
+            </div>
+          </div>
+          
+          <div class="session-item">
+            <div class="session-time">2:15 PM</div>
+            <div class="session-content">
+              <div class="session-title">Memory Aid Practice</div>
+              <div class="session-desc">Using visual mnemonic techniques</div>
+              <span class="session-tag">Reinforcement</span>
+            </div>
+          </div>
+          
+          <div class="session-item">
+            <div class="session-time">4:00 PM</div>
+            <div class="session-content">
+              <div class="session-title">Practice Exam Questions</div>
+              <div class="session-desc">Timed response practice</div>
+              <span class="session-tag">Assessment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Memory Aids Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">🧠</span>
+          Visual Memory Aids
+        </h2>
+        <a href="#" class="view-all-link">
+          Browse All Memory Aids
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Specially designed visual learning tools to help neurodivergent students memorize complex legal concepts</p>
+      
+      <div class="memory-aids-section">
+        <div class="memory-aids-list">
+          <div class="memory-aid">
+            <div class="memory-aid-icon">🏛️</div>
+            <div class="memory-aid-content">
+              <h4 class="memory-aid-title">Constitutional Powers Mnemonic: CATS-PP</h4>
+              <p class="memory-aid-desc">Visual mnemonic device for remembering the constitutional powers in the UAE: Commerce, Army, Tax, Spend, Post, Patents.</p>
+              <div class="memory-aid-meta">
+                <div class="memory-aid-type">Mnemonic Device</div>
+                <a href="#" class="memory-aid-link">
+                  View Memory Aid
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="memory-aid">
+            <div class="memory-aid-icon">🗺️</div>
+            <div class="memory-aid-content">
+              <h4 class="memory-aid-title">Constitutional Amendments Visual Map</h4>
+              <p class="memory-aid-desc">Color-coded visual map showing the relationship between constitutional amendments and their practical applications in UAE law.</p>
+              <div class="memory-aid-meta">
+                <div class="memory-aid-type">Visual Map</div>
+                <a href="#" class="memory-aid-link">
+                  View Memory Aid
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="memory-aid">
+            <div class="memory-aid-icon">📝</div>
+            <div class="memory-aid-content">
+              <h4 class="memory-aid-title">Contract Formation: Offer + Acceptance + Consideration = Contract</h4>
+              <p class="memory-aid-desc">Visual formula with interactive examples showing how the three elements combine to create a valid contract under UAE law.</p>
+              <div class="memory-aid-meta">
+                <div class="memory-aid-type">Visual Formula</div>
+                <a href="#" class="memory-aid-link">
+                  View Memory Aid
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="memory-aid">
+            <div class="memory-aid-icon">🔍</div>
+            <div class="memory-aid-content">
+              <h4 class="memory-aid-title">Negligence Elements: DBCD Process Flow</h4>
+              <p class="memory-aid-desc">Visual process flow diagram showing the elements of negligence: Duty, Breach, Causation, Damages, with UAE case examples.</p>
+              <div class="memory-aid-meta">
+                <div class="memory-aid-type">Process Flow</div>
+                <a href="#" class="memory-aid-link">
+                  View Memory Aid
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Case Studies Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">📝</span>
+          UAE Case Studies
+        </h2>
+      </div>
+      <p class="section-subtitle">Practical applications of legal principles through real UAE court cases, adapted for neurodivergent learning styles</p>
+      
+      <div class="case-studies-section">
+        <div class="case-studies-grid">
+          <div class="case-study-card">
+            <div class="case-study-header">
+              <div class="case-study-icon">⚖️</div>
+              <h3 class="case-study-title">Property Rights Case: Al Futtaim v. Al Nahyan</h3>
+            </div>
+            <div class="case-study-body">
+              <p class="case-study-desc">Interactive analysis of a landmark UAE property rights case with color-coded legal principles and visual decision tree.</p>
+              <div class="case-study-meta">
+                <div class="case-study-topics">Property Law</div>
+                <button class="case-study-btn">Study Case</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="case-study-card">
+            <div class="case-study-header">
+              <div class="case-study-icon">📝</div>
+              <h3 class="case-study-title">Contract Dispute: Dubai Holdings LLC</h3>
+            </div>
+            <div class="case-study-body">
+              <p class="case-study-desc">Detailed examination of contract enforcement in UAE commercial law with interactive element highlighting and visual relationship mapping.</p>
+              <div class="case-study-meta">
+                <div class="case-study-topics">Contract Law</div>
+                <button class="case-study-btn">Study Case</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="case-study-card">
+            <div class="case-study-header">
+              <div class="case-study-icon">👨‍⚖️</div>
+              <h3 class="case-study-title">Criminal Procedure: Public Prosecution v. Saeed</h3>
+            </div>
+            <div class="case-study-body">
+              <p class="case-study-desc">Step-by-step visual analysis of UAE criminal procedure using a real case with color-coded stages and decision points.</p>
+              <div class="case-study-meta">
+                <div class="case-study-topics">Criminal Procedure</div>
+                <button class="case-study-btn">Study Case</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- UAE Legal Resources -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">📚</span>
+          UAE Legal Resources
+        </h2>
+      </div>
+      <p class="section-subtitle">Specialized resources adapted for neurodivergent learners studying UAE law</p>
+      
+      <div class="resources-section">
+        <div class="resources-grid">
+          <div class="resource-card">
+            <div class="resource-header">
+              <div class="resource-icon">📜</div>
+              <h3 class="resource-title">UAE Civil Code (Visual Edition)</h3>
+            </div>
+            <p class="resource-desc">Enhanced version of the UAE Civil Code with visual annotations, color-coding, and spatial organization designed for neurodivergent learners.</p>
+            <div class="resource-meta">
+              <div class="resource-type">Legal Text</div>
+              <a href="#" class="resource-link">
+                Access Resource
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-header">
+              <div class="resource-icon">🎧</div>
+              <h3 class="resource-title">Audio Legal Dictionary</h3>
+            </div>
+            <p class="resource-desc">Audio pronunciation guide to complex UAE legal terminology with accompanying visual representations and usage examples.</p>
+            <div class="resource-meta">
+              <div class="resource-type">Audio Resource</div>
+              <a href="#" class="resource-link">
+                Access Resource
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-header">
+              <div class="resource-icon">📊</div>
+              <h3 class="resource-title">UAE Court System Map</h3>
+            </div>
+            <p class="resource-desc">Interactive visualization of the UAE court hierarchy and jurisdiction with case flow animations and examples.</p>
+            <div class="resource-meta">
+              <div class="resource-type">Visual Guide</div>
+              <a href="#" class="resource-link">
+                Access Resource
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-header">
+              <div class="resource-icon">📱</div>
+              <h3 class="resource-title">Bar Exam Question Bank</h3>
+            </div>
+            <p class="resource-desc">Comprehensive collection of UAE Bar Exam practice questions with multi-modal explanations tailored for different learning styles.</p>
+            <div class="resource-meta">
+              <div class="resource-type">Practice Tool</div>
+              <a href="#" class="resource-link">
+                Access Resource
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Accessibility Toolbar -->
+    <div class="accessibility-toolbar">
+      <button class="accessibility-btn">
+        <span>Aa</span>
+        <div class="accessibility-btn-tooltip">Text Size</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>🎨</span>
+        <div class="accessibility-btn-tooltip">Color Theme</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>📖</span>
+        <div class="accessibility-btn-tooltip">Reading Guide</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>🔊</span>
+        <div class="accessibility-btn-tooltip">Text to Speech</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>⌨️</span>
+        <div class="accessibility-btn-tooltip">Keyboard Nav</div>
+      </button>
+    </div>
+    
+    <!-- Focus Mode Toggle -->
+    <div class="focus-mode-toggle">
+      <div class="focus-mode-icon">👁️</div>
+      <div class="focus-mode-label">Focus Mode</div>
+      <div class="focus-mode-switch">
+        <div class="focus-mode-switch-handle"></div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Help & Support</a>
+        <a href="#" class="footer-link">UAE Bar Association</a>
+        <a href="#" class="footer-link">Legal Resources</a>
+        <a href="#" class="footer-link">Accessibility</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+      </div>
+      <div class="footer-text">&copy; 2025 ShatziiOS Law School | Specialized Education for UAE Bar Exam</div>
+    </footer>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus Mode Toggle
+      const focusModeToggle = document.querySelector('.focus-mode-toggle');
+      
+      focusModeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('focus-mode-on');
+        
+        if (document.body.classList.contains('focus-mode-on')) {
+          // Hide non-essential elements
+          document.querySelectorAll('.case-studies-section, .resources-section, .memory-aids-section').forEach(el => {
+            el.style.opacity = '0.3';
+            el.style.pointerEvents = 'none';
+          });
+          
+          // Highlight current content
+          document.querySelector('.progress-card').style.boxShadow = '0 0 30px rgba(46, 125, 50, 0.3)';
+          document.querySelector('.progress-card').style.border = '2px solid var(--primary-color)';
+          
+          // Add focus-specific styles
+          document.body.style.backgroundColor = 'var(--dark-bg)';
+          document.querySelector('.container').style.maxWidth = '800px';
+        } else {
+          // Restore all elements
+          document.querySelectorAll('.case-studies-section, .resources-section, .memory-aids-section').forEach(el => {
+            el.style.opacity = '1';
+            el.style.pointerEvents = 'auto';
+          });
+          
+          // Remove highlighting
+          document.querySelector('.progress-card').style.boxShadow = '';
+          document.querySelector('.progress-card').style.border = '1px solid rgba(46, 125, 50, 0.1)';
+          
+          // Reset focus-specific styles
+          document.body.style.backgroundColor = '';
+          document.querySelector('.container').style.maxWidth = '';
+        }
+      });
+      
+      // Accessibility Controls
+      const textSizeBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(1)');
+      let textSizeIndex = 1; // 0 = smaller, 1 = normal, 2 = larger
+      const textSizes = ['0.9', '1', '1.2'];
+      
+      textSizeBtn.addEventListener('click', function() {
+        textSizeIndex = (textSizeIndex + 1) % 3;
+        document.documentElement.style.fontSize = textSizes[textSizeIndex] + 'rem';
+      });
+      
+      // Color theme button
+      const colorBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(2)');
+      let colorThemeIndex = 0; // 0 = default, 1 = high contrast, 2 = calm mode
+      
+      colorBtn.addEventListener('click', function() {
+        colorThemeIndex = (colorThemeIndex + 1) % 3;
+        
+        if (colorThemeIndex === 0) {
+          // Default colors
+          document.documentElement.style.setProperty('--primary-color', '#2E7D32');
+          document.documentElement.style.setProperty('--secondary-color', '#B0BEC5');
+          document.documentElement.style.setProperty('--accent-color', '#FBC02D');
+          document.documentElement.style.setProperty('--dark-bg', '#112015');
+          document.documentElement.style.setProperty('--card-bg', '#1E2D22');
+        } else if (colorThemeIndex === 1) {
+          // High contrast
+          document.documentElement.style.setProperty('--primary-color', '#FFFFFF');
+          document.documentElement.style.setProperty('--secondary-color', '#FFFF00');
+          document.documentElement.style.setProperty('--accent-color', '#00FFFF');
+          document.documentElement.style.setProperty('--dark-bg', '#000000');
+          document.documentElement.style.setProperty('--card-bg', '#0F0F0F');
+          document.documentElement.style.setProperty('--text-primary', '#FFFFFF');
+          document.documentElement.style.setProperty('--text-secondary', '#EEEEEE');
+        } else {
+          // Calm mode
+          document.documentElement.style.setProperty('--primary-color', '#3A5F3D');
+          document.documentElement.style.setProperty('--secondary-color', '#8DA58C');
+          document.documentElement.style.setProperty('--accent-color', '#D0CA89');
+          document.documentElement.style.setProperty('--dark-bg', '#141D18');
+          document.documentElement.style.setProperty('--card-bg', '#1F2B22');
+        }
+      });
+      
+      // Reading guide
+      const readingGuideBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(3)');
+      let readingGuideActive = false;
+      let readingGuide;
+      
+      readingGuideBtn.addEventListener('click', function() {
+        readingGuideActive = !readingGuideActive;
+        
+        if (readingGuideActive) {
+          // Create reading guide
+          readingGuide = document.createElement('div');
+          readingGuide.style.position = 'fixed';
+          readingGuide.style.left = '0';
+          readingGuide.style.width = '100%';
+          readingGuide.style.height = '30px';
+          readingGuide.style.backgroundColor = 'rgba(46, 125, 50, 0.1)';
+          readingGuide.style.border = '1px solid rgba(46, 125, 50, 0.3)';
+          readingGuide.style.zIndex = '999';
+          readingGuide.style.pointerEvents = 'none';
+          document.body.appendChild(readingGuide);
+          
+          // Add mousemove event listener
+          document.addEventListener('mousemove', moveReadingGuide);
+        } else {
+          // Remove reading guide
+          document.removeEventListener('mousemove', moveReadingGuide);
+          readingGuide.remove();
+        }
+      });
+      
+      function moveReadingGuide(e) {
+        readingGuide.style.top = `${e.clientY - 15}px`;
+      }
+      
+      // Text-to-speech functionality
+      const speechBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(4)');
+      let isSpeaking = false;
+      
+      speechBtn.addEventListener('click', function() {
+        if (!isSpeaking && 'speechSynthesis' in window) {
+          // Get text to read - for example, the welcome message
+          const textToRead = document.querySelector('.welcome-text').textContent;
+          const utterance = new SpeechSynthesisUtterance(textToRead);
+          utterance.rate = 0.9; // Slightly slower than default
+          
+          window.speechSynthesis.speak(utterance);
+          isSpeaking = true;
+          speechBtn.style.backgroundColor = 'var(--primary-color)';
+          
+          utterance.onend = function() {
+            isSpeaking = false;
+            speechBtn.style.backgroundColor = '';
+          };
+        } else if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          speechBtn.style.backgroundColor = '';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
