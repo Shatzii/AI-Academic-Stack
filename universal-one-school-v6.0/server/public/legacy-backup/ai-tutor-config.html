@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShatziiOS - AI Integration Hub</title>
+    <style>
+        :root {
+            --primary: #04FFFF;
+            --primary-dark: #00CCCC;
+            --primary-light: rgba(4, 255, 255, 0.1);
+            --secondary: #7B68EE;
+            --secondary-dark: #6A5ACD;
+            --background: #121212;
+            --card-bg: #1E1E1E;
+            --card-bg-hover: #2A2A2A;
+            --text: #FFFFFF;
+            --text-muted: #B0B0B0;
+            --error: #FF5252;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+        }
+        
+        .api-status {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .api-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .api-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .api-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .api-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .api-status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .status-active {
+            background-color: var(--success);
+        }
+        
+        .status-inactive {
+            background-color: var(--error);
+        }
+        
+        .status-warning {
+            background-color: var(--warning);
+        }
+        
+        .config-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        .config-button:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            background-color: var(--card-bg-hover);
+        }
+        
+        .feature-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .feature-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .feature-description {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card-footer {
+            padding: 1rem 1.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feature-status {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .feature-action {
+            padding: 0.65rem 1.25rem;
+            background-color: var(--primary);
+            color: var(--background);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .feature-action:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .stats-section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .activity-section {
+            margin-bottom: 4rem;
+        }
+        
+        .recent-activity {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+        }
+        
+        .activity-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        
+        .activity-details {
+            flex-grow: 1;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 4rem;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+        
+        @media (max-width: 768px) {
+            .api-status {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .api-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ShatziiOS</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/ceo-dashboard">Dashboard</a>
+                <a href="/sitemap">Site Map</a>
+            </div>
+        </header>
+        
+        <div class="page-header">
+            <h1>AI Integration Hub</h1>
+            <p class="subtitle">Configure and manage AI-powered learning experiences tailored for neurodivergent students across all educational levels.</p>
+        </div>
+        
+        <div class="api-status">
+            <div class="api-card">
+                <div class="api-icon">🤖</div>
+                <div class="api-name">Anthropic Claude</div>
+                <div class="api-status-indicator">
+                    <div class="status-dot status-active"></div>
+                    <span>Connected</span>
+                </div>
+                <button class="config-button">Configure</button>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-icon">🔍</div>
+                <div class="api-name">Perplexity AI</div>
+                <div class="api-status-indicator">
+                    <div class="status-dot status-active"></div>
+                    <span>Connected</span>
+                </div>
+                <button class="config-button">Configure</button>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-icon">📚</div>
+                <div class="api-name">OpenAI</div>
+                <div class="api-status-indicator">
+                    <div class="status-dot status-active"></div>
+                    <span>Connected</span>
+                </div>
+                <button class="config-button">Configure</button>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-card-header">
+                    <div class="feature-icon">👩‍🏫</div>
+                    <h3 class="feature-title">AI Teacher Creator</h3>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-description">Create personalized AI teachers with custom personalities, teaching styles, and expertise areas. Configure support for specific neurodivergent learning needs.</p>
+                    <ul>
+                        <li>Subject-specific expertise</li>
+                        <li>Grade level customization</li>
+                        <li>Neurodivergent support profiles</li>
+                        <li>Teaching style configuration</li>
+                    </ul>
+                </div>
+                <div class="feature-card-footer">
+                    <span class="feature-status">12 teachers created</span>
+                    <a href="/ai-teacher-creator" class="feature-action">Create Teacher</a>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-card-header">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Learning Style Assessment</h3>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-description">AI-powered assessment tool to identify students' learning styles, strengths, and areas for support. Generates personalized learning recommendations.</p>
+                    <ul>
+                        <li>Neurodivergent profile creation</li>
+                        <li>Adaptive assessment techniques</li>
+                        <li>Learning style identification</li>
+                        <li>Personalized recommendations</li>
+                    </ul>
+                </div>
+                <div class="feature-card-footer">
+                    <span class="feature-status">156 assessments completed</span>
+                    <a href="/learning-style-assessment" class="feature-action">Start Assessment</a>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-card-header">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">Curriculum Generator</h3>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-description">Generate personalized curriculum content tailored to students' learning styles, grade levels, and neurodivergent needs.</p>
+                    <ul>
+                        <li>Standards-aligned content</li>
+                        <li>Multi-modal learning materials</li>
+                        <li>Neurodivergent adaptations</li>
+                        <li>Interactive exercises</li>
+                    </ul>
+                </div>
+                <div class="feature-card-footer">
+                    <span class="feature-status">87 curriculums generated</span>
+                    <a href="/curriculum-generator" class="feature-action">Generate Curriculum</a>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-card-header">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">AI Tutoring Session</h3>
+                </div>
+                <div class="feature-content">
+                    <p class="feature-description">Interactive one-on-one tutoring sessions with AI teachers. Provides real-time feedback, explanations, and adaptive learning experiences.</p>
+                    <ul>
+                        <li>Real-time tutoring</li>
+                        <li>Multi-modal explanations</li>
+                        <li>Adaptive difficulty</li>
+                        <li>Progress tracking</li>
+                    </ul>
+                </div>
+                <div class="feature-card-footer">
+                    <span class="feature-status">235 sessions conducted</span>
+                    <a href="/ai-tutoring-session" class="feature-action">Start Session</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <h2 class="section-title">AI Integration Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">456</div>
+                    <div class="stat-label">Active AI Teachers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2,893</div>
+                    <div class="stat-label">Tutoring Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Student Satisfaction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">12,567</div>
+                    <div class="stat-label">Learning Materials Generated</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="activity-section">
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="recent-activity">
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon">👩‍🏫</div>
+                        <div class="activity-details">
+                            <div class="activity-title">New AI Teacher Created: Professor Newton (Physics)</div>
+                            <div class="activity-meta">
+                                <span>By: Administrator</span>
+                                <span>Today, 10:25 AM</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">📝</div>
+                        <div class="activity-details">
+                            <div class="activity-title">Curriculum Generated: Middle School Mathematics for ADHD Students</div>
+                            <div class="activity-meta">
+                                <span>By: Curriculum Department</span>
+                                <span>Yesterday, 3:45 PM</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">💬</div>
+                        <div class="activity-details">
+                            <div class="activity-title">Tutoring Session Completed: Algebra Fundamentals with 5 Students</div>
+                            <div class="activity-meta">
+                                <span>By: Professor Einstein (AI)</span>
+                                <span>Yesterday, 1:15 PM</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">🧠</div>
+                        <div class="activity-details">
+                            <div class="activity-title">Learning Style Assessment Completed for 12 New Students</div>
+                            <div class="activity-meta">
+                                <span>By: Assessment Team</span>
+                                <span>Apr 22, 2025</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">⚙️</div>
+                        <div class="activity-details">
+                            <div class="activity-title">AI Model Updated: Claude 3.7 Sonnet Integration Complete</div>
+                            <div class="activity-meta">
+                                <span>By: System</span>
+                                <span>Apr 21, 2025</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="/ceo-dashboard" class="back-link">← Back to Dashboard</a>
+        </div>
+        
+        <footer>
+            &copy; 2025 ShatziiOS Educational Platform | All Rights Reserved
+        </footer>
+    </div>
+    
+    <!-- Load the AI Tutor Configuration script -->
+    <script src="/js/ai-tutor-config.js"></script>
+</body>
+</html>

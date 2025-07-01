@@ -1,0 +1,226 @@
+import express from "express";
+import path from "path";
+import { createServer } from "http";
+
+const PORT = process.env.PORT || 5000;
+const app = express();
+
+// Serve static files from the public directory with correct MIME types
+app.use(express.static(path.join(process.cwd(), 'public'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
+
+// Parse JSON request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Contact form endpoint
+app.post('/api/contact', (req, res) => {
+  const { name, email, subject, message } = req.body;
+  console.log('Contact form submission:', { name, email, subject, message });
+  res.json({ success: true, message: 'Thank you for your message! We will get back to you soon.' });
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok',
+    message: 'The Universal One School platform is running',
+    version: '1.0.0',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// School information endpoint
+app.get('/api/schools', (req, res) => {
+  const schools = [
+    {
+      id: 'primary',
+      name: 'Primary School',
+      url: 'https://superhero.shatzii.com',
+      theme: 'superhero',
+      description: 'Superhero-themed K-6 education tailored for young neurodivergent minds.',
+      features: ['Interactive Stories', 'Visual Learning', 'Adaptive Pace']
+    },
+    {
+      id: 'secondary',
+      name: 'Secondary School',
+      url: 'https://secondary.shatzii.com',
+      theme: 'mature',
+      description: 'Grades 7-12 with mature themes designed for adolescent learners.',
+      features: ['Project-Based', 'Self-Paced', 'Career Focused']
+    },
+    {
+      id: 'law',
+      name: 'Law School',
+      url: 'https://law.shatzii.com',
+      theme: 'professional',
+      description: 'College-level legal education designed for neurodivergent students.',
+      features: ['Case Studies', 'Simulations', 'Legal Writing']
+    },
+    {
+      id: 'language',
+      name: 'Language School',
+      url: 'https://language.shatzii.com',
+      theme: 'global',
+      description: 'Multilingual education in English, German, and Spanish.',
+      features: ['Conversation', 'Cultural Context', 'Practical Usage']
+    }
+  ];
+  res.json(schools);
+});
+
+// Demo credentials endpoint
+app.get('/api/demo-credentials', (req, res) => {
+  const credentials = {
+    admin: {
+      username: 'admin',
+      password: 'admin123',
+      note: 'Use these credentials for admin access to all schools'
+    },
+    student: {
+      username: 'student',
+      password: 'student123',
+      note: 'Use these credentials for student demo access to all schools'
+    }
+  };
+  res.json(credentials);
+});
+
+// Serve the main index.html for the root path
+app.get('/', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+});
+
+// Fallback route - serve the main index.html for any other routes
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+});
+
+// Start the server
+const httpServer = createServer(app);
+httpServer.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`The Universal One School platform running on port ${PORT}`);
+  console.log(`Main landing page: http://localhost:${PORT}`);
+  console.log('School subdomains will be available at their respective URLs');
+});
+
+export default app;
+          connectSrc: ["'self'", "ws:", "wss:"],
+        },
+      },
+    }));
+    
+    // Configure middleware
+    app.use(bodyParser.json());
+    app.use(cors({
+      origin: isProd ? ['https://shatzii.com'] : true,
+      credentials: true,
+    }));
+    
+    // Set up authentication with Passport
+    await setupAuth(app);
+    
+    // API routes
+    app.get("/api/health", (req, res) => {
+      res.json({ status: "ok", timestamp: new Date() });
+    });
+    
+    // Register Law School routes
+    app.use('/api/law-school', lawSchoolRoutes);
+    
+    // Register Translation routes for parent portal
+    app.use('/api/translation', translationRoutes);
+    
+    // Create HTTP server
+    const httpServer = createServer(app);
+    
+    // Register all routes from the routes.ts file
+    try {
+      await registerAPIRoutes(app);
+      console.log('✅ All routes registered successfully');
+    } catch (error) {
+      console.error('❌ Error registering routes:', error);
+    }
+    
+    // Static file serving for production and development
+    // In development, the frontend is served by Vite's built-in server
+    // Use import.meta.url instead of __dirname for ESM compatibility
+    const __filename = new URL(import.meta.url).pathname;
+    const __dirname = path.dirname(__filename);
+    const staticPath = path.resolve(__dirname, "../dist");
+    // Serve files from the public directory
+    app.use(express.static(path.join(__dirname, '../public')));
+    app.use(express.static(staticPath));
+    
+    // Serve landing page for root path
+    app.get("/", (req, res) => {
+      res.sendFile(path.join(__dirname, '../public/index.html'));
+    });
+    
+    // Serve index.html for any path not explicitly handled (for SPA routing)
+    app.get("*", (req, res) => {
+      if (req.path.startsWith("/api")) {
+        return res.status(404).json({ error: "API endpoint not found" });
+      }
+      res.sendFile(path.join(staticPath, "index.html"));
+    });
+    
+    // Start the server
+    httpServer.listen(Number(PORT), "0.0.0.0", () => {
+      console.log(`🚀 Server running at http://0.0.0.0:${PORT}`);
+      console.log(`📝 API available at http://0.0.0.0:${PORT}/api/`);
+      console.log(`🔒 Authentication routes configured`);
+      
+      // Log environment info in production for verification
+      if (process.env.NODE_ENV === 'production') {
+        console.log(`💻 Environment: Production`);
+        console.log(`🌐 Hostname: ${process.env.HOSTNAME || 'shatzii.com'}`);
+        console.log(`🔄 Server IP: ${process.env.SERVER_IP || '188.245.209.124'}`);
+        console.log(`📊 CPU Cores: ${require('os').cpus().length}`);
+        console.log(`💾 Memory: ${Math.round(require('os').totalmem() / (1024 * 1024 * 1024))} GB`);
+      }
+    });
+    
+    // Handle graceful shutdown
+    const shutdown = async () => {
+      console.log("Shutting down server...");
+      
+      try {
+        await pool.end();
+        console.log("Database connections closed");
+        
+        httpServer.close(() => {
+          console.log("HTTP server closed");
+          process.exit(0);
+        });
+      } catch (error) {
+        console.error("Error during shutdown:", error);
+        process.exit(1);
+      }
+    };
+    
+    process.on("SIGTERM", shutdown);
+    process.on("SIGINT", shutdown);
+    
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
+// Start the server
+setupServer().catch(error => {
+  console.error("Unhandled error during server setup:", error);
+  process.exit(1);
+});

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShatziiOS - Parent Dashboard</title>
+    <style>
+        :root {
+            --primary: #04FFFF;
+            --primary-dark: #00CCCC;
+            --background: #121212;
+            --card-bg: #1E1E1E;
+            --text: #FFFFFF;
+            --text-muted: #B0B0B0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .button {
+            background-color: var(--primary);
+            color: var(--background);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .button:hover {
+            background-color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parent Dashboard</h1>
+        <p>Select the school dashboard you'd like to view for your child:</p>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/school/elementary" class="button">Elementary School</a>
+            <a href="/school/middle" class="button">Middle School</a>
+            <a href="/school/high" class="button">High School</a>
+            <a href="/school/law" class="button">Law School</a>
+            <a href="/school/language" class="button">Language School</a>
+        </div>
+        
+        <p style="margin-top: 3rem;">
+            <a href="/" style="color: var(--primary); text-decoration: none;">← Back to Home</a>
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7-12 Secondary School - ShatziiOS</title>
+  <style>
+    :root {
+      /* 7-12 Theme Colors - Modern, Professional Theme */
+      --primary-color: #3380FF;
+      --secondary-color: #9C44FF;
+      --accent-color: #44DDFF;
+      --success-color: #33D69F;
+      --warning-color: #FFC555;
+      --error-color: #FF5A65;
+      --dark-bg: #121222;
+      --card-bg: #1D1D35;
+      --card-hover: #252545;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B8B8D0;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      --border-radius: 12px;
+      --font-dyslexic: 'Arial', 'Helvetica', sans-serif;
+      --font-spacing: 0.02em;
+      --line-height: 1.6;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-dyslexic);
+      background-color: var(--dark-bg);
+      background-image: 
+        linear-gradient(135deg, rgba(51, 128, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(156, 68, 255, 0.05) 0%, transparent 50%);
+      color: var(--text-primary);
+      line-height: var(--line-height);
+      letter-spacing: var(--font-spacing);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header and Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-top: 1rem;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      letter-spacing: 1px;
+      margin-right: 1rem;
+    }
+    
+    .school-name {
+      font-size: 1.4rem;
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+    
+    /* Main Navigation */
+    .main-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0 2rem;
+      background-color: rgba(29, 29, 53, 0.8);
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      box-shadow: var(--shadow);
+    }
+    
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+    
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .nav-icon {
+      font-size: 1.1rem;
+    }
+    
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--card-bg), var(--card-hover));
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent, rgba(51, 128, 255, 0.1));
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
+    
+    .welcome-content {
+      max-width: 70%;
+    }
+    
+    .welcome-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .welcome-text {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 90%;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .primary-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .primary-btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(51, 128, 255, 0.3);
+    }
+    
+    .secondary-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .secondary-btn:hover {
+      background-color: rgba(51, 128, 255, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    /* Dashboard Sections */
+    .dashboard-section {
+      margin-bottom: 2.5rem;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .section-title-icon {
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+    }
+    
+    .section-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .view-all-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+    
+    .view-all-link:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+    
+    /* Card Grid Layout */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    /* Project Cards */
+    .project-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid rgba(51, 128, 255, 0.1);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary-color);
+    }
+    
+    .project-card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .project-subject {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .project-subject-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(51, 128, 255, 0.1);
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+    
+    .project-difficulty {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .project-card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .project-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .project-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      flex-grow: 1;
+    }
+    
+    .project-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .skill-tag {
+      padding: 0.3rem 0.7rem;
+      background-color: rgba(156, 68, 255, 0.1);
+      color: var(--secondary-color);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .project-card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .project-deadline {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .project-btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .project-btn:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    /* Dashboard Rows - For wider content */
+    .dashboard-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 992px) {
+      .dashboard-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Progress Tracking */
+    .progress-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(51, 128, 255, 0.1);
+    }
+    
+    .progress-card-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .progress-card-icon {
+      color: var(--secondary-color);
+      font-size: 1.3rem;
+    }
+    
+    .progress-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .progress-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    
+    .progress-item-title {
+      font-weight: 500;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .progress-item-icon {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+    
+    .progress-percentage {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .progress-bar-bg {
+      height: 8px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    
+    .progress-bar-fill.math {
+      background: linear-gradient(90deg, #3380FF, #44DDFF);
+    }
+    
+    .progress-bar-fill.science {
+      background: linear-gradient(90deg, #9C44FF, #FF44A4);
+    }
+    
+    .progress-bar-fill.history {
+      background: linear-gradient(90deg, #FFC555, #FF8A5B);
+    }
+    
+    .progress-bar-fill.language {
+      background: linear-gradient(90deg, #33D69F, #2ACF90);
+    }
+    
+    /* Learning Style Card */
+    .learning-style-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid rgba(156, 68, 255, 0.1);
+    }
+    
+    .learning-style-title {
+      font-size: 1.3rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .learning-style-content {
+      flex-grow: 1;
+    }
+    
+    .learning-style-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .style-strengths {
+      margin-bottom: 1.5rem;
+    }
+    
+    .style-strength-title {
+      font-weight: 500;
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .style-strength-list {
+      list-style: none;
+    }
+    
+    .style-strength-item {
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: 0.95rem;
+    }
+    
+    .style-strength-item::before {
+      content: '•';
+      position: absolute;
+      left: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    .learning-style-chart {
+      background-color: rgba(29, 29, 53, 0.5);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .chart-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    /* Badges and Achievements */
+    .badges-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(156, 68, 255, 0.1);
+    }
+    
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .badge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s ease;
+      padding: 1rem 0.5rem;
+      border-radius: 8px;
+    }
+    
+    .badge-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: translateY(-5px);
+    }
+    
+    .badge-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: rgba(51, 128, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.8rem;
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      position: relative;
+    }
+    
+    .badge-icon.unlocked {
+      background: linear-gradient(135deg, rgba(51, 128, 255, 0.2), rgba(156, 68, 255, 0.2));
+      border: 2px solid var(--secondary-color);
+    }
+    
+    .badge-icon.locked {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+    
+    .badge-icon.locked::after {
+      content: '🔒';
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      font-size: 1rem;
+    }
+    
+    .badge-name {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    
+    .badge-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Community Impact Projects */
+    .community-projects-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--secondary-color);
+    }
+    
+    .community-projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    
+    .community-project {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: rgba(29, 29, 53, 0.5);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    
+    .community-project:hover {
+      transform: translateY(-3px);
+      background-color: rgba(29, 29, 53, 0.8);
+      border-color: var(--accent-color);
+    }
+    
+    .community-project-icon {
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      border-radius: 50%;
+      background-color: rgba(156, 68, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary-color);
+      font-size: 1.5rem;
+    }
+    
+    .community-project-content {
+      flex-grow: 1;
+    }
+    
+    .community-project-title {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .community-project-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .community-project-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .community-project-team {
+      font-size: 0.85rem;
+      color: var(--accent-color);
+    }
+    
+    .community-project-status {
+      font-size: 0.85rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    
+    .status-active {
+      background-color: rgba(51, 214, 159, 0.15);
+      color: var(--success-color);
+    }
+    
+    .status-planning {
+      background-color: rgba(255, 197, 85, 0.15);
+      color: var(--warning-color);
+    }
+    
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+    }
+    
+    .profile-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      flex: 1;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(51, 128, 255, 0.1);
+    }
+    
+    .profile-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      height: 80px;
+      position: relative;
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      border: 4px solid var(--card-bg);
+      position: absolute;
+      bottom: -40px;
+      left: 1.5rem;
+    }
+    
+    .profile-content {
+      padding: 3rem 1.5rem 1.5rem;
+    }
+    
+    .profile-name {
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    
+    .profile-role {
+      color: var(--accent-color);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .profile-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .profile-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .profile-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    /* User Tools */
+    .tools-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    
+    .tools-group {
+      display: flex;
+      gap: 1rem;
+      padding: 0.3rem;
+    }
+    
+    .tool-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      min-width: 200px;
+      max-width: 300px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(51, 128, 255, 0.05);
+      cursor: pointer;
+    }
+    
+    .tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--accent-color);
+    }
+    
+    .tool-icon {
+      width: 45px;
+      height: 45px;
+      min-width: 45px;
+      border-radius: 8px;
+      background-color: rgba(51, 128, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 1.3rem;
+    }
+    
+    .tool-content {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .tool-name {
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    
+    .tool-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Accessibility Controls */
+    .accessibility-toolbar {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: rgba(29, 29, 53, 0.9);
+      padding: 0.7rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      border: 1px solid rgba(51, 128, 255, 0.3);
+    }
+    
+    .accessibility-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .accessibility-btn:hover {
+      background-color: rgba(51, 128, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .accessibility-btn-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--card-bg);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      color: var(--text-secondary);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      margin-bottom: 0.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .accessibility-btn:hover .accessibility-btn-tooltip {
+      opacity: 1;
+    }
+    
+    /* Focus Mode Toggle */
+    .focus-mode-toggle {
+      position: fixed;
+      top: 5rem;
+      right: 1.5rem;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: rgba(29, 29, 53, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(51, 128, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .focus-mode-toggle:hover {
+      transform: translateY(-3px);
+    }
+    
+    .focus-mode-icon {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+    
+    .focus-mode-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .focus-mode-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin-left: 0.5rem;
+    }
+    
+    .focus-mode-switch-handle {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--text-secondary);
+      transition: all 0.3s ease;
+    }
+    
+    body.focus-mode-on .focus-mode-switch {
+      background-color: var(--primary-color);
+    }
+    
+    body.focus-mode-on .focus-mode-switch-handle {
+      left: 22px;
+      background-color: white;
+    }
+    
+    /* Calendar and Schedule */
+    .calendar-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(51, 128, 255, 0.1);
+    }
+    
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .calendar-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .calendar-nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .calendar-nav-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: none;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .calendar-nav-btn:hover {
+      background-color: rgba(51, 128, 255, 0.1);
+      color: var(--primary-color);
+    }
+    
+    .calendar-month {
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      margin: 0 0.5rem;
+    }
+    
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    
+    .calendar-weekday {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 0.5rem 0;
+      font-weight: 500;
+    }
+    
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.3rem;
+    }
+    
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    
+    .calendar-day:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .calendar-day.today {
+      background-color: rgba(51, 128, 255, 0.1);
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+    
+    .calendar-day.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+    }
+    
+    .calendar-day.selected {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 500;
+    }
+    
+    .calendar-day.other-month {
+      opacity: 0.5;
+    }
+    
+    .upcoming-events {
+      margin-top: 1.5rem;
+    }
+    
+    .upcoming-events-title {
+      font-size: 1.1rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    
+    .event-item {
+      display: flex;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      background-color: rgba(29, 29, 53, 0.5);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .event-item:hover {
+      background-color: rgba(29, 29, 53, 0.8);
+    }
+    
+    .event-time {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      min-width: 55px;
+    }
+    
+    .event-content {
+      flex-grow: 1;
+    }
+    
+    .event-title {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+    
+    .event-details {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .event-subject {
+      padding: 0.2rem 0.5rem;
+      background-color: rgba(51, 128, 255, 0.1);
+      color: var(--primary-color);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: auto;
+      font-weight: 500;
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 2rem 0 1rem;
+      text-align: center;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    
+    .footer-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .footer-text {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    
+    /* Responsive Adaptations */
+    @media (max-width: 992px) {
+      .profile-section {
+        flex-direction: column;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .main-nav {
+        overflow-x: auto;
+        padding: 0.5rem 1rem;
+      }
+      
+      .welcome-content {
+        max-width: 100%;
+      }
+      
+      .focus-mode-toggle, .accessibility-toolbar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <div class="logo">ShatziiOS</div>
+        <div class="school-name">7-12 Secondary School</div>
+      </div>
+      
+      <div class="profile-container">
+        <div class="profile-avatar">S</div>
+      </div>
+    </header>
+    
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+      <a href="#" class="nav-link active">
+        <span class="nav-icon">📊</span>
+        Dashboard
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">📚</span>
+        Courses
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🧠</span>
+        Learning Tools
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🌍</span>
+        Impact Projects
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🏆</span>
+        Achievements
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">📅</span>
+        Schedule
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">⚙️</span>
+        Settings
+      </a>
+    </nav>
+    
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div class="welcome-content">
+        <h1 class="welcome-title">Welcome back, Student!</h1>
+        <h2 class="welcome-subtitle">Apply your learning powers to real-world change</h2>
+        <p class="welcome-text">This is where your journey of knowledge becomes a force for positive change. Discover how your unique learning abilities can help tackle challenges in your community and beyond.</p>
+        <div class="cta-buttons">
+          <button class="primary-btn">
+            <span>Continue Learning</span>
+            <span>→</span>
+          </button>
+          <button class="secondary-btn">
+            <span>Your Progress Report</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Dashboard Layout -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">🌟</span>
+          Your Current Projects
+        </h2>
+        <a href="#" class="view-all-link">
+          View All Projects
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Use your unique learning abilities to make a difference through these active projects</p>
+      
+      <div class="card-grid">
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-subject">
+              <div class="project-subject-icon">🧪</div>
+              <span>Science</span>
+            </div>
+            <div class="project-difficulty">Advanced</div>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">Environmental Monitoring App</h3>
+            <p class="project-desc">Design and build a mobile application that monitors local environmental conditions and alerts the community about potential issues.</p>
+            <div class="project-skills">
+              <span class="skill-tag">Data Analysis</span>
+              <span class="skill-tag">App Design</span>
+              <span class="skill-tag">Environmental Science</span>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <div class="project-deadline">
+              <span>Due:</span>
+              <span>May 15</span>
+            </div>
+            <button class="project-btn">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-subject">
+              <div class="project-subject-icon">📐</div>
+              <span>Math</span>
+            </div>
+            <div class="project-difficulty">Intermediate</div>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">Community Budget Calculator</h3>
+            <p class="project-desc">Create a calculator that helps people in the community manage their finances and plan budgets for community events and initiatives.</p>
+            <div class="project-skills">
+              <span class="skill-tag">Financial Math</span>
+              <span class="skill-tag">Budget Planning</span>
+              <span class="skill-tag">Web Development</span>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <div class="project-deadline">
+              <span>Due:</span>
+              <span>June 5</span>
+            </div>
+            <button class="project-btn">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-subject">
+              <div class="project-subject-icon">📝</div>
+              <span>Language Arts</span>
+            </div>
+            <div class="project-difficulty">Beginner</div>
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-title">Community Stories Podcast</h3>
+            <p class="project-desc">Produce a podcast that shares diverse stories from your community, highlighting experiences, challenges, and aspirations.</p>
+            <div class="project-skills">
+              <span class="skill-tag">Storytelling</span>
+              <span class="skill-tag">Audio Production</span>
+              <span class="skill-tag">Interviewing</span>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <div class="project-deadline">
+              <span>Due:</span>
+              <span>May 28</span>
+            </div>
+            <button class="project-btn">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Learning Progress & Style Row -->
+    <div class="dashboard-row">
+      <!-- Progress Tracking Card -->
+      <div class="progress-card">
+        <h3 class="progress-card-title">
+          <span class="progress-card-icon">📊</span>
+          Your Learning Progress
+        </h3>
+        
+        <div class="progress-items">
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">📐</span>
+                Mathematics
+              </div>
+              <div class="progress-percentage">75%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill math" style="width: 75%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">🧪</span>
+                Science
+              </div>
+              <div class="progress-percentage">88%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill science" style="width: 88%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">🏛️</span>
+                History & Social Studies
+              </div>
+              <div class="progress-percentage">62%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill history" style="width: 62%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">📝</span>
+                Language Arts
+              </div>
+              <div class="progress-percentage">95%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill language" style="width: 95%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Learning Style Card -->
+      <div class="learning-style-card">
+        <h3 class="learning-style-title">
+          <span class="progress-card-icon">🧠</span>
+          Your Learning Style
+        </h3>
+        
+        <div class="learning-style-content">
+          <p class="learning-style-desc">Understanding how you learn best helps you apply your strengths to make a positive impact.</p>
+          
+          <div class="style-strengths">
+            <h4 class="style-strength-title">
+              <span>💪</span>
+              Your Key Strengths
+            </h4>
+            <ul class="style-strength-list">
+              <li class="style-strength-item">Visual-spatial thinking</li>
+              <li class="style-strength-item">Creative problem-solving</li>
+              <li class="style-strength-item">Pattern recognition</li>
+              <li class="style-strength-item">Divergent thinking</li>
+            </ul>
+          </div>
+          
+          <div class="learning-style-chart">
+            <div class="chart-placeholder">
+              Interactive learning style chart<br>
+              Click to explore your unique profile
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Badges and Achievements -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">🏆</span>
+          Achievements & Badges
+        </h2>
+        <a href="#" class="view-all-link">
+          View All Achievements
+          <span>→</span>
+        </a>
+      </div>
+      
+      <div class="badges-section">
+        <div class="badges-grid">
+          <div class="badge-item">
+            <div class="badge-icon unlocked">🔬</div>
+            <div class="badge-name">Science Pioneer</div>
+            <div class="badge-desc">Completed 10 science experiments</div>
+          </div>
+          
+          <div class="badge-item">
+            <div class="badge-icon unlocked">🌱</div>
+            <div class="badge-name">Earth Protector</div>
+            <div class="badge-desc">Led an environmental project</div>
+          </div>
+          
+          <div class="badge-item">
+            <div class="badge-icon unlocked">📊</div>
+            <div class="badge-name">Data Analyst</div>
+            <div class="badge-desc">Mastered statistical analysis</div>
+          </div>
+          
+          <div class="badge-item">
+            <div class="badge-icon unlocked">📚</div>
+            <div class="badge-name">Bookworm</div>
+            <div class="badge-desc">Read 20 books in a semester</div>
+          </div>
+          
+          <div class="badge-item">
+            <div class="badge-icon locked">🌍</div>
+            <div class="badge-name">Global Citizen</div>
+            <div class="badge-desc">Complete international project</div>
+          </div>
+          
+          <div class="badge-item">
+            <div class="badge-icon locked">💻</div>
+            <div class="badge-name">Coding Wizard</div>
+            <div class="badge-desc">Build a full web application</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Community Impact Projects -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">🌍</span>
+          Community Impact Projects
+        </h2>
+        <a href="#" class="view-all-link">
+          Join More Projects
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Apply your learning to make real change in your community</p>
+      
+      <div class="community-projects-section">
+        <div class="community-projects-list">
+          <div class="community-project">
+            <div class="community-project-icon">🌱</div>
+            <div class="community-project-content">
+              <h4 class="community-project-title">Community Garden Initiative</h4>
+              <p class="community-project-desc">Help design and build a community garden that provides fresh produce to local families.</p>
+              <div class="community-project-meta">
+                <div class="community-project-team">Team: Green Guardians</div>
+                <div class="community-project-status status-active">Active</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="community-project">
+            <div class="community-project-icon">🧮</div>
+            <div class="community-project-content">
+              <h4 class="community-project-title">Math Tutoring Program</h4>
+              <p class="community-project-desc">Volunteer to tutor younger students who need help with mathematics, building their confidence and skills.</p>
+              <div class="community-project-meta">
+                <div class="community-project-team">Team: Math Mentors</div>
+                <div class="community-project-status status-active">Active</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="community-project">
+            <div class="community-project-icon">🤖</div>
+            <div class="community-project-content">
+              <h4 class="community-project-title">Technology Access Initiative</h4>
+              <p class="community-project-desc">Develop a program to improve technology access and skills for underserved community members.</p>
+              <div class="community-project-meta">
+                <div class="community-project-team">Team: Tech Bridges</div>
+                <div class="community-project-status status-planning">Planning</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Calendar and Schedule -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">📅</span>
+          Your Schedule
+        </h2>
+      </div>
+      
+      <div class="calendar-section">
+        <div class="calendar-header">
+          <h3 class="calendar-title">
+            <span class="calendar-title-icon">📆</span>
+            April 2025
+          </h3>
+          <div class="calendar-nav">
+            <button class="calendar-nav-btn">⟨</button>
+            <div class="calendar-month">April 2025</div>
+            <button class="calendar-nav-btn">⟩</button>
+          </div>
+        </div>
+        
+        <div class="calendar-weekdays">
+          <div class="calendar-weekday">Sun</div>
+          <div class="calendar-weekday">Mon</div>
+          <div class="calendar-weekday">Tue</div>
+          <div class="calendar-weekday">Wed</div>
+          <div class="calendar-weekday">Thu</div>
+          <div class="calendar-weekday">Fri</div>
+          <div class="calendar-weekday">Sat</div>
+        </div>
+        
+        <div class="calendar-days">
+          <div class="calendar-day other-month">30</div>
+          <div class="calendar-day other-month">31</div>
+          <div class="calendar-day">1</div>
+          <div class="calendar-day">2</div>
+          <div class="calendar-day">3</div>
+          <div class="calendar-day">4</div>
+          <div class="calendar-day">5</div>
+          <div class="calendar-day">6</div>
+          <div class="calendar-day">7</div>
+          <div class="calendar-day">8</div>
+          <div class="calendar-day has-event">9</div>
+          <div class="calendar-day">10</div>
+          <div class="calendar-day">11</div>
+          <div class="calendar-day">12</div>
+          <div class="calendar-day">13</div>
+          <div class="calendar-day">14</div>
+          <div class="calendar-day has-event">15</div>
+          <div class="calendar-day">16</div>
+          <div class="calendar-day">17</div>
+          <div class="calendar-day">18</div>
+          <div class="calendar-day">19</div>
+          <div class="calendar-day">20</div>
+          <div class="calendar-day">21</div>
+          <div class="calendar-day">22</div>
+          <div class="calendar-day">23</div>
+          <div class="calendar-day">24</div>
+          <div class="calendar-day">25</div>
+          <div class="calendar-day has-event selected today">26</div>
+          <div class="calendar-day">27</div>
+          <div class="calendar-day">28</div>
+          <div class="calendar-day has-event">29</div>
+          <div class="calendar-day">30</div>
+          <div class="calendar-day other-month">1</div>
+          <div class="calendar-day other-month">2</div>
+          <div class="calendar-day other-month">3</div>
+        </div>
+        
+        <div class="upcoming-events">
+          <h4 class="upcoming-events-title">Today's Schedule (April 26)</h4>
+          
+          <div class="event-list">
+            <div class="event-item">
+              <div class="event-time">9:00 AM</div>
+              <div class="event-content">
+                <div class="event-title">Advanced Science Lab</div>
+                <div class="event-details">Room 203 - Environmental Testing</div>
+              </div>
+              <div class="event-subject">Science</div>
+            </div>
+            
+            <div class="event-item">
+              <div class="event-time">11:30 AM</div>
+              <div class="event-content">
+                <div class="event-title">Project Team Meeting</div>
+                <div class="event-details">Library - Environmental App Team</div>
+              </div>
+              <div class="event-subject">Project</div>
+            </div>
+            
+            <div class="event-item">
+              <div class="event-time">2:15 PM</div>
+              <div class="event-content">
+                <div class="event-title">Mathematics Workshop</div>
+                <div class="event-details">Room 112 - Statistics and Data Analysis</div>
+              </div>
+              <div class="event-subject">Math</div>
+            </div>
+            
+            <div class="event-item">
+              <div class="event-time">4:00 PM</div>
+              <div class="event-content">
+                <div class="event-title">Community Garden Meetup</div>
+                <div class="event-details">Community Center - Planning Session</div>
+              </div>
+              <div class="event-subject">Impact</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Learning Tools Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">🛠️</span>
+          Learning Tools
+        </h2>
+      </div>
+      <p class="section-subtitle">Specialized tools to support your unique learning style</p>
+      
+      <div class="tools-section">
+        <div class="tools-group">
+          <div class="tool-card">
+            <div class="tool-icon">📝</div>
+            <div class="tool-content">
+              <h4 class="tool-name">Smart Notes</h4>
+              <p class="tool-desc">Visual note-taking with organization tools</p>
+            </div>
+          </div>
+          
+          <div class="tool-card">
+            <div class="tool-icon">🎯</div>
+            <div class="tool-content">
+              <h4 class="tool-name">Focus Timer</h4>
+              <p class="tool-desc">Customizable study intervals with breaks</p>
+            </div>
+          </div>
+          
+          <div class="tool-card">
+            <div class="tool-icon">🎧</div>
+            <div class="tool-content">
+              <h4 class="tool-name">Audio Reader</h4>
+              <p class="tool-desc">Convert any text to speech for auditory learning</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tools-group">
+          <div class="tool-card">
+            <div class="tool-icon">🧩</div>
+            <div class="tool-content">
+              <h4 class="tool-name">Concept Mapper</h4>
+              <p class="tool-desc">Visual relationship mapping for complex topics</p>
+            </div>
+          </div>
+          
+          <div class="tool-card">
+            <div class="tool-icon">📊</div>
+            <div class="tool-content">
+              <h4 class="tool-name">Data Visualizer</h4>
+              <p class="tool-desc">Turn numbers into interactive charts and graphs</p>
+            </div>
+          </div>
+          
+          <div class="tool-card">
+            <div class="tool-icon">📋</div>
+            <div class="tool-content">
+              <h4 class="tool-name">Task Organizer</h4>
+              <p class="tool-desc">Break down projects into manageable steps</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Accessibility Toolbar -->
+    <div class="accessibility-toolbar">
+      <button class="accessibility-btn">
+        <span>Aa</span>
+        <div class="accessibility-btn-tooltip">Text Size</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>🎨</span>
+        <div class="accessibility-btn-tooltip">Color Theme</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>📖</span>
+        <div class="accessibility-btn-tooltip">Reading Guide</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>🔊</span>
+        <div class="accessibility-btn-tooltip">Text to Speech</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>⌨️</span>
+        <div class="accessibility-btn-tooltip">Keyboard Nav</div>
+      </button>
+    </div>
+    
+    <!-- Focus Mode Toggle -->
+    <div class="focus-mode-toggle">
+      <div class="focus-mode-icon">👁️</div>
+      <div class="focus-mode-label">Focus Mode</div>
+      <div class="focus-mode-switch">
+        <div class="focus-mode-switch-handle"></div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Help & Support</a>
+        <a href="#" class="footer-link">Learning Resources</a>
+        <a href="#" class="footer-link">Parent Portal</a>
+        <a href="#" class="footer-link">Teacher Dashboard</a>
+        <a href="#" class="footer-link">Accessibility</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+      </div>
+      <div class="footer-text">&copy; 2025 ShatziiOS Secondary School | Empowering Neurodivergent Learners to Change the World</div>
+    </footer>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus Mode Toggle
+      const focusModeToggle = document.querySelector('.focus-mode-toggle');
+      
+      focusModeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('focus-mode-on');
+        
+        if (document.body.classList.contains('focus-mode-on')) {
+          // Hide non-essential elements
+          document.querySelectorAll('.calendar-section, .badges-section, .tools-section, .community-projects-section').forEach(el => {
+            el.style.opacity = '0.3';
+            el.style.pointerEvents = 'none';
+          });
+          
+          // Highlight current content
+          document.querySelector('.progress-card').style.boxShadow = '0 0 30px rgba(51, 128, 255, 0.3)';
+          document.querySelector('.progress-card').style.border = '2px solid var(--primary-color)';
+          
+          // Add focus-specific styles
+          document.body.style.backgroundColor = 'var(--dark-bg)';
+          document.querySelector('.container').style.maxWidth = '800px';
+        } else {
+          // Restore all elements
+          document.querySelectorAll('.calendar-section, .badges-section, .tools-section, .community-projects-section').forEach(el => {
+            el.style.opacity = '1';
+            el.style.pointerEvents = 'auto';
+          });
+          
+          // Remove highlighting
+          document.querySelector('.progress-card').style.boxShadow = '';
+          document.querySelector('.progress-card').style.border = '1px solid rgba(51, 128, 255, 0.1)';
+          
+          // Reset focus-specific styles
+          document.body.style.backgroundColor = '';
+          document.querySelector('.container').style.maxWidth = '';
+        }
+      });
+      
+      // Accessibility Controls
+      const textSizeBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(1)');
+      let textSizeIndex = 1; // 0 = smaller, 1 = normal, 2 = larger
+      const textSizes = ['0.9', '1', '1.2'];
+      
+      textSizeBtn.addEventListener('click', function() {
+        textSizeIndex = (textSizeIndex + 1) % 3;
+        document.documentElement.style.fontSize = textSizes[textSizeIndex] + 'rem';
+      });
+      
+      // Color theme button
+      const colorBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(2)');
+      let colorThemeIndex = 0; // 0 = default, 1 = high contrast, 2 = calm mode
+      
+      colorBtn.addEventListener('click', function() {
+        colorThemeIndex = (colorThemeIndex + 1) % 3;
+        
+        if (colorThemeIndex === 0) {
+          // Default colors
+          document.documentElement.style.setProperty('--primary-color', '#3380FF');
+          document.documentElement.style.setProperty('--secondary-color', '#9C44FF');
+          document.documentElement.style.setProperty('--accent-color', '#44DDFF');
+          document.documentElement.style.setProperty('--dark-bg', '#121222');
+          document.documentElement.style.setProperty('--card-bg', '#1D1D35');
+        } else if (colorThemeIndex === 1) {
+          // High contrast
+          document.documentElement.style.setProperty('--primary-color', '#FFFFFF');
+          document.documentElement.style.setProperty('--secondary-color', '#FFFF00');
+          document.documentElement.style.setProperty('--accent-color', '#00FFFF');
+          document.documentElement.style.setProperty('--dark-bg', '#000000');
+          document.documentElement.style.setProperty('--card-bg', '#0F0F0F');
+          document.documentElement.style.setProperty('--text-primary', '#FFFFFF');
+          document.documentElement.style.setProperty('--text-secondary', '#EEEEEE');
+        } else {
+          // Calm mode
+          document.documentElement.style.setProperty('--primary-color', '#6E8B3D');
+          document.documentElement.style.setProperty('--secondary-color', '#8FB996');
+          document.documentElement.style.setProperty('--accent-color', '#A3C4BC');
+          document.documentElement.style.setProperty('--dark-bg', '#2F3E46');
+          document.documentElement.style.setProperty('--card-bg', '#354F52');
+        }
+      });
+      
+      // Reading guide
+      const readingGuideBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(3)');
+      let readingGuideActive = false;
+      let readingGuide;
+      
+      readingGuideBtn.addEventListener('click', function() {
+        readingGuideActive = !readingGuideActive;
+        
+        if (readingGuideActive) {
+          // Create reading guide
+          readingGuide = document.createElement('div');
+          readingGuide.style.position = 'fixed';
+          readingGuide.style.left = '0';
+          readingGuide.style.width = '100%';
+          readingGuide.style.height = '30px';
+          readingGuide.style.backgroundColor = 'rgba(51, 128, 255, 0.1)';
+          readingGuide.style.border = '1px solid rgba(51, 128, 255, 0.3)';
+          readingGuide.style.zIndex = '999';
+          readingGuide.style.pointerEvents = 'none';
+          document.body.appendChild(readingGuide);
+          
+          // Add mousemove event listener
+          document.addEventListener('mousemove', moveReadingGuide);
+        } else {
+          // Remove reading guide
+          document.removeEventListener('mousemove', moveReadingGuide);
+          readingGuide.remove();
+        }
+      });
+      
+      function moveReadingGuide(e) {
+        readingGuide.style.top = `${e.clientY - 15}px`;
+      }
+      
+      // Text-to-speech functionality
+      const speechBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(4)');
+      let isSpeaking = false;
+      
+      speechBtn.addEventListener('click', function() {
+        if (!isSpeaking && 'speechSynthesis' in window) {
+          // Get text to read - for example, the welcome message
+          const textToRead = document.querySelector('.welcome-text').textContent;
+          const utterance = new SpeechSynthesisUtterance(textToRead);
+          utterance.rate = 0.9; // Slightly slower than default
+          
+          window.speechSynthesis.speak(utterance);
+          isSpeaking = true;
+          speechBtn.style.backgroundColor = 'var(--primary-color)';
+          
+          utterance.onend = function() {
+            isSpeaking = false;
+            speechBtn.style.backgroundColor = '';
+          };
+        } else if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          speechBtn.style.backgroundColor = '';
+        }
+      });
+      
+      // Calendar functionality
+      const calendarDays = document.querySelectorAll('.calendar-day');
+      
+      calendarDays.forEach(day => {
+        day.addEventListener('click', function() {
+          // Remove selected class from all days
+          calendarDays.forEach(d => d.classList.remove('selected'));
+          
+          // Add selected class to clicked day
+          this.classList.add('selected');
+          
+          // Update events title (simplified example)
+          document.querySelector('.upcoming-events-title').textContent = 
+            `Today's Schedule (April ${this.textContent})`;
+          
+          // In a real application, you would fetch events for the selected day
+        });
+      });
+    });
+  </script>
+</body>
+</html>

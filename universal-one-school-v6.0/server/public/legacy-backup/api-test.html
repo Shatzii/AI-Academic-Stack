@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Test Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .test-container {
+      margin-bottom: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .test-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>ShatziiOS API Test Page</h1>
+  
+  <div class="test-container">
+    <div class="test-title">1. Check API Status</div>
+    <button onclick="checkAPIStatus()">Test Status API</button>
+    <div id="status-results" class="results">Results will appear here...</div>
+  </div>
+  
+  <div class="test-container">
+    <div class="test-title">2. Create AI Teacher</div>
+    <textarea id="teacher-config">
+{
+  "name": "Professor Einstein",
+  "subject": "Physics",
+  "gradeLevel": "High School (9-12)",
+  "teachingStyle": "Socratic",
+  "supportTypes": ["ADHD", "Visual Learners"],
+  "personalityTraits": ["Encouraging", "Patient"],
+  "formalityLevel": 3,
+  "description": "A friendly physics teacher who specializes in making complex concepts understandable.",
+  "expertise": "Newtonian mechanics, relativity, optics"
+}
+    </textarea>
+    <button onclick="createTeacher()">Create Teacher</button>
+    <div id="teacher-results" class="results">Results will appear here...</div>
+  </div>
+  
+  <div class="test-container">
+    <div class="test-title">3. Get Teacher Response</div>
+    <textarea id="teacher-message">Hello, can you explain the concept of gravity to me in simple terms?</textarea>
+    <button onclick="getTeacherResponse()">Get Response</button>
+    <div id="response-results" class="results">Results will appear here...</div>
+  </div>
+  
+  <div class="test-container">
+    <div class="test-title">4. Custom API Request</div>
+    <textarea id="custom-endpoint">/api/ai/integration/status</textarea>
+    <textarea id="custom-body"></textarea>
+    <button onclick="customAPIRequest('GET')">GET</button>
+    <button onclick="customAPIRequest('POST')">POST</button>
+    <div id="custom-results" class="results">Results will appear here...</div>
+  </div>
+  
+  <script>
+    // Utility function to display results
+    function showResult(elementId, success, data) {
+      const element = document.getElementById(elementId);
+      if (success) {
+        element.innerHTML = `<span class="success">SUCCESS</span>\n${JSON.stringify(data, null, 2)}`;
+      } else {
+        element.innerHTML = `<span class="error">ERROR</span>\n${JSON.stringify(data, null, 2)}`;
+      }
+    }
+    
+    // Test the API status endpoint
+    async function checkAPIStatus() {
+      const resultsElement = document.getElementById('status-results');
+      resultsElement.innerHTML = 'Checking API status...';
+      
+      try {
+        const response = await fetch('/api/ai/integration/status');
+        const data = await response.json();
+        
+        showResult('status-results', true, data);
+      } catch (error) {
+        showResult('status-results', false, {
+          error: error.message,
+          details: 'Failed to connect to API status endpoint'
+        });
+      }
+    }
+    
+    // Test creating an AI teacher
+    async function createTeacher() {
+      const resultsElement = document.getElementById('teacher-results');
+      resultsElement.innerHTML = 'Creating teacher...';
+      
+      try {
+        const configText = document.getElementById('teacher-config').value;
+        const config = JSON.parse(configText);
+        
+        const response = await fetch('/api/ai/integration/create-teacher', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(config)
+        });
+        
+        const data = await response.json();
+        showResult('teacher-results', true, data);
+        
+        // Save last created teacher for teacher response
+        if (data.systemPrompt) {
+          window.lastTeacherConfig = {
+            ...config,
+            systemPrompt: data.systemPrompt
+          };
+        }
+      } catch (error) {
+        showResult('teacher-results', false, {
+          error: error.message,
+          details: 'Failed to create AI teacher'
+        });
+      }
+    }
+    
+    // Test getting a response from the teacher
+    async function getTeacherResponse() {
+      const resultsElement = document.getElementById('response-results');
+      resultsElement.innerHTML = 'Getting teacher response...';
+      
+      if (!window.lastTeacherConfig) {
+        showResult('response-results', false, {
+          error: 'No teacher available',
+          details: 'Please create a teacher first using the "Create Teacher" button'
+        });
+        return;
+      }
+      
+      try {
+        const messageText = document.getElementById('teacher-message').value;
+        
+        const response = await fetch('/api/ai/integration/teacher-response', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            teacherConfig: window.lastTeacherConfig,
+            conversationHistory: [],
+            userMessage: messageText
+          })
+        });
+        
+        const data = await response.json();
+        showResult('response-results', true, data);
+      } catch (error) {
+        showResult('response-results', false, {
+          error: error.message,
+          details: 'Failed to get teacher response'
+        });
+      }
+    }
+    
+    // Custom API request
+    async function customAPIRequest(method) {
+      const resultsElement = document.getElementById('custom-results');
+      resultsElement.innerHTML = `Sending ${method} request...`;
+      
+      try {
+        const endpoint = document.getElementById('custom-endpoint').value;
+        const bodyText = document.getElementById('custom-body').value;
+        
+        const options = {
+          method: method,
+          headers: {}
+        };
+        
+        if (method !== 'GET' && bodyText.trim()) {
+          options.headers['Content-Type'] = 'application/json';
+          options.body = bodyText;
+        }
+        
+        const response = await fetch(endpoint, options);
+        
+        // Try to parse as JSON
+        try {
+          const data = await response.json();
+          showResult('custom-results', response.ok, {
+            status: response.status,
+            data: data
+          });
+        } catch (e) {
+          // Not JSON, get as text
+          const text = await response.text();
+          showResult('custom-results', response.ok, {
+            status: response.status,
+            isJson: false,
+            text: text.substring(0, 500) + (text.length > 500 ? '...' : '')
+          });
+        }
+      } catch (error) {
+        showResult('custom-results', false, {
+          error: error.message,
+          details: 'Failed to complete custom API request'
+        });
+      }
+    }
+    
+    // Run a status check on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(checkAPIStatus, 500);
+    });
+  </script>
+</body>
+</html>

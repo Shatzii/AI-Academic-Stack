@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDASH Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1abc9c;
+      --secondary-color: #16a085;
+      --accent-color: #f1c40f;
+      --text-color: #ffffff;
+      --background-color: #121212;
+      --card-color: #1e1e1e;
+      --header-color: #222222;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 0 L95 25 L95 75 L50 100 L5 75 L5 25 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>');
+      background-size: 100px 100px;
+      opacity: 0.3;
+      z-index: 1;
+    }
+    
+    .dashboard {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .navbar {
+      background-color: var(--header-color);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .nav-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-links a.active {
+      background-color: var(--primary-color);
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .card {
+      background-color: var(--card-color);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card-header {
+      background-color: var(--header-color);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .card-icon {
+      font-size: 2rem;
+    }
+    
+    .card-title {
+      margin: 0;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .card-content {
+      padding: 20px;
+    }
+    
+    .card-footer {
+      padding: 15px 20px;
+      background-color: rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .tool-item {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .tool-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    .tool-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .tool-name {
+      font-weight: 500;
+    }
+    
+    .progress-container {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 10px;
+      background-color: var(--primary-color);
+      width: 85%;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .stat {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 12px 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--accent-color);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    
+    .learning-style-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .learning-style-text {
+      flex: 1;
+    }
+    
+    .learning-style-text h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+      color: var(--primary-color);
+    }
+    
+    .learning-style-chart {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--primary-color) 0 45%,
+        #3498db 45% 65%, 
+        #9b59b6 65% 85%,
+        #f1c40f 85% 100%
+      );
+      margin-left: 20px;
+      position: relative;
+    }
+    
+    .learning-style-chart::after {
+      content: "";
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      width: 60%;
+      height: 60%;
+      background-color: var(--card-color);
+      border-radius: 50%;
+    }
+    
+    .upcoming-event {
+      border-left: 4px solid var(--primary-color);
+      padding-left: 15px;
+      margin-top: 15px;
+    }
+    
+    .upcoming-event h4 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+    
+    .upcoming-event-date {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .back-button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>NDASH Platform</h1>
+    <p>Advanced adaptive learning tools and personalized education designed for neurodivergent learners.</p>
+  </div>
+  
+  <div class="dashboard">
+    <div class="navbar">
+      <a href="#" class="logo">🧠 NDASH</a>
+      <div class="nav-links">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Learning Path</a>
+        <a href="#">Accessibility Tools</a>
+        <a href="#">Resources</a>
+        <a href="#">Analytics</a>
+      </div>
+    </div>
+    
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🧠</div>
+          <h3 class="card-title">Learning Profile</h3>
+        </div>
+        <div class="card-content">
+          <h4>Personalized Learning Style</h4>
+          <div class="learning-style-info">
+            <div class="learning-style-text">
+              <h3>Visual-Kinesthetic</h3>
+              <p>You learn best with visual aids and hands-on activities.</p>
+            </div>
+            <div class="learning-style-chart"></div>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value">85%</div>
+              <div class="stat-label">Profile Completion</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">12</div>
+              <div class="stat-label">Strengths Identified</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn">Update Profile</a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">⚒️</div>
+          <h3 class="card-title">Accessibility Tools</h3>
+        </div>
+        <div class="card-content">
+          <p>Custom tools to enhance your learning experience:</p>
+          <div class="tool-grid">
+            <div class="tool-item">
+              <div class="tool-icon">🔤</div>
+              <div class="tool-name">Text-to-Speech</div>
+            </div>
+            <div class="tool-item">
+              <div class="tool-icon">🎨</div>
+              <div class="tool-name">Color Filters</div>
+            </div>
+            <div class="tool-item">
+              <div class="tool-icon">📝</div>
+              <div class="tool-name">Note Taking</div>
+            </div>
+            <div class="tool-item">
+              <div class="tool-icon">⏱️</div>
+              <div class="tool-name">Focus Timer</div>
+            </div>
+            <div class="tool-item">
+              <div class="tool-icon">📊</div>
+              <div class="tool-name">Visual Aids</div>
+            </div>
+            <div class="tool-item">
+              <div class="tool-icon">🔍</div>
+              <div class="tool-name">Reading Guide</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn">Customize Tools</a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <h3 class="card-title">Progress Tracking</h3>
+        </div>
+        <div class="card-content">
+          <h4>This Week's Progress</h4>
+          <div class="progress-container">
+            <div class="progress-bar"></div>
+          </div>
+          <p>85% Complete - Great progress!</p>
+          
+          <div class="upcoming-event">
+            <h4>Math Assessment</h4>
+            <div class="upcoming-event-date">Tomorrow, 10:00 AM</div>
+            <p>Adaptive assessment with visual supports</p>
+          </div>
+          
+          <div class="upcoming-event">
+            <h4>Reading Comprehension Session</h4>
+            <div class="upcoming-event-date">Friday, 2:00 PM</div>
+            <p>Interactive story with multi-sensory components</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn">View Details</a>
+        </div>
+      </div>
+    </div>
+    
+    <a href="/" class="back-button">← Back to School Selection</a>
+  </div>
+</body>
+</html>
+  

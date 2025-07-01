@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Language Learning School - ShatziiOS</title>
+  <style>
+    :root {
+      /* Language School Theme Colors */
+      --primary-color: #E64A19;
+      --secondary-color: #4DB6AC;
+      --accent-color: #FFB300;
+      --success-color: #66BB6A;
+      --warning-color: #FFD54F;
+      --error-color: #EF5350;
+      --dark-bg: #1F1A17;
+      --card-bg: #2E2520;
+      --card-hover: #3E332C;
+      --text-primary: #FFFFFF;
+      --text-secondary: #D7CCC8;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      --border-radius: 12px;
+      --font-dyslexic: 'Arial', 'Helvetica', sans-serif;
+      --font-spacing: 0.03em;
+      --line-height: 1.7;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-dyslexic);
+      background-color: var(--dark-bg);
+      background-image: 
+        linear-gradient(135deg, rgba(230, 74, 25, 0.07) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(77, 182, 172, 0.05) 0%, transparent 50%);
+      color: var(--text-primary);
+      line-height: var(--line-height);
+      letter-spacing: var(--font-spacing);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header and Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-top: 1rem;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      letter-spacing: 1px;
+      margin-right: 1rem;
+    }
+    
+    .school-name {
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+    
+    /* Main Navigation */
+    .main-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0 2rem;
+      background-color: rgba(46, 37, 32, 0.8);
+      padding: 0.5rem;
+      border-radius: var(--border-radius);
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    
+    .main-nav::-webkit-scrollbar {
+      height: 5px;
+    }
+    
+    .main-nav::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    
+    .main-nav::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+    
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+    
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .nav-icon {
+      font-size: 1.1rem;
+    }
+    
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--card-bg), var(--card-hover));
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent, rgba(230, 74, 25, 0.1));
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
+    
+    .welcome-content {
+      max-width: 70%;
+      position: relative;
+      z-index: 5;
+    }
+    
+    .welcome-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.2rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    
+    .welcome-text {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 90%;
+    }
+    
+    .language-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .language-badge {
+      padding: 0.6rem 1.2rem;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 30px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .language-badge.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .language-badge:hover {
+      transform: translateY(-3px);
+      background-color: rgba(230, 74, 25, 0.2);
+    }
+    
+    .language-flag {
+      font-size: 1.2rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .primary-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .primary-btn:hover {
+      background-color: var(--accent-color);
+      color: #333;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(230, 74, 25, 0.3);
+    }
+    
+    .secondary-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .secondary-btn:hover {
+      background-color: rgba(230, 74, 25, 0.1);
+      transform: translateY(-3px);
+    }
+    
+    /* Dashboard Sections */
+    .dashboard-section {
+      margin-bottom: 2.5rem;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .section-title-icon {
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+    }
+    
+    .section-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .view-all-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+    
+    .view-all-link:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    /* Card Grid Layout */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    /* Lesson Cards */
+    .lesson-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid rgba(230, 74, 25, 0.1);
+    }
+    
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary-color);
+    }
+    
+    .lesson-card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .lesson-type {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .lesson-type-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(230, 74, 25, 0.1);
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+    
+    .lesson-level {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .lesson-card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .lesson-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .lesson-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      flex-grow: 1;
+    }
+    
+    .lesson-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .lesson-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .lesson-detail-icon {
+      color: var(--accent-color);
+      font-size: 1rem;
+    }
+    
+    .lesson-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .lesson-tag {
+      padding: 0.3rem 0.7rem;
+      background-color: rgba(230, 74, 25, 0.1);
+      color: var(--primary-color);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .lesson-card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .lesson-progress {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .lesson-btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .lesson-btn:hover {
+      background-color: var(--accent-color);
+      color: #333;
+      transform: translateY(-2px);
+    }
+    
+    /* Dashboard Rows - For wider content */
+    .dashboard-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 992px) {
+      .dashboard-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Language Progress Tracking */
+    .progress-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(230, 74, 25, 0.1);
+    }
+    
+    .progress-card-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .progress-card-icon {
+      color: var(--accent-color);
+      font-size: 1.3rem;
+    }
+    
+    .progress-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .progress-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    
+    .progress-item-title {
+      font-weight: 500;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .progress-item-icon {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+    
+    .progress-percentage {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .progress-bar-bg {
+      height: 8px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    
+    .progress-bar-fill.vocabulary {
+      background: linear-gradient(90deg, #E64A19, #FF7043);
+    }
+    
+    .progress-bar-fill.grammar {
+      background: linear-gradient(90deg, #4DB6AC, #80CBC4);
+    }
+    
+    .progress-bar-fill.conversation {
+      background: linear-gradient(90deg, #FFB300, #FFCA28);
+    }
+    
+    .progress-bar-fill.culture {
+      background: linear-gradient(90deg, #7E57C2, #9575CD);
+    }
+    
+    /* Vocabulary Practice */
+    .vocabulary-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--secondary-color);
+      margin-bottom: 2rem;
+    }
+    
+    .vocabulary-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .vocabulary-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .vocabulary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .vocabulary-card {
+      background-color: rgba(46, 37, 32, 0.7);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .vocabulary-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--secondary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .vocabulary-card:hover .vocabulary-translation {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .vocabulary-term {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .vocabulary-phonetic {
+      font-size: 0.85rem;
+      color: var(--accent-color);
+      margin-bottom: 0.3rem;
+      font-style: italic;
+    }
+    
+    .vocabulary-category {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      width: fit-content;
+      margin-top: auto;
+    }
+    
+    .vocabulary-translation {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--secondary-color);
+      color: #333;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: all 0.3s ease;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    .vocabulary-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .vocabulary-mode-selector {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .vocabulary-mode {
+      padding: 0.4rem 0.8rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .vocabulary-mode.active {
+      background-color: var(--secondary-color);
+      color: #333;
+    }
+    
+    .vocabulary-mode:hover {
+      background-color: rgba(77, 182, 172, 0.2);
+    }
+    
+    .vocabulary-view-all {
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.3s ease;
+    }
+    
+    .vocabulary-view-all:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+    
+    /* Conversation Practice */
+    .conversation-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .conversation-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .conversation-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .conversation-container {
+      background-color: rgba(46, 37, 32, 0.7);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .conversation-scenario {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    .conversation-exchange {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .conversation-message {
+      display: flex;
+      gap: 1rem;
+      max-width: 80%;
+    }
+    
+    .conversation-message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    
+    .conversation-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .conversation-avatar.user {
+      background-color: var(--secondary-color);
+      color: #333;
+    }
+    
+    .conversation-bubble {
+      background-color: rgba(230, 74, 25, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      position: relative;
+    }
+    
+    .conversation-bubble.user {
+      background-color: rgba(77, 182, 172, 0.1);
+    }
+    
+    .conversation-text {
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .conversation-translation {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+    
+    .conversation-input {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .conversation-textbox {
+      flex-grow: 1;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: rgba(46, 37, 32, 0.5);
+      color: var(--text-primary);
+      font-family: var(--font-dyslexic);
+      font-size: 1rem;
+      resize: none;
+    }
+    
+    .conversation-textbox:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    .conversation-send {
+      padding: 0.5rem 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-dyslexic);
+    }
+    
+    .conversation-send:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+    
+    /* Cultural Notes */
+    .culture-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--accent-color);
+      margin-bottom: 2rem;
+    }
+    
+    .culture-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .culture-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .culture-card {
+      background-color: rgba(46, 37, 32, 0.7);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .culture-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .culture-card-img {
+      height: 160px;
+      background-color: rgba(46, 37, 32, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--accent-color);
+    }
+    
+    .culture-card-content {
+      padding: 1.5rem;
+    }
+    
+    .culture-card-title {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .culture-card-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    
+    .culture-card-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.3s ease;
+    }
+    
+    .culture-card-link:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    /* Practice Schedule */
+    .schedule-section {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .schedule-title {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .today-sessions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .session-item {
+      display: flex;
+      gap: 1rem;
+      background-color: rgba(46, 37, 32, 0.7);
+      border-radius: 8px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .session-item:hover {
+      background-color: rgba(46, 37, 32, 0.9);
+      transform: translateY(-3px);
+    }
+    
+    .session-time {
+      min-width: 60px;
+      text-align: center;
+      background-color: rgba(230, 74, 25, 0.1);
+      padding: 0.5rem;
+      border-radius: 6px;
+      color: var(--primary-color);
+      font-weight: 500;
+      height: fit-content;
+    }
+    
+    .session-content {
+      flex-grow: 1;
+    }
+    
+    .session-title {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+    
+    .session-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .session-activity {
+      display: inline-block;
+      padding: 0.3rem 0.7rem;
+      background-color: rgba(77, 182, 172, 0.1);
+      color: var(--secondary-color);
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    
+    /* Accessibility Controls */
+    .accessibility-toolbar {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: rgba(46, 37, 32, 0.9);
+      padding: 0.7rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      border: 1px solid rgba(230, 74, 25, 0.3);
+    }
+    
+    .accessibility-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    .accessibility-btn:hover {
+      background-color: rgba(230, 74, 25, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .accessibility-btn-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--card-bg);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      color: var(--text-secondary);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      margin-bottom: 0.5rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .accessibility-btn:hover .accessibility-btn-tooltip {
+      opacity: 1;
+    }
+    
+    /* Focus Mode Toggle */
+    .focus-mode-toggle {
+      position: fixed;
+      top: 5rem;
+      right: 1.5rem;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: rgba(46, 37, 32, 0.9);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(230, 74, 25, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .focus-mode-toggle:hover {
+      transform: translateY(-3px);
+    }
+    
+    .focus-mode-icon {
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
+    
+    .focus-mode-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .focus-mode-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin-left: 0.5rem;
+    }
+    
+    .focus-mode-switch-handle {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--text-secondary);
+      transition: all 0.3s ease;
+    }
+    
+    body.focus-mode-on .focus-mode-switch {
+      background-color: var(--primary-color);
+    }
+    
+    body.focus-mode-on .focus-mode-switch-handle {
+      left: 22px;
+      background-color: white;
+    }
+    
+    /* Audio Player */
+    .audio-player {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background-color: rgba(46, 37, 32, 0.9);
+      padding: 0.7rem 1rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+      z-index: 999;
+      border: 1px solid rgba(230, 74, 25, 0.3);
+    }
+    
+    .audio-control {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .audio-control:hover {
+      background-color: var(--accent-color);
+      transform: scale(1.1);
+    }
+    
+    .audio-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+    }
+    
+    .audio-title {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    
+    .audio-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    .audio-progress {
+      width: 100px;
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .audio-progress-fill {
+      height: 100%;
+      width: 35%;
+      background-color: var(--primary-color);
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 2rem 0 1rem;
+      text-align: center;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    
+    .footer-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .footer-text {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    
+    /* Responsive Adaptations */
+    @media (max-width: 992px) {
+      .profile-section {
+        flex-direction: column;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .welcome-content {
+        max-width: 100%;
+      }
+      
+      .vocabulary-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      }
+      
+      .focus-mode-toggle, .accessibility-toolbar, .audio-player {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <div class="logo">ShatziiOS</div>
+        <div class="school-name">Language Learning</div>
+      </div>
+      
+      <div class="profile-container">
+        <div class="profile-avatar">S</div>
+      </div>
+    </header>
+    
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+      <a href="#" class="nav-link active">
+        <span class="nav-icon">📊</span>
+        Dashboard
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">📚</span>
+        Vocabulary
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🔤</span>
+        Grammar
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">💬</span>
+        Conversation
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🌍</span>
+        Cultural Notes
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🎯</span>
+        Practice
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">🧠</span>
+        Memory Techniques
+      </a>
+      <a href="#" class="nav-link">
+        <span class="nav-icon">⚙️</span>
+        Settings
+      </a>
+    </nav>
+    
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div class="welcome-content">
+        <h1 class="welcome-title">Welcome to Language Learning</h1>
+        <h2 class="welcome-subtitle">Choose Your Language</h2>
+        <p class="welcome-text">Our language learning platform is designed specifically for neurodivergent learners with specialized techniques to make language acquisition engaging, accessible, and effective.</p>
+        
+        <div class="language-selector">
+          <div class="language-badge active">
+            <span class="language-flag">🇪🇸</span>
+            <span>Spanish</span>
+          </div>
+          <div class="language-badge">
+            <span class="language-flag">🇫🇷</span>
+            <span>French</span>
+          </div>
+          <div class="language-badge">
+            <span class="language-flag">🇩🇪</span>
+            <span>German</span>
+          </div>
+          <div class="language-badge">
+            <span class="language-flag">🇮🇹</span>
+            <span>Italian</span>
+          </div>
+          <div class="language-badge">
+            <span class="language-flag">🇯🇵</span>
+            <span>Japanese</span>
+          </div>
+        </div>
+        
+        <div class="cta-buttons">
+          <button class="primary-btn">
+            <span>Continue Learning</span>
+            <span>→</span>
+          </button>
+          <button class="secondary-btn">
+            <span>Practice Today's Vocabulary</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Vocabulary Practice Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">📚</span>
+          Spanish Vocabulary
+        </h2>
+        <a href="#" class="view-all-link">
+          View All Vocabulary
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Practice these words with multisensory techniques designed for better retention and recall</p>
+      
+      <div class="vocabulary-section">
+        <h3 class="vocabulary-title">
+          <span class="progress-card-icon">🍽️</span>
+          Food & Dining Vocabulary
+        </h3>
+        <p class="vocabulary-subtitle">Learn essential restaurant vocabulary to help you order food in Spanish-speaking countries</p>
+        
+        <div class="vocabulary-grid">
+          <div class="vocabulary-card">
+            <h4 class="vocabulary-term">restaurante</h4>
+            <p class="vocabulary-phonetic">res-tau-RAN-te</p>
+            <span class="vocabulary-category">noun</span>
+            <div class="vocabulary-translation">restaurant</div>
+          </div>
+          
+          <div class="vocabulary-card">
+            <h4 class="vocabulary-term">menú</h4>
+            <p class="vocabulary-phonetic">me-NU</p>
+            <span class="vocabulary-category">noun</span>
+            <div class="vocabulary-translation">menu</div>
+          </div>
+          
+          <div class="vocabulary-card">
+            <h4 class="vocabulary-term">pedir</h4>
+            <p class="vocabulary-phonetic">pe-DIR</p>
+            <span class="vocabulary-category">verb</span>
+            <div class="vocabulary-translation">to order</div>
+          </div>
+          
+          <div class="vocabulary-card">
+            <h4 class="vocabulary-term">delicioso</h4>
+            <p class="vocabulary-phonetic">de-li-CIO-so</p>
+            <span class="vocabulary-category">adjective</span>
+            <div class="vocabulary-translation">delicious</div>
+          </div>
+          
+          <div class="vocabulary-card">
+            <h4 class="vocabulary-term">cuenta</h4>
+            <p class="vocabulary-phonetic">CUEN-ta</p>
+            <span class="vocabulary-category">noun</span>
+            <div class="vocabulary-translation">bill</div>
+          </div>
+          
+          <div class="vocabulary-card">
+            <h4 class="vocabulary-term">propina</h4>
+            <p class="vocabulary-phonetic">pro-PI-na</p>
+            <span class="vocabulary-category">noun</span>
+            <div class="vocabulary-translation">tip</div>
+          </div>
+        </div>
+        
+        <div class="vocabulary-actions">
+          <div class="vocabulary-mode-selector">
+            <div class="vocabulary-mode active">Visual</div>
+            <div class="vocabulary-mode">Audio</div>
+            <div class="vocabulary-mode">Flashcards</div>
+          </div>
+          
+          <a href="#" class="vocabulary-view-all">
+            Practice All Words
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Progress and Schedule Row -->
+    <div class="dashboard-row">
+      <!-- Language Progress Tracking -->
+      <div class="progress-card">
+        <h3 class="progress-card-title">
+          <span class="progress-card-icon">📊</span>
+          Your Spanish Progress
+        </h3>
+        
+        <div class="progress-items">
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">📚</span>
+                Vocabulary
+              </div>
+              <div class="progress-percentage">65%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill vocabulary" style="width: 65%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">🔤</span>
+                Grammar
+              </div>
+              <div class="progress-percentage">42%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill grammar" style="width: 42%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">💬</span>
+                Conversation
+              </div>
+              <div class="progress-percentage">38%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill conversation" style="width: 38%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-item-header">
+              <div class="progress-item-title">
+                <span class="progress-item-icon">🌍</span>
+                Cultural Knowledge
+              </div>
+              <div class="progress-percentage">52%</div>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill culture" style="width: 52%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Practice Schedule -->
+      <div class="schedule-section">
+        <h3 class="schedule-title">
+          <span class="progress-card-icon">📅</span>
+          Today's Practice Schedule
+        </h3>
+        
+        <div class="today-sessions">
+          <div class="session-item">
+            <div class="session-time">9:00 AM</div>
+            <div class="session-content">
+              <div class="session-title">Vocabulary Review</div>
+              <div class="session-desc">Food & Dining Terms</div>
+              <span class="session-activity">Spaced Repetition</span>
+            </div>
+          </div>
+          
+          <div class="session-item">
+            <div class="session-time">11:30 AM</div>
+            <div class="session-content">
+              <div class="session-title">Conversation Practice</div>
+              <div class="session-desc">Restaurant Dialogues</div>
+              <span class="session-activity">Role Play</span>
+            </div>
+          </div>
+          
+          <div class="session-item">
+            <div class="session-time">2:15 PM</div>
+            <div class="session-content">
+              <div class="session-title">Grammar Lesson</div>
+              <div class="session-desc">Present Tense Verbs</div>
+              <span class="session-activity">Visual Learning</span>
+            </div>
+          </div>
+          
+          <div class="session-item">
+            <div class="session-time">4:00 PM</div>
+            <div class="session-content">
+              <div class="session-title">Cultural Immersion</div>
+              <div class="session-desc">Spanish Dining Customs</div>
+              <span class="session-activity">Video Learning</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Conversation Practice -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">💬</span>
+          Conversation Practice
+        </h2>
+      </div>
+      <p class="section-subtitle">Practice real-world dialogues with our adaptive conversation system designed for neurodivergent learners</p>
+      
+      <div class="conversation-section">
+        <h3 class="conversation-title">
+          <span class="progress-card-icon">🍽️</span>
+          At the Restaurant
+        </h3>
+        <p class="conversation-subtitle">Practice ordering food and interacting with restaurant staff in Spanish</p>
+        
+        <div class="conversation-container">
+          <div class="conversation-scenario">You are at a restaurant in Madrid and want to order dinner</div>
+          
+          <div class="conversation-exchange">
+            <div class="conversation-message">
+              <div class="conversation-avatar">W</div>
+              <div class="conversation-bubble">
+                <p class="conversation-text">Buenas noches, ¿qué desea ordenar?</p>
+                <p class="conversation-translation">Good evening, what would you like to order?</p>
+              </div>
+            </div>
+            
+            <div class="conversation-message user">
+              <div class="conversation-avatar user">S</div>
+              <div class="conversation-bubble user">
+                <p class="conversation-text">Me gustaría una paella, por favor.</p>
+                <p class="conversation-translation">I would like a paella, please.</p>
+              </div>
+            </div>
+            
+            <div class="conversation-message">
+              <div class="conversation-avatar">W</div>
+              <div class="conversation-bubble">
+                <p class="conversation-text">Excelente elección. ¿Y para beber?</p>
+                <p class="conversation-translation">Excellent choice. And to drink?</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="conversation-input">
+            <textarea class="conversation-textbox" placeholder="Type your response in Spanish..."></textarea>
+            <button class="conversation-send">
+              <span>Send</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cultural Notes -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">🌍</span>
+          Cultural Notes
+        </h2>
+        <a href="#" class="view-all-link">
+          View All Cultural Notes
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Understanding the culture is essential for language mastery - these cultural insights are presented in a visual-spatial format to enhance comprehension and retention</p>
+      
+      <div class="culture-section">
+        <h3 class="culture-title">
+          <span class="progress-card-icon">🇪🇸</span>
+          Spanish Culture and Customs
+        </h3>
+        
+        <div class="culture-cards">
+          <div class="culture-card">
+            <div class="culture-card-img">🍽️</div>
+            <div class="culture-card-content">
+              <h4 class="culture-card-title">Spanish Dining Customs</h4>
+              <p class="culture-card-desc">Learn about meal times, table manners, tipping practices, and typical dining experiences in Spain.</p>
+              <a href="#" class="culture-card-link">
+                Learn More
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="culture-card">
+            <div class="culture-card-img">👋</div>
+            <div class="culture-card-content">
+              <h4 class="culture-card-title">Greetings and Social Interactions</h4>
+              <p class="culture-card-desc">Understand the importance of personal greetings, physical contact, and social expectations in Spanish culture.</p>
+              <a href="#" class="culture-card-link">
+                Learn More
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="culture-card">
+            <div class="culture-card-img">🎭</div>
+            <div class="culture-card-content">
+              <h4 class="culture-card-title">Festivals and Celebrations</h4>
+              <p class="culture-card-desc">Explore the colorful world of Spanish festivals, regional celebrations, and important cultural holidays.</p>
+              <a href="#" class="culture-card-link">
+                Learn More
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Lessons Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-title-icon">📚</span>
+          Spanish Lessons
+        </h2>
+        <a href="#" class="view-all-link">
+          View All Lessons
+          <span>→</span>
+        </a>
+      </div>
+      <p class="section-subtitle">Multisensory lessons designed specifically for neurodivergent learners with visual guides, audio support, and interactive practice</p>
+      
+      <div class="card-grid">
+        <!-- Vocabulary Lesson Card -->
+        <div class="lesson-card">
+          <div class="lesson-card-header">
+            <div class="lesson-type">
+              <div class="lesson-type-icon">📚</div>
+              <span>Vocabulary</span>
+            </div>
+            <div class="lesson-level">Beginner</div>
+          </div>
+          <div class="lesson-card-body">
+            <h3 class="lesson-title">Food & Restaurant Vocabulary</h3>
+            <p class="lesson-desc">Learn essential Spanish words and phrases for dining out with visual memory associations and spatial vocabulary maps designed for neurodivergent learners.</p>
+            <div class="lesson-details">
+              <div class="lesson-detail">
+                <span class="lesson-detail-icon">⏱️</span>
+                <span>20 minutes</span>
+              </div>
+              <div class="lesson-detail">
+                <span class="lesson-detail-icon">🗣️</span>
+                <span>30 new words</span>
+              </div>
+            </div>
+            <div class="lesson-tags">
+              <span class="lesson-tag">Dining</span>
+              <span class="lesson-tag">Noun-focused</span>
+              <span class="lesson-tag">Visual Learning</span>
+            </div>
+          </div>
+          <div class="lesson-card-footer">
+            <div class="lesson-progress">
+              <span>Progress:</span>
+              <span>65%</span>
+            </div>
+            <button class="lesson-btn">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Grammar Lesson Card -->
+        <div class="lesson-card">
+          <div class="lesson-card-header">
+            <div class="lesson-type">
+              <div class="lesson-type-icon">🔤</div>
+              <span>Grammar</span>
+            </div>
+            <div class="lesson-level">Beginner</div>
+          </div>
+          <div class="lesson-card-body">
+            <h3 class="lesson-title">Present Tense Verbs</h3>
+            <p class="lesson-desc">Master regular verbs in the present tense with color-coded patterns, interactive conjugation tools, and visual reference guides designed for neurodivergent learning styles.</p>
+            <div class="lesson-details">
+              <div class="lesson-detail">
+                <span class="lesson-detail-icon">⏱️</span>
+                <span>25 minutes</span>
+              </div>
+              <div class="lesson-detail">
+                <span class="lesson-detail-icon">📝</span>
+                <span>Pattern-based</span>
+              </div>
+            </div>
+            <div class="lesson-tags">
+              <span class="lesson-tag">Verb Conjugation</span>
+              <span class="lesson-tag">Pattern Recognition</span>
+              <span class="lesson-tag">Visual-Spatial</span>
+            </div>
+          </div>
+          <div class="lesson-card-footer">
+            <div class="lesson-progress">
+              <span>Progress:</span>
+              <span>42%</span>
+            </div>
+            <button class="lesson-btn">Continue</button>
+          </div>
+        </div>
+        
+        <!-- Conversation Lesson Card -->
+        <div class="lesson-card">
+          <div class="lesson-card-header">
+            <div class="lesson-type">
+              <div class="lesson-type-icon">💬</div>
+              <span>Conversation</span>
+            </div>
+            <div class="lesson-level">Beginner</div>
+          </div>
+          <div class="lesson-card-body">
+            <h3 class="lesson-title">Restaurant Dialogues</h3>
+            <p class="lesson-desc">Practice ordering food and engaging in restaurant conversations with audio-visual scripts, adaptive response options, and multisensory reinforcement.</p>
+            <div class="lesson-details">
+              <div class="lesson-detail">
+                <span class="lesson-detail-icon">⏱️</span>
+                <span>30 minutes</span>
+              </div>
+              <div class="lesson-detail">
+                <span class="lesson-detail-icon">🎭</span>
+                <span>Role-playing</span>
+              </div>
+            </div>
+            <div class="lesson-tags">
+              <span class="lesson-tag">Interactive</span>
+              <span class="lesson-tag">Audio-Visual</span>
+              <span class="lesson-tag">Real-world Context</span>
+            </div>
+          </div>
+          <div class="lesson-card-footer">
+            <div class="lesson-progress">
+              <span>Progress:</span>
+              <span>38%</span>
+            </div>
+            <button class="lesson-btn">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Accessibility Toolbar -->
+    <div class="accessibility-toolbar">
+      <button class="accessibility-btn">
+        <span>Aa</span>
+        <div class="accessibility-btn-tooltip">Text Size</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>🎨</span>
+        <div class="accessibility-btn-tooltip">Color Theme</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>📖</span>
+        <div class="accessibility-btn-tooltip">Reading Guide</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>🔊</span>
+        <div class="accessibility-btn-tooltip">Text to Speech</div>
+      </button>
+      <button class="accessibility-btn">
+        <span>⏱️</span>
+        <div class="accessibility-btn-tooltip">Slow Audio</div>
+      </button>
+    </div>
+    
+    <!-- Focus Mode Toggle -->
+    <div class="focus-mode-toggle">
+      <div class="focus-mode-icon">👁️</div>
+      <div class="focus-mode-label">Focus Mode</div>
+      <div class="focus-mode-switch">
+        <div class="focus-mode-switch-handle"></div>
+      </div>
+    </div>
+    
+    <!-- Audio Player -->
+    <div class="audio-player">
+      <button class="audio-control">▶️</button>
+      <div class="audio-info">
+        <div class="audio-title">Vocabulary: Food Items</div>
+        <div class="audio-subtitle">Spanish Pronunciation</div>
+      </div>
+      <div class="audio-progress">
+        <div class="audio-progress-fill"></div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Help & Support</a>
+        <a href="#" class="footer-link">All Languages</a>
+        <a href="#" class="footer-link">Learning Resources</a>
+        <a href="#" class="footer-link">Accessibility</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+      </div>
+      <div class="footer-text">&copy; 2025 ShatziiOS Language Learning | Specialized Education for Neurodivergent Learners</div>
+    </footer>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Language selector
+      const languageBadges = document.querySelectorAll('.language-badge');
+      languageBadges.forEach(badge => {
+        badge.addEventListener('click', function() {
+          languageBadges.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Focus Mode Toggle
+      const focusModeToggle = document.querySelector('.focus-mode-toggle');
+      
+      focusModeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('focus-mode-on');
+        
+        if (document.body.classList.contains('focus-mode-on')) {
+          // Hide non-essential elements
+          document.querySelectorAll('.culture-section, .conversation-section, .vocabulary-section').forEach(el => {
+            el.style.opacity = '0.3';
+            el.style.pointerEvents = 'none';
+          });
+          
+          // Highlight current content
+          document.querySelector('.lesson-card').style.boxShadow = '0 0 30px rgba(230, 74, 25, 0.3)';
+          document.querySelector('.lesson-card').style.border = '2px solid var(--primary-color)';
+          
+          // Add focus-specific styles
+          document.body.style.backgroundColor = 'var(--dark-bg)';
+          document.querySelector('.container').style.maxWidth = '800px';
+        } else {
+          // Restore all elements
+          document.querySelectorAll('.culture-section, .conversation-section, .vocabulary-section').forEach(el => {
+            el.style.opacity = '1';
+            el.style.pointerEvents = 'auto';
+          });
+          
+          // Remove highlighting
+          document.querySelector('.lesson-card').style.boxShadow = '';
+          document.querySelector('.lesson-card').style.border = '1px solid rgba(230, 74, 25, 0.1)';
+          
+          // Reset focus-specific styles
+          document.body.style.backgroundColor = '';
+          document.querySelector('.container').style.maxWidth = '';
+        }
+      });
+      
+      // Vocabulary mode selector
+      const vocabularyModes = document.querySelectorAll('.vocabulary-mode');
+      vocabularyModes.forEach(mode => {
+        mode.addEventListener('click', function() {
+          vocabularyModes.forEach(m => m.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Accessibility Controls
+      const textSizeBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(1)');
+      let textSizeIndex = 1; // 0 = smaller, 1 = normal, 2 = larger
+      const textSizes = ['0.9', '1', '1.2'];
+      
+      textSizeBtn.addEventListener('click', function() {
+        textSizeIndex = (textSizeIndex + 1) % 3;
+        document.documentElement.style.fontSize = textSizes[textSizeIndex] + 'rem';
+      });
+      
+      // Color theme button
+      const colorBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(2)');
+      let colorThemeIndex = 0; // 0 = default, 1 = high contrast, 2 = calm mode
+      
+      colorBtn.addEventListener('click', function() {
+        colorThemeIndex = (colorThemeIndex + 1) % 3;
+        
+        if (colorThemeIndex === 0) {
+          // Default colors
+          document.documentElement.style.setProperty('--primary-color', '#E64A19');
+          document.documentElement.style.setProperty('--secondary-color', '#4DB6AC');
+          document.documentElement.style.setProperty('--accent-color', '#FFB300');
+          document.documentElement.style.setProperty('--dark-bg', '#1F1A17');
+          document.documentElement.style.setProperty('--card-bg', '#2E2520');
+        } else if (colorThemeIndex === 1) {
+          // High contrast
+          document.documentElement.style.setProperty('--primary-color', '#FFFFFF');
+          document.documentElement.style.setProperty('--secondary-color', '#FFFF00');
+          document.documentElement.style.setProperty('--accent-color', '#00FFFF');
+          document.documentElement.style.setProperty('--dark-bg', '#000000');
+          document.documentElement.style.setProperty('--card-bg', '#0F0F0F');
+          document.documentElement.style.setProperty('--text-primary', '#FFFFFF');
+          document.documentElement.style.setProperty('--text-secondary', '#EEEEEE');
+        } else {
+          // Calm mode
+          document.documentElement.style.setProperty('--primary-color', '#8D6E63');
+          document.documentElement.style.setProperty('--secondary-color', '#78909C');
+          document.documentElement.style.setProperty('--accent-color', '#AED581');
+          document.documentElement.style.setProperty('--dark-bg', '#2A2420');
+          document.documentElement.style.setProperty('--card-bg', '#3A322D');
+        }
+      });
+      
+      // Reading guide
+      const readingGuideBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(3)');
+      let readingGuideActive = false;
+      let readingGuide;
+      
+      readingGuideBtn.addEventListener('click', function() {
+        readingGuideActive = !readingGuideActive;
+        
+        if (readingGuideActive) {
+          // Create reading guide
+          readingGuide = document.createElement('div');
+          readingGuide.style.position = 'fixed';
+          readingGuide.style.left = '0';
+          readingGuide.style.width = '100%';
+          readingGuide.style.height = '30px';
+          readingGuide.style.backgroundColor = 'rgba(230, 74, 25, 0.1)';
+          readingGuide.style.border = '1px solid rgba(230, 74, 25, 0.3)';
+          readingGuide.style.zIndex = '999';
+          readingGuide.style.pointerEvents = 'none';
+          document.body.appendChild(readingGuide);
+          
+          // Add mousemove event listener
+          document.addEventListener('mousemove', moveReadingGuide);
+        } else {
+          // Remove reading guide
+          document.removeEventListener('mousemove', moveReadingGuide);
+          readingGuide.remove();
+        }
+      });
+      
+      function moveReadingGuide(e) {
+        readingGuide.style.top = `${e.clientY - 15}px`;
+      }
+      
+      // Text-to-speech functionality
+      const speechBtn = document.querySelector('.accessibility-toolbar .accessibility-btn:nth-child(4)');
+      let isSpeaking = false;
+      
+      speechBtn.addEventListener('click', function() {
+        if (!isSpeaking && 'speechSynthesis' in window) {
+          // Read the first vocabulary term as an example
+          const terms = document.querySelectorAll('.vocabulary-term');
+          if (terms.length > 0) {
+            const text = terms[0].textContent;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'es-ES'; // Spanish language
+            utterance.rate = 0.8; // Slightly slower for language learning
+            
+            window.speechSynthesis.speak(utterance);
+            isSpeaking = true;
+            this.style.backgroundColor = 'var(--primary-color)';
+            
+            utterance.onend = function() {
+              isSpeaking = false;
+              speechBtn.style.backgroundColor = '';
+            };
+          }
+        } else if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          this.style.backgroundColor = '';
+        }
+      });
+      
+      // Audio player functionality
+      const audioControl = document.querySelector('.audio-control');
+      let isPlaying = false;
+      
+      audioControl.addEventListener('click', function() {
+        isPlaying = !isPlaying;
+        
+        if (isPlaying) {
+          this.textContent = '⏸️';
+          // Simulate audio progress
+          const audioProgressFill = document.querySelector('.audio-progress-fill');
+          let width = 0;
+          const interval = setInterval(() => {
+            width += 1;
+            if (width > 100) {
+              clearInterval(interval);
+              isPlaying = false;
+              this.textContent = '▶️';
+              return;
+            }
+            audioProgressFill.style.width = `${width}%`;
+          }, 300);
+        } else {
+          this.textContent = '▶️';
+          // In a real app, you would pause the audio here
+        }
+      });
+    });
+  </script>
+  
+  <!-- Assessment Integration Script -->
+  <script src="/js/assessment-dashboard-integration.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize assessment integration with the language dashboard
+      window.assessmentDashboardIntegration.initAssessmentIntegration({
+        dashboardType: 'language',
+        userId: '1', // Default user ID for testing, replace with actual user ID in production
+        languagePreferences: {
+          targetLanguage: 'Spanish', // Default language, can be changed by user
+          proficiencyLevel: 'Beginner' // Default level, updated based on assessment
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShatziiOS Application</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: white;
+    }
+    
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    .loader {
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .school-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .school-card {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .school-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .school-card-header {
+      padding: 20px;
+      background-color: #222;
+    }
+    
+    .school-card-body {
+      padding: 20px;
+    }
+    
+    .school-card-footer {
+      padding: 15px 20px;
+      background-color: #2a2a2a;
+      text-align: center;
+    }
+    
+    .school-button {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .school-button:hover {
+      background-color: #2980b9;
+    }
+    
+    .law-school {
+      --school-color: #e67e22;
+    }
+    
+    .neurodivergent-school {
+      --school-color: #2ecc71;
+    }
+    
+    .language-school {
+      --school-color: #9b59b6;
+    }
+    
+    .ndash {
+      --school-color: #1abc9c;
+    }
+    
+    .law-school .school-button {
+      background-color: #e67e22;
+    }
+    
+    .law-school .school-button:hover {
+      background-color: #d35400;
+    }
+    
+    .neurodivergent-school .school-button {
+      background-color: #2ecc71;
+    }
+    
+    .neurodivergent-school .school-button:hover {
+      background-color: #27ae60;
+    }
+    
+    .language-school .school-button {
+      background-color: #9b59b6;
+    }
+    
+    .language-school .school-button:hover {
+      background-color: #8e44ad;
+    }
+    
+    .ndash .school-button {
+      background-color: #1abc9c;
+    }
+    
+    .ndash .school-button:hover {
+      background-color: #16a085;
+    }
+    
+    h1 {
+      text-align: center;
+      margin: 40px 0;
+      font-size: 2.5rem;
+    }
+    
+    h2 {
+      margin-top: 0;
+      color: var(--school-color);
+    }
+    
+    .icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ShatziiOS Educational Platform</h1>
+  
+  <div class="school-container">
+    <div class="school-card law-school">
+      <div class="school-card-header">
+        <div class="icon">⚖️</div>
+        <h2>Shatzii School of Law</h2>
+      </div>
+      <div class="school-card-body">
+        <p>Legal education with UAE Bar Exam preparation, designed for aspiring legal professionals with a focus on accessible learning methods.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/server-proxy-law-school" class="school-button">Enter Law School</a>
+      </div>
+    </div>
+    
+    <div class="school-card neurodivergent-school">
+      <div class="school-card-header">
+        <div class="icon">🦸</div>
+        <h2>Neurodivergent School</h2>
+      </div>
+      <div class="school-card-body">
+        <p>Specialized education for neurodivergent students with emphasis on dyslexia-specific curriculum from kindergarten through college.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/server-proxy-neurodivergent-school" class="school-button">Enter School</a>
+      </div>
+    </div>
+    
+    <div class="school-card language-school">
+      <div class="school-card-header">
+        <div class="icon">🗣️</div>
+        <h2>Language Learning School</h2>
+      </div>
+      <div class="school-card-body">
+        <p>AI-powered language acquisition courses across multiple languages including Spanish, German, French, Italian, Japanese, Chinese and Russian.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/server-proxy-language-school" class="school-button">Enter School</a>
+      </div>
+    </div>
+    
+    <div class="school-card ndash">
+      <div class="school-card-header">
+        <div class="icon">🧠</div>
+        <h2>NDASH Platform</h2>
+      </div>
+      <div class="school-card-body">
+        <p>Advanced education for neurodivergent learners with adaptive technologies and personalized learning experiences.</p>
+      </div>
+      <div class="school-card-footer">
+        <a href="/server-proxy-ndash" class="school-button">Enter NDASH</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to handle navigation
+    function navigateToApp(path) {
+      const mainContainer = document.querySelector('.school-container');
+      const loaderContainer = document.createElement('div');
+      loaderContainer.className = 'loader-container';
+      
+      const loader = document.createElement('div');
+      loader.className = 'loader';
+      
+      const message = document.createElement('div');
+      message.textContent = 'Loading application...';
+      
+      loaderContainer.appendChild(loader);
+      loaderContainer.appendChild(message);
+      
+      document.body.innerHTML = '';
+      document.body.appendChild(loaderContainer);
+      
+      // Redirect after showing loader
+      setTimeout(() => {
+        window.location.href = path;
+      }, 1500);
+      
+      return false;
+    }
+    
+    // Set up click handlers for all school buttons
+    document.querySelectorAll('.school-button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const path = this.getAttribute('href');
+        // Map the server-proxy paths to the actual React routes
+        const routeMap = {
+          '/server-proxy-law-school': '/law-school',
+          '/server-proxy-neurodivergent-school': '/neurodivergent-school/enhanced-elementary',
+          '/server-proxy-language-school': '/language-school',
+          '/server-proxy-ndash': '/ndash'
+        };
+        
+        navigateToApp(routeMap[path]);
+      });
+    });
+  </script>
+</body>
+</html>
