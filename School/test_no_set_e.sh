@@ -2,7 +2,7 @@
 # Pre-Production Checklist Script for OpenEdTex
 # Validates all production readiness requirements
 
-set -e
+# set -e
 
 # Source environment variables
 if [ -f ".env" ]; then
@@ -166,10 +166,10 @@ echo -e "\n${BLUE}4. Application Files${NC}"
 echo "---------------------"
 
 check_file "backend/manage.py" "Django manage.py exists"
-check_file "backend/config/settings.py" "Django settings.py exists"
+check_file "backend/settings.py" "Django settings.py exists"
 check_file "package.json" "Frontend package.json exists"
 check_file "vite.config.js" "Vite configuration exists"
-check_file "backend/docker-compose.yml" "Docker Compose configuration exists"
+check_file "docker-compose.yml" "Docker Compose configuration exists"
 check_file "backend/Dockerfile" "Backend Dockerfile exists"
 check_file "frontend.Dockerfile" "Frontend Dockerfile exists"
 
@@ -258,8 +258,8 @@ check_command "jest" "Jest is installed" false
 echo -e "\n${BLUE}14. Performance and Optimization${NC}"
 echo "-----------------------------------"
 
-check_file "vite.config.js" "Vite build configuration exists"
-check_file "backend/Dockerfile" "Optimized Dockerfile exists"
+check_file "/app/vite.config.js" "Vite build configuration exists"
+check_file "/app/backend/Dockerfile" "Optimized Dockerfile exists"
 check_file "docker-compose.prod.yml" "Production Docker Compose exists" false
 
 # 15. Compliance and Security
