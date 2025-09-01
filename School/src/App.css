@@ -1,0 +1,376 @@
+/* Base CSS Variables for Branding */
+:root {
+  --brand-primary: #007bff;
+  --brand-secondary: #6c757d;
+  --brand-accent: #28a745;
+  --brand-background: #ffffff;
+  --brand-text: #212529;
+  --brand-primary-font: 'Inter', sans-serif;
+  --brand-heading-font: 'Inter', sans-serif;
+}
+
+/* Apply branding variables to Bootstrap classes */
+.bg-primary {
+  background-color: var(--brand-primary) !important;
+}
+
+.text-primary {
+  color: var(--brand-primary) !important;
+}
+
+.btn-primary {
+  background-color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-primary-hover, darken(var(--brand-primary), 10%)) !important;
+  border-color: var(--brand-primary-hover, darken(var(--brand-primary), 10%)) !important;
+}
+
+.btn-outline-primary {
+  color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+}
+
+/* Typography */
+body {
+  font-family: var(--brand-primary-font);
+  color: var(--brand-text);
+  background-color: var(--brand-background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--brand-heading-font);
+  color: var(--brand-text);
+}
+
+/* Navbar branding */
+.navbar-brand {
+  font-family: var(--brand-heading-font);
+  font-weight: 600;
+}
+
+/* Card styling with branding */
+.card {
+  border-color: rgba(var(--brand-primary-rgb, 0, 123, 255), 0.125);
+}
+
+.card-header {
+  background-color: rgba(var(--brand-primary-rgb, 0, 123, 255), 0.03);
+  border-bottom-color: rgba(var(--brand-primary-rgb, 0, 123, 255), 0.125);
+}
+
+/* Form styling */
+.form-control:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--brand-primary-rgb, 0, 123, 255), 0.25);
+}
+
+/* Link styling */
+a {
+  color: var(--brand-primary);
+}
+
+a:hover {
+  color: var(--brand-primary-hover, darken(var(--brand-primary), 15%));
+}
+
+/* Search Results */
+.search-results {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.search-results .card {
+  transition: transform 0.2s ease;
+}
+
+.search-results .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Code Block Enhancements */
+.code-block-container {
+  position: relative;
+  margin: 20px 0;
+}
+
+.code-block {
+  position: relative;
+  background-color: #2d2d2d !important;
+  color: #f8f8f2 !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  margin: 0 !important;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8f8f2;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.copy-btn.copied {
+  background: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+/* Interactive Diagrams */
+.clickable {
+  transition: all 0.3s ease;
+}
+
+.clickable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.expanded-details {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    transform: translateY(0);
+  }
+}
+
+/* Contact Form */
+.contact-info {
+  padding: 20px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+}
+
+.contact-info h5 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.contact-info p {
+  margin-bottom: 0;
+  color: #6c757d;
+}
+
+/* Form Enhancements */
+.form-control:focus,
+.form-select:focus {
+  border-color: #41b883;
+  box-shadow: 0 0 0 0.2rem rgba(65, 184, 131, 0.25);
+}
+
+/* Dark mode for new elements */
+.app.dark-mode .search-results {
+  background-color: #2a2a2a;
+  border-bottom-color: #444;
+}
+
+.app.dark-mode .code-block {
+  background-color: #1a1a1a !important;
+  color: #f8f8f2 !important;
+}
+
+.app.dark-mode .copy-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f8f8f2;
+}
+
+.app.dark-mode .contact-info {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.app.dark-mode .contact-info p {
+  color: #adb5bd;
+}
+
+/* Loading Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #41b883;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+  background: linear-gradient(135deg, #41b883, #2a6b52);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2a6b52, #41b883);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(65, 184, 131, 0.3);
+}
+
+.btn-outline-primary {
+  border-color: #41b883;
+  color: #41b883;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #41b883;
+  border-color: #41b883;
+  transform: translateY(-2px);
+}
+
+/* Card Hover Effects */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .search-results .col-md-4 {
+    margin-bottom: 15px;
+  }
+  
+  .code-block-container {
+    margin: 15px 0;
+  }
+  
+  .copy-btn {
+    position: static;
+    display: block;
+    margin-top: 10px;
+    width: fit-content;
+  }
+  
+  .contact-info {
+    margin-bottom: 30px;
+  }
+}
+
+/* Accessibility Improvements */
+.btn:focus,
+.form-control:focus,
+.form-select:focus {
+  outline: 2px solid #41b883;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .btn,
+  .copy-btn,
+  .search-results {
+    display: none !important;
+  }
+  
+  .code-block {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #ccc;
+  }
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card animations */
+.architecture-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Component box hover effects */
+.component-box {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.component-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .header-section h1 {
+    font-size: 2rem;
+  }
+  
+  .navbar-nav {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .component-box {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Loading states */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
