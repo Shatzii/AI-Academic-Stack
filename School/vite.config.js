@@ -32,7 +32,17 @@ export default defineConfig({
             if (id.includes('axios') || id.includes('socket.io-client') || id.includes('react-hot-toast')) {
               return 'utils-vendor'
             }
+            if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+              return 'charts-vendor'
+            }
             return 'vendor'
+          }
+          // Separate large components into chunks
+          if (id.includes('components/ai/')) {
+            return 'ai-components'
+          }
+          if (id.includes('components/courses/')) {
+            return 'course-components'
           }
         },
         // Optimize chunk file names
@@ -56,11 +66,14 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug']
       }
     },
     // Set chunk size warning limit
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    // Enable CSS code splitting
+    cssCodeSplit: true
   },
   // Optimize dev server
   server: {

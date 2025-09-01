@@ -26,6 +26,8 @@ const InternationalizationSettings = lazy(() => import('./components/common/Inte
 const OnboardingWizard = lazy(() => import('./components/common/OnboardingWizard'))
 const CoursesList = lazy(() => import('./components/courses/CoursesList'))
 const AIAssistant = lazy(() => import('./components/ai/AIAssistant'))
+const StudentIDSystem = lazy(() => import('./components/common/StudentIDSystem'))
+const StudentIDAdmin = lazy(() => import('./components/common/StudentIDAdmin'))
 
 // Context
 import { AuthProvider } from './context/AuthContext.jsx'
@@ -46,11 +48,15 @@ function App() {
         <AuthProvider>
           <AchievementNotifications />
           <Router>
+            {/* Skip Links for Accessibility */}
+            <a href="#main-content" className="skip-link">Skip to main content</a>
+            <a href="#navigation" className="skip-link">Skip to navigation</a>
+            <div className="app-container" role="application" aria-label="OpenEdTex Academic Platform">
             <div className="app">
               <Navbar />
               <div className="main-content">
                 <Sidebar />
-                <main className="content">
+                <main id="main-content" className="content">
                   <Routes>
                     {/* Public Routes */}
                     <Route path="/" element={
@@ -118,6 +124,16 @@ function App() {
                   <Route path="/ai/chat" element={
                     <Suspense fallback={<Loading message="Loading AI assistant..." />}>
                       <AIAssistant />
+                    </Suspense>
+                  } />
+                  <Route path="/student-id" element={
+                    <Suspense fallback={<Loading message="Loading Student ID system..." />}>
+                      <StudentIDSystem />
+                    </Suspense>
+                  } />
+                  <Route path="/admin/student-id" element={
+                    <Suspense fallback={<Loading message="Loading Student ID admin..." />}>
+                      <StudentIDAdmin />
                     </Suspense>
                   } />
 

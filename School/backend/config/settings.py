@@ -68,6 +68,9 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'health_check',  # Health check app
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 
     # Local apps
     'users',
@@ -113,6 +116,12 @@ LOGGING = {
             'filename': BASE_DIR / 'logs' / 'django_error.log',
             'formatter': 'verbose',
         },
+        'security_file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'security.log',
+            'formatter': 'verbose',
+        },
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -132,6 +141,11 @@ LOGGING = {
         'django.request': {
             'handlers': ['console', 'file'],
             'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['security_file'],
+            'level': 'WARNING',
             'propagate': False,
         },
     },

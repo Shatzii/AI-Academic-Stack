@@ -1,8 +1,11 @@
 # Create a secrets validation utility
 
 import os
+import logging
 from pathlib import Path
 from dotenv import load_dotenv
+
+logger = logging.getLogger(__name__)
 
 class SecretsValidator:
     """Validate that all required secrets are properly configured"""
@@ -77,7 +80,8 @@ class SecretsValidator:
                         if value:
                             results['optional'][secret] = self._validate_secret_strength(secret, value)
                             continue
-                    except:
+                    except Exception as e:
+                        logger.warning(f"Failed to decrypt secret {secret}: {e}")
                         pass
             
             if value and not value.startswith('your-') and value != '':

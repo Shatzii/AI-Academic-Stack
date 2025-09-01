@@ -17,6 +17,18 @@ export const sendMessage = createAsyncThunk(
   }
 )
 
+export const fetchConversations = createAsyncThunk(
+  'ai/fetchConversations',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await aiAPI.getConversations()
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Failed to fetch conversations')
+    }
+  }
+)
+
 export const fetchConversation = createAsyncThunk(
   'ai/fetchConversation',
   async (conversationId, { rejectWithValue }) => {
@@ -98,5 +110,5 @@ const aiSlice = createSlice({
   },
 })
 
-export const { clearError, setCurrentConversation, addMessage, clearConversation } = aiSlice.actions
+export const { clearConversation, setCurrentConversation, addMessage } = aiSlice.actions
 export default aiSlice.reducer

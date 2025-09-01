@@ -48,6 +48,8 @@ class CourseListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        # Optimize queries with select_related and prefetch_related
+        queryset = queryset.select_related('subject', 'instructor')
         # Only show published courses to non-instructors
         if not (self.request.user.is_authenticated and
                 (self.request.user.is_teacher or self.request.user.is_admin)):
@@ -72,6 +74,10 @@ class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        # Optimize queries with select_related and prefetch_related
+        queryset = queryset.select_related('subject', 'instructor').prefetch_related(
+            'lessons', 'reviews', 'materials', 'enrollments__student'
+        )
         # Allow instructors to see their own courses in any status
         if self.request.user.is_authenticated and self.request.user.is_teacher:
             return queryset.filter(

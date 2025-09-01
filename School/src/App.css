@@ -1,12 +1,40 @@
-/* Base CSS Variables for Branding */
-:root {
-  --brand-primary: #007bff;
-  --brand-secondary: #6c757d;
-  --brand-accent: #28a745;
-  --brand-background: #ffffff;
-  --brand-text: #212529;
-  --brand-primary-font: 'Inter', sans-serif;
-  --brand-heading-font: 'Inter', sans-serif;
+/* Accessibility Styles */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--brand-primary);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Focus indicators */
+*:focus {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn {
+    border: 2px solid;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Apply branding variables to Bootstrap classes */

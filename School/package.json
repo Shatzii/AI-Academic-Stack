@@ -31,13 +31,15 @@
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
+    "react-intersection-observer": "^9.16.0",
     "react-markdown": "^8.0.7",
     "react-modal": "^3.16.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.0",
     "react-spinners": "^0.13.8",
     "react-syntax-highlighter": "^15.6.6",
-    "socket.io-client": "^4.7.0"
+    "socket.io-client": "^4.7.0",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
@@ -47,6 +49,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "lighthouse": "^12.8.2",
     "terser": "^5.43.1",
     "vite": "^5.4.19"
   }

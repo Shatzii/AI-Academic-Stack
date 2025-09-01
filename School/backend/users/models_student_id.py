@@ -10,6 +10,9 @@ from PIL import Image, ImageDraw, ImageFont
 import barcode
 from barcode.writer import ImageWriter
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class StudentIDCard(models.Model):
@@ -219,8 +222,8 @@ class StudentIDCard(models.Model):
                 qr_img = Image.open(self.qr_code.path)
                 qr_img = qr_img.resize((100, 100))
                 img.paste(qr_img, (450, 250))
-            except:
-                pass
+            except Exception as e:
+                logger.warning(f"Failed to add QR code: {e}")
 
         # Add barcode (if exists)
         if self.barcode_image:
@@ -228,8 +231,8 @@ class StudentIDCard(models.Model):
                 barcode_img = Image.open(self.barcode_image.path)
                 barcode_img = barcode_img.resize((200, 50))
                 img.paste(barcode_img, (350, 320))
-            except:
-                pass
+            except Exception as e:
+                logger.warning(f"Failed to add barcode: {e}")
 
         # Add footer
         draw.text((30, height - 40), "This card remains property of OpenEdTex University", fill='#666666', font=font_small)
