@@ -154,6 +154,7 @@ function App() {
               }}
             />
           </div>
+          </div>
         </Router>
       </AuthProvider>
     </BrandingProvider>
