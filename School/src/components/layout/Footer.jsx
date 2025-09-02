@@ -5,11 +5,11 @@ const Footer = () => {
   const { branding } = useBranding()
 
   return (
-    <footer className="footer bg-dark text-light py-4 mt-auto">
+    <footer className="footer">
       <div className="container">
         <div className="row">
           <div className="col-lg-4 mb-4">
-            <h5 className="mb-3">
+            <h5 className="mb-3 d-flex align-items-center">
               {branding?.small_logo_url && (
                 <img
                   src={branding.small_logo_url}
@@ -18,10 +18,10 @@ const Footer = () => {
                   className="me-2"
                 />
               )}
-              <i className="fas fa-graduation-cap me-2"></i>
-              {branding?.school_name || 'OpenEdTex'}
+              <i className="fas fa-graduation-cap me-2 text-primary"></i>
+              <span className="text-white">{branding?.school_name || 'OpenEdTex'}</span>
             </h5>
-            <p className="mb-3">
+            <p className="mb-3 text-white-50">
               {branding?.school_tagline || 'AI-powered educational platform for the future of learning. Transform your educational experience with intelligent tools and real-time collaboration.'}
             </p>
             <div className="social-links">

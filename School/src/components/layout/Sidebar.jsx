@@ -89,16 +89,16 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-header">
-        <div className="user-info">
-          <div className="user-avatar">
+      <div className="sidebar-header p-4">
+        <div className="d-flex align-items-center">
+          <div className="user-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style={{width: '40px', height: '40px'}}>
             <i className="fas fa-user"></i>
           </div>
           <div className="user-details">
-            <h6 className="user-name">
+            <h6 className="user-name mb-0 fw-semibold text-white">
               {user?.first_name} {user?.last_name}
             </h6>
-            <span className="user-role text-capitalize">
+            <span className="user-role text-capitalize text-white-50 small">
               {user?.role || 'Student'}
             </span>
           </div>
@@ -106,15 +106,17 @@ const Sidebar = () => {
       </div>
 
       <nav className="sidebar-nav">
-        <ul className="nav-list">
+        <ul className="list-unstyled">
           {filteredMenuItems.map((item) => (
-            <li key={item.path} className="nav-item">
+            <li key={item.path} className="mb-1">
               <Link
                 to={item.path}
-                className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
+                className={`sidebar-nav-link d-flex align-items-center text-decoration-none px-4 py-3 rounded-end ${
+                  isActive(item.path) ? 'active' : ''
+                }`}
               >
-                <i className={`${item.icon} nav-icon`}></i>
-                <span className="nav-text">{item.label}</span>
+                <i className={`${item.icon} me-3`} style={{width: '20px', textAlign: 'center'}}></i>
+                <span>{item.label}</span>
               </Link>
             </li>
           ))}

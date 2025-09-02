@@ -28,6 +28,9 @@ const CoursesList = lazy(() => import('./components/courses/CoursesList'))
 const AIAssistant = lazy(() => import('./components/ai/AIAssistant'))
 const StudentIDSystem = lazy(() => import('./components/common/StudentIDSystem'))
 const StudentIDAdmin = lazy(() => import('./components/common/StudentIDAdmin'))
+const ClassroomList = lazy(() => import('./components/classrooms/ClassroomList'))
+const ClassroomDetail = lazy(() => import('./components/classrooms/ClassroomDetail'))
+const StudyGroups = lazy(() => import('./components/common/StudyGroups'))
 
 // Context
 import { AuthProvider } from './context/AuthContext.jsx'
@@ -37,9 +40,7 @@ import { BrandingProvider } from './context/BrandingContext.jsx'
 import AchievementNotifications from './components/common/AchievementNotifications'
 
 // Styles
-import './App.css'
-import './components.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import './styles/index.css'
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
       <BrandingProvider>
         <AuthProvider>
           <AchievementNotifications />
-          <Router>
+          <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             {/* Skip Links for Accessibility */}
             <a href="#main-content" className="skip-link">Skip to main content</a>
             <a href="#navigation" className="skip-link">Skip to navigation</a>
@@ -134,6 +135,21 @@ function App() {
                   <Route path="/admin/student-id" element={
                     <Suspense fallback={<Loading message="Loading Student ID admin..." />}>
                       <StudentIDAdmin />
+                    </Suspense>
+                  } />
+                  <Route path="/classrooms" element={
+                    <Suspense fallback={<Loading message="Loading classrooms..." />}>
+                      <ClassroomList />
+                    </Suspense>
+                  } />
+                  <Route path="/classrooms/:id" element={
+                    <Suspense fallback={<Loading message="Loading classroom..." />}>
+                      <ClassroomDetail />
+                    </Suspense>
+                  } />
+                  <Route path="/study-groups" element={
+                    <Suspense fallback={<Loading message="Loading study groups..." />}>
+                      <StudyGroups />
                     </Suspense>
                   } />
 

@@ -5,6 +5,7 @@ import { useBranding } from '../../context/BrandingContext.jsx'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../slices/authSlice'
 import toast from 'react-hot-toast'
+import ThemeToggle from '../common/ThemeToggle.jsx'
 
 const Navbar = memo(() => {
   const { user, isAuthenticated } = useAuth()
@@ -24,9 +25,9 @@ const Navbar = memo(() => {
   }
 
   return (
-    <nav id="navigation" className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: branding?.primary_color || '#007bff' }} role="navigation" aria-label="Main navigation">
+    <nav id="navigation" className="navbar navbar-expand-lg" role="navigation" aria-label="Main navigation">
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand d-flex align-items-center" to="/">
           {branding?.small_logo_url && (
             <img
               src={branding.small_logo_url}
@@ -35,8 +36,8 @@ const Navbar = memo(() => {
               className="me-2"
             />
           )}
-          <i className="fas fa-graduation-cap me-2"></i>
-          {branding?.school_name || 'OpenEdTex'}
+          <i className="fas fa-graduation-cap me-2 text-primary"></i>
+          <span className="fw-bold text-primary">{branding?.school_name || 'OpenEdTex'}</span>
         </Link>
 
         <button
@@ -53,37 +54,37 @@ const Navbar = memo(() => {
         <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/" onClick={() => setIsMenuOpen(false)}>
-                <i className="fas fa-home me-1"></i>Home
+              <Link className="nav-link px-3 py-2" to="/" onClick={() => setIsMenuOpen(false)}>
+                <i className="fas fa-home me-2"></i>Home
               </Link>
             </li>
 
             {isAuthenticated && (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/courses" onClick={() => setIsMenuOpen(false)}>
-                    <i className="fas fa-book me-1"></i>Courses
+                  <Link className="nav-link px-3 py-2" to="/courses" onClick={() => setIsMenuOpen(false)}>
+                    <i className="fas fa-book me-2"></i>Courses
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/ai/chat" onClick={() => setIsMenuOpen(false)}>
-                    <i className="fas fa-brain me-1"></i>AI Assistant
+                  <Link className="nav-link px-3 py-2" to="/ai/chat" onClick={() => setIsMenuOpen(false)}>
+                    <i className="fas fa-brain me-2"></i>AI Assistant
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                    <i className="fas fa-chart-line me-1"></i>Dashboard
+                  <Link className="nav-link px-3 py-2" to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                    <i className="fas fa-chart-line me-2"></i>Dashboard
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/student-id" onClick={() => setIsMenuOpen(false)}>
-                    <i className="fas fa-id-card me-1"></i>Student ID
+                  <Link className="nav-link px-3 py-2" to="/student-id" onClick={() => setIsMenuOpen(false)}>
+                    <i className="fas fa-id-card me-2"></i>Student ID
                   </Link>
                 </li>
                 {user?.role === 'admin' && (
                   <li className="nav-item">
-                    <Link className="nav-link" to="/admin/student-id" onClick={() => setIsMenuOpen(false)}>
-                      <i className="fas fa-cog me-1"></i>Admin
+                    <Link className="nav-link px-3 py-2" to="/admin/student-id" onClick={() => setIsMenuOpen(false)}>
+                      <i className="fas fa-cog me-2"></i>Admin
                     </Link>
                   </li>
                 )}
@@ -92,6 +93,9 @@ const Navbar = memo(() => {
           </ul>
 
           <ul className="navbar-nav">
+            <li className="nav-item d-flex align-items-center me-3">
+              <ThemeToggle />
+            </li>
             {isAuthenticated ? (
               <li className="nav-item dropdown">
                 <a
@@ -124,7 +128,7 @@ const Navbar = memo(() => {
                         </Link>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="http://localhost:8000/admin/" target="_blank" rel="noopener noreferrer">
+                        <a className="dropdown-item" href="http://localhost:8001/admin/" target="_blank" rel="noopener noreferrer">
                           <i className="fas fa-user-shield me-2"></i>Django Admin
                         </a>
                       </li>

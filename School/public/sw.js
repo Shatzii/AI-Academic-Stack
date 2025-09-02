@@ -80,8 +80,11 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(request)
       .then((response) => {
-        // Cache successful responses
-        if (response.status === 200) {
+        // Cache successful responses (only cache same-origin requests)
+        if (response.status === 200 &&
+            url.origin === self.location.origin &&
+            !request.url.startsWith('chrome-extension://') &&
+            !request.url.includes('github.dev')) {
           const responseClone = response.clone()
           caches.open(STATIC_CACHE).then((cache) => {
             cache.put(request, responseClone)

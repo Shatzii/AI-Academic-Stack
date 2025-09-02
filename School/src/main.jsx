@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import ErrorBoundary from './components/common/ErrorBoundary.jsx'
-import './style.css'
+import './styles/index.css'
 
 // Register service worker for caching
 if ('serviceWorker' in navigator) {

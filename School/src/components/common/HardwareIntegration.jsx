@@ -37,7 +37,7 @@ const HardwareIntegration = () => {
 
   const initializeWebSocket = () => {
     try {
-      const ws = new WebSocket('ws://localhost:8000/ws/hardware/')
+      const ws = new WebSocket('ws://localhost:8001/ws/hardware/')
 
       ws.onopen = () => {
         console.log('WebSocket connected')
