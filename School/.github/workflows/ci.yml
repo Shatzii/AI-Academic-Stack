@@ -2,14 +2,13 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
     branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:13
@@ -27,7 +26,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -43,17 +42,40 @@ jobs:
     - name: Run tests
       run: |
         cd backend
-        python manage.py test
+        python manage.py test --verbosity=2
 
     - name: Run security audit
       run: |
         cd backend
-        pip install bandit
+        chmod +x security_audit.sh
+        ./security_audit.sh
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install linting tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black isort bandit
+
+    - name: Run linters
+      run: |
+        cd backend
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        black --check .
+        isort --check-only .
         bandit -r . -f json -o security_audit.json
 
-  build-frontend:
+  frontend-test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
 
@@ -61,9 +83,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
+        cache: 'npm'
 
     - name: Install dependencies
       run: npm install
+
+    - name: Run tests
+      run: npm test -- --watchAll=false
 
     - name: Run linting
       run: npm run lint
@@ -71,16 +97,13 @@ jobs:
     - name: Build
       run: npm run build
 
-  security-audit:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-
     - name: Audit dependencies
       run: npm audit --audit-level moderate
+
+  deploy:
+    needs: [test, lint, frontend-test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+    - name: Deploy to production
+      run: echo "Deploy to production server"

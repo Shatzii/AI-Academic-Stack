@@ -1,0 +1,16 @@
+{
+    "include": [
+        "backend"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "__pycache__",
+        "*.pyc"
+    ],
+    "pythonVersion": "3.12",
+    "typeCheckingMode": "basic",
+    "useLibraryCodeForTypes": true,
+    "reportMissingImports": "warning",
+    "reportMissingTypeStubs": "warning"
+}

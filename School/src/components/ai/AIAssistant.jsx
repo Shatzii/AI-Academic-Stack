@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 const AIAssistant = () => {
   const dispatch = useDispatch()
   const { user } = useAuth()
-  const { messages, loading, conversationId } = useSelector(state => state.ai)
+  const { messages, loading, conversationId, aiServiceInfo } = useSelector(state => state.ai)
 
   const [inputMessage, setInputMessage] = useState('')
   const [selectedSubject, setSelectedSubject] = useState('')
@@ -288,7 +288,51 @@ const AIAssistant = () => {
                 </div>
               </div>
 
-              {/* Tips */}
+              {/* AI Service Info */}
+              <div className="card mb-4 border-0 shadow-sm">
+                <div className="card-header bg-white border-0">
+                  <h6 className="mb-0 fw-bold">
+                    <i className="fas fa-cogs text-primary me-2"></i>
+                    AI Service Status
+                  </h6>
+                </div>
+                <div className="card-body">
+                  <div className="ai-service-info">
+                    <div className="mb-2">
+                      <small className="text-muted">Service:</small>
+                      <div>
+                        <span className={`badge ${aiServiceInfo.serviceType === 'ollama' ? 'bg-success' : aiServiceInfo.serviceType === 'openai' ? 'bg-info' : 'bg-warning'}`}>
+                          {aiServiceInfo.serviceType ? aiServiceInfo.serviceType.toUpperCase() : 'HYBRID'}
+                        </span>
+                      </div>
+                    </div>
+                    {aiServiceInfo.model && (
+                      <div className="mb-2">
+                        <small className="text-muted">Model:</small>
+                        <div className="small fw-bold">{aiServiceInfo.model}</div>
+                      </div>
+                    )}
+                    {aiServiceInfo.tokensUsed > 0 && (
+                      <div className="mb-2">
+                        <small className="text-muted">Tokens Used:</small>
+                        <div className="small fw-bold">{aiServiceInfo.tokensUsed}</div>
+                      </div>
+                    )}
+                    {aiServiceInfo.responseTime > 0 && (
+                      <div className="mb-2">
+                        <small className="text-muted">Response Time:</small>
+                        <div className="small fw-bold">{aiServiceInfo.responseTime.toFixed(2)}s</div>
+                      </div>
+                    )}
+                    {!aiServiceInfo.serviceType && (
+                      <div className="text-muted small">
+                        <i className="fas fa-info-circle me-1"></i>
+                        Service info will appear after your first message
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
               <div className="card border-0 shadow-sm">
                 <div className="card-header bg-white border-0">
                   <h6 className="mb-0 fw-bold">

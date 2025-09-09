@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # ... existing services ...
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: openedtex_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app
+
+  ai-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.ai
+    container_name: openedtex_ai_service
+    ports:
+      - "8001:8001"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AI_MODE=hybrid  # Can be 'ollama', 'openai', or 'hybrid'
+    depends_on:
+      - ollama
+    networks:
+      - app
+
+volumes:
+  ollama_data:
+
+networks:
+  app:
+    driver: bridge

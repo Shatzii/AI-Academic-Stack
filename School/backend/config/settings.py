@@ -13,13 +13,50 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'gl595leG0_WyDhmqYZimFRXrI6FEf6pFUY2y9yCYDjvOjXOKIlH3H5RSF78CG__MXc')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-very-long-and-secure-secret-key-here-change-this-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 # Environment detection
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
+
+# AWS Secrets Manager Integration for Production
+if ENVIRONMENT == 'production':
+    try:
+        import boto3
+        from botocore.exceptions import ClientError
+        
+        def get_secret(secret_name, region_name="us-east-1"):
+            """Retrieve secret from AWS Secrets Manager"""
+            session = boto3.session.Session()
+            client = session.client(
+                service_name='secretsmanager',
+                region_name=region_name
+            )
+            
+            try:
+                get_secret_value_response = client.get_secret_value(
+                    SecretId=secret_name
+                )
+            except ClientError as e:
+                print(f"Error retrieving secret {secret_name}: {e}")
+                return None
+            
+            if 'SecretString' in get_secret_value_response:
+                return get_secret_value_response['SecretString']
+            return None
+        
+        # Load secrets from AWS Secrets Manager
+        aws_secrets = get_secret('openedtex/production/secrets')
+        if aws_secrets:
+            import json
+            secrets = json.loads(aws_secrets)
+            for key, value in secrets.items():
+                os.environ[key] = value
+        
+    except ImportError:
+        print("AWS SDK not available, using environment variables")
 
 # Security settings - Enhanced for production
 SECURE_BROWSER_XSS_FILTER = True
@@ -71,6 +108,7 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'two_factor',
+    'django_prometheus',
 
     # Local apps
     'users',
@@ -81,6 +119,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -90,6 +129,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

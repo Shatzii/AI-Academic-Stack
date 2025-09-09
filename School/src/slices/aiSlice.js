@@ -48,6 +48,12 @@ const initialState = {
   loading: false,
   error: null,
   stats: null,
+  aiServiceInfo: {
+    model: null,
+    tokensUsed: 0,
+    responseTime: 0,
+    serviceType: null, // 'ollama', 'openai', or 'hybrid'
+  },
 }
 
 const aiSlice = createSlice({
@@ -58,12 +64,32 @@ const aiSlice = createSlice({
       state.currentConversation = null
       state.messages = []
       state.error = null
+      state.aiServiceInfo = {
+        model: null,
+        tokensUsed: 0,
+        responseTime: 0,
+        serviceType: null,
+      }
     },
     setCurrentConversation: (state, action) => {
       state.currentConversation = action.payload
     },
     addMessage: (state, action) => {
       state.messages.push(action.payload)
+    },
+    updateAIServiceInfo: (state, action) => {
+      state.aiServiceInfo = {
+        ...state.aiServiceInfo,
+        ...action.payload,
+      }
+    },
+    clearAIServiceInfo: (state) => {
+      state.aiServiceInfo = {
+        model: null,
+        tokensUsed: 0,
+        responseTime: 0,
+        serviceType: null,
+      }
     },
   },
   extraReducers: (builder) => {
@@ -76,6 +102,16 @@ const aiSlice = createSlice({
         state.loading = false
         if (!state.currentConversation) {
           state.currentConversation = action.payload.conversation_id
+        }
+        // Update AI service info if available in response
+        if (action.payload.tokens_used !== undefined || action.payload.response_time !== undefined || action.payload.service_type || action.payload.model) {
+          state.aiServiceInfo = {
+            ...state.aiServiceInfo,
+            tokensUsed: action.payload.tokens_used || state.aiServiceInfo.tokensUsed,
+            responseTime: action.payload.response_time || state.aiServiceInfo.responseTime,
+            serviceType: action.payload.service_type || state.aiServiceInfo.serviceType,
+            model: action.payload.model || state.aiServiceInfo.model,
+          }
         }
       })
       .addCase(sendMessage.rejected, (state, action) => {
@@ -110,5 +146,5 @@ const aiSlice = createSlice({
   },
 })
 
-export const { clearConversation, setCurrentConversation, addMessage } = aiSlice.actions
+export const { clearConversation, setCurrentConversation, addMessage, updateAIServiceInfo, clearAIServiceInfo } = aiSlice.actions
 export default aiSlice.reducer

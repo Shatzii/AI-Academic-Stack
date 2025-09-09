@@ -41,6 +41,9 @@ urlpatterns = [
 
     # Health check
     path('health/', include('health_check.urls')),
+
+    # Prometheus metrics
+    path('metrics/', include('django_prometheus.urls')),
 ]
 
 # Serve media files during development

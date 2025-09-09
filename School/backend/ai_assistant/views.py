@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.db import models
 from .models import (
     AIConversation, AIMessage, AIPromptTemplate, AIStudyPlan,
     AIQuiz, AIQuizAttempt
@@ -15,10 +16,13 @@ from .serializers import (
     AIChatRequestSerializer, AIStudyPlanRequestSerializer,
     AIQuizGenerationRequestSerializer, AIResponseSerializer
 )
-import openai
 from django.conf import settings
 import json
 from datetime import timedelta
+from ai_service_client import get_ai_response
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class AIConversationListView(generics.ListCreateAPIView):
@@ -101,7 +105,7 @@ class AIChatView(APIView):
         )
 
         # Generate AI response
-        ai_response, tokens_used, response_time = self.generate_ai_response(
+        ai_response, tokens_used, response_time, service_type = self.generate_ai_response(
             user_message, conversation, context
         )
 
@@ -127,6 +131,8 @@ class AIChatView(APIView):
             'message_id': ai_msg.id,
             'tokens_used': tokens_used,
             'response_time': response_time,
+            'service_type': service_type,
+            'model': 'gpt-3.5-turbo',  # Default model, could be enhanced to return actual model used
             'suggestions': self.generate_suggestions(ai_response)
         }
 
@@ -136,7 +142,7 @@ class AIChatView(APIView):
         return Response(response_serializer.validated_data)
 
     def generate_ai_response(self, user_message, conversation, context):
-        """Generate AI response using OpenAI."""
+        """Generate AI response using AI service with OpenAI fallback."""
         import time
         start_time = time.time()
 
@@ -154,25 +160,25 @@ class AIChatView(APIView):
                 role = "user" if msg.message_type == "user" else "assistant"
                 messages.append({"role": role, "content": msg.content})
 
-            # Make API call
-            client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+            # Use our AI service client with fallback
+            ai_response, tokens_used, response_time, service_type = get_ai_response(
                 messages=messages,
-                max_tokens=1000,
-                temperature=0.7
+                model="gpt-3.5-turbo",  # Default model, will use local if available
+                temperature=0.7,
+                max_tokens=1000
             )
 
-            ai_response = response.choices[0].message.content
-            tokens_used = response.usage.total_tokens
-            response_time = round(time.time() - start_time, 2)
+            # Adjust response time if it wasn't set by the service
+            if response_time == 0:
+                response_time = round(time.time() - start_time, 2)
 
-            return ai_response, tokens_used, response_time
+            return ai_response, tokens_used, response_time, service_type
 
         except Exception as e:
+            logger.error(f"AI response generation failed: {e}")
             # Fallback response
             fallback_response = "I'm sorry, I'm having trouble processing your request right now. Please try again later."
-            return fallback_response, 0, round(time.time() - start_time, 2)
+            return fallback_response, 0, round(time.time() - start_time, 2), 'fallback'
 
     def build_system_prompt(self, conversation, context):
         """Build system prompt for AI."""
@@ -295,15 +301,11 @@ class AIStudyPlanListView(generics.ListCreateAPIView):
         """
 
         try:
-            client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=1500,
-                temperature=0.7
+            from ai_service_client import get_ai_response
+            messages = [{"role": "user", "content": prompt}]
+            ai_response, tokens_used, response_time, service_type = get_ai_response(
+                messages, max_tokens=1500, temperature=0.7
             )
-
-            ai_response = response.choices[0].message.content
 
             # Parse JSON response
             try:
@@ -413,15 +415,11 @@ class AIQuizListView(generics.ListCreateAPIView):
         """
 
         try:
-            client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=2000,
-                temperature=0.7
+            from ai_service_client import get_ai_response
+            messages = [{"role": "user", "content": prompt}]
+            ai_response, tokens_used, response_time, service_type = get_ai_response(
+                messages, max_tokens=2000, temperature=0.7
             )
-
-            ai_response = response.choices[0].message.content
 
             # Parse JSON response
             try:
