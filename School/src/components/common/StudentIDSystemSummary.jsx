@@ -129,7 +129,7 @@ const StudentIDSystemSummary = () => {
                 </div>
                 <div className="card-content">
                   <h3>{systemStats.total_records_today || 0}</h3>
-                  <p>Today's Records</p>
+                  <p>Today&apos;s Records</p>
                 </div>
               </div>
             </div>

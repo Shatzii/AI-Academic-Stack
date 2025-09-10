@@ -42,7 +42,7 @@ import NotFound from './components/common/NotFound'
 import Loading from './components/common/Loading'
 
 // Context
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 // Styles
 import './App.css'

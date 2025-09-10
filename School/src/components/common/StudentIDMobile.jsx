@@ -82,7 +82,7 @@ const StudentIDMobile = () => {
             <i className="fas fa-id-card fa-4x text-muted"></i>
           </div>
           <h3>No Active ID Card</h3>
-          <p className="text-muted">You don't have an active student ID card yet.</p>
+          <p className="text-muted">You don&apos;t have an active student ID card yet.</p>
           <p className="text-muted small">
             Please contact your school administration to request a new card.
           </p>

@@ -14,7 +14,8 @@
     "type-check": "tsc --noEmit",
     "optimize": "npm run lint:fix && npm run build",
     "check-optimizations": "node optimize-build.js",
-    "serve:optimized": "npm run build && npm run preview"
+    "serve:optimized": "npm run build && npm run preview",
+    "prepare": "husky"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
@@ -42,15 +43,26 @@
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^24.3.1",
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "lighthouse": "^12.8.2",
+    "lint-staged": "^16.1.6",
     "terser": "^5.43.1",
-    "vite": "^5.4.19"
+    "typescript": "^5.9.2",
+    "vite": "^5.4.19",
+    "vite-plugin-pwa": "^1.0.3",
+    "vitest": "^3.2.4",
+    "workbox-window": "^7.3.0"
   }
 }

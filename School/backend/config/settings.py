@@ -116,6 +116,8 @@ INSTALLED_APPS = [
     'classrooms',
     'ai_assistant',
     'analytics',
+    'adaptive_learning',
+    'gamification',
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,5 @@
 // frontend/src/utils/performanceMonitor.js
+import React from 'react';
 import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
 import api from '../api.js';
 

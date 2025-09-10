@@ -20,6 +20,8 @@ const Navbar = memo(() => {
     navigate('/')
   }
 
+  Navbar.displayName = 'Navbar'
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
@@ -162,5 +164,7 @@ const Navbar = memo(() => {
     </nav>
   )
 })
+
+Navbar.displayName = 'Navbar'
 
 export default Navbar

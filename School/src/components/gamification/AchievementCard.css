@@ -1,0 +1,342 @@
+/* Achievement Card Styles */
+
+.achievement-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.achievement-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.achievement-card.unlocked {
+  border-left-color: #27ae60;
+  background: linear-gradient(135deg, rgba(39, 174, 96, 0.05) 0%, rgba(46, 204, 113, 0.05) 100%);
+}
+
+.achievement-card.locked {
+  border-left-color: #95a5a6;
+  opacity: 0.8;
+  filter: grayscale(20%);
+}
+
+.achievement-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.achievement-card-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(52, 152, 219, 0.1);
+  border-radius: 50%;
+}
+
+.achievement-details h3 {
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.achievement-details p {
+  color: #7f8c8d;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.unlock-date {
+  color: #27ae60;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Requirements Section */
+.achievement-requirements {
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 3px solid #3498db;
+}
+
+.achievement-requirements h4 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.achievement-requirements ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.achievement-requirements li {
+  color: #7f8c8d;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.achievement-requirements li.completed {
+  color: #27ae60;
+  text-decoration: line-through;
+}
+
+.achievement-requirements li.completed::before {
+  content: '✓';
+  position: absolute;
+  left: -20px;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Progress Section */
+.achievement-progress {
+  margin-top: 15px;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #ecf0f1;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 10px 0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.4s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-text {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Footer Section */
+.achievement-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.achievement-points {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.points-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f39c12;
+}
+
+.points-label {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.achievement-rarity {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(149, 165, 166, 0.1);
+}
+
+/* Rarity Colors */
+.achievement-rarity.common {
+  color: #95a5a6;
+  background: rgba(149, 165, 166, 0.1);
+}
+
+.achievement-rarity.uncommon {
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+}
+
+.achievement-rarity.rare {
+  color: #3498db;
+  background: rgba(52, 152, 219, 0.1);
+}
+
+.achievement-rarity.epic {
+  color: #9b59b6;
+  background: rgba(155, 89, 182, 0.1);
+}
+
+.achievement-rarity.legendary {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+/* Hover Effects */
+.achievement-card.locked:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.achievement-card.unlocked:hover .achievement-card-icon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .achievement-card {
+    padding: 15px;
+  }
+
+  .achievement-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .achievement-card-icon {
+    align-self: center;
+  }
+
+  .achievement-details h3 {
+    font-size: 1.1rem;
+  }
+
+  .achievement-details p {
+    font-size: 0.9rem;
+  }
+
+  .achievement-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .points-value {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .achievement-card {
+    padding: 12px;
+  }
+
+  .achievement-card-icon {
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .achievement-details h3 {
+    font-size: 1rem;
+  }
+
+  .achievement-details p {
+    font-size: 0.85rem;
+  }
+
+  .progress-bar {
+    height: 8px;
+  }
+
+  .points-value {
+    font-size: 1.2rem;
+  }
+}
+
+/* Animation for newly unlocked achievements */
+@keyframes unlockPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.achievement-card.newly-unlocked {
+  animation: unlockPulse 0.6s ease-in-out;
+  box-shadow: 0 0 20px rgba(39, 174, 96, 0.4);
+}
+
+/* Special effects for legendary achievements */
+.achievement-card.legendary {
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.05) 0%, rgba(192, 57, 43, 0.05) 100%);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.achievement-card.legendary .achievement-card-icon {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* Tooltip for locked achievements */
+.achievement-tooltip {
+  position: relative;
+}
+
+.achievement-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}

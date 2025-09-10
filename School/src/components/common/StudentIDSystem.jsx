@@ -301,7 +301,7 @@ const StudentIDSystem = () => {
                   <div className="card-body text-center py-5">
                     <i className="fas fa-id-card fa-3x text-muted mb-3"></i>
                     <h5>No Active ID Card</h5>
-                    <p className="text-muted">You don't have an active student ID card yet.</p>
+                    <p className="text-muted">You don&apos;t have an active student ID card yet.</p>
                     <button
                       className="btn btn-primary"
                       onClick={() => setActiveTab('request')}
@@ -336,7 +336,7 @@ const StudentIDSystem = () => {
                     <h6>Security Tips</h6>
                     <ul className="small text-muted">
                       <li>Report lost cards immediately</li>
-                      <li>Don't share your card with others</li>
+                      <li>Don&apos;t share your card with others</li>
                       <li>Keep emergency contacts current</li>
                       <li>Check expiry date regularly</li>
                     </ul>

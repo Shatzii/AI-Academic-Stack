@@ -84,7 +84,7 @@ const OnboardingWizard = () => {
                     Welcome to OpenEdTex!
                   </h2>
                   <p className="text-muted mb-4">
-                    Let's personalize your learning experience in just a few steps
+                    Let&apos;s personalize your learning experience in just a few steps
                   </p>
 
                   {/* Progress Bar */}
@@ -279,7 +279,7 @@ const OnboardingWizard = () => {
                       </div>
                       <h4 className="mb-3">
                         <i className="fas fa-rocket text-primary me-2"></i>
-                        You're All Set!
+                        You&apos;re All Set!
                       </h4>
                       <p className="text-muted mb-4">
                         Welcome to OpenEdTex! Your learning journey is about to begin.

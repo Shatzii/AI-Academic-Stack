@@ -38,6 +38,8 @@ urlpatterns = [
     path('api/classrooms/', include('classrooms.urls')),
     path('api/ai/', include('ai_assistant.urls')),
     path('api/analytics/', include('analytics.urls')),
+    path('api/adaptive/', include('adaptive_learning.urls')),
+    path('api/gamification/', include('gamification.urls')),
 
     # Health check
     path('health/', include('health_check.urls')),

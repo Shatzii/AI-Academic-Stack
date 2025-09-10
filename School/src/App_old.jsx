@@ -109,25 +109,6 @@ function App() {
 }
 
 export default App
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
-                <button 
-                  className={`nav-link ${activeSection === 'architecture' ? 'active' : ''}`}
-                  onClick={() => setActiveSection('architecture')}
-                >
-                  Architecture
-                </button>
-              </li>
-              <li className="nav-item">
-                <button 
-                  className={`nav-link ${activeSection === 'frontend' ? 'active' : ''}`}
-                  onClick={() => setActiveSection('frontend')}
-                >
-                  Frontend
-                </button>
-              </li>
               <li className="nav-item">
                 <button 
                   className={`nav-link ${activeSection === 'backend' ? 'active' : ''}`}
