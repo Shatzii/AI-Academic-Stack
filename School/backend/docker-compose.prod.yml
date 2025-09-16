@@ -68,7 +68,7 @@ services:
     ports:
       - "4173:4173"
     environment:
-      - VITE_API_URL=https://api.yourdomain.com
+      - VITE_API_URL=https://${API_DOMAIN:-api.yourdomain.com}
     depends_on:
       - backend
     restart: unless-stopped
@@ -94,7 +94,7 @@ services:
     volumes:
       - certbot_www:/var/www/certbot
       - certbot_conf:/etc/letsencrypt
-    command: certonly --webroot -w /var/www/certbot --email your-email@example.com -d your_domain.com -d www.your_domain.com --agree-tos --non-interactive
+    command: certonly --webroot -w /var/www/certbot --email ${EMAIL_HOST_USER:-admin@yourdomain.com} -d ${DOMAIN:-yourdomain.com} -d www.${DOMAIN:-yourdomain.com} --agree-tos --non-interactive
     restart: unless-stopped
 
 volumes:
