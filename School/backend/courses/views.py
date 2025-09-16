@@ -14,7 +14,7 @@ from .serializers import (
     EnrollmentCreateSerializer, CourseReviewSerializer, CourseReviewCreateSerializer,
     CourseMaterialSerializer, CourseStatsSerializer
 )
-from .permissions import IsInstructorOrReadOnly, IsEnrolledOrInstructor, IsStudentOrInstructor
+from .permissions import IsInstructorOrReadOnly, IsEnrolledOrInstructor, IsStudentOrInstructor, is_administrative_user
 from users.models_student_id import StudentIDCard
 
 
@@ -50,9 +50,9 @@ class CourseListView(generics.ListCreateAPIView):
         queryset = super().get_queryset()
         # Optimize queries with select_related and prefetch_related
         queryset = queryset.select_related('subject', 'instructor')
-        # Only show published courses to non-instructors
+        # Only show published courses to non-instructors and non-administrative users
         if not (self.request.user.is_authenticated and
-                (self.request.user.is_teacher or self.request.user.is_admin)):
+                (self.request.user.is_teacher or is_administrative_user(self.request.user))):
             queryset = queryset.filter(status='published')
         return queryset
 
@@ -78,12 +78,14 @@ class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
         queryset = queryset.select_related('subject', 'instructor').prefetch_related(
             'lessons', 'reviews', 'materials', 'enrollments__student'
         )
-        # Allow instructors to see their own courses in any status
+        # Allow instructors to see their own courses in any status, administrative users see all
         if self.request.user.is_authenticated and self.request.user.is_teacher:
             return queryset.filter(
                 Q(status='published') |
                 Q(instructor=self.request.user)
             )
+        elif self.request.user.is_authenticated and is_administrative_user(self.request.user):
+            return queryset  # Administrative users see all courses
         return queryset.filter(status='published')
 
 
@@ -100,8 +102,8 @@ class LessonListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         course_id = self.kwargs.get('course_id')
         course = get_object_or_404(Course, id=course_id)
-        # Check if user is the instructor
-        if course.instructor != self.request.user and not self.request.user.is_admin:
+        # Check if user is the instructor or has administrative privileges
+        if course.instructor != self.request.user and not is_administrative_user(self.request.user):
             raise permissions.PermissionDenied("You can only create lessons for your own courses.")
         serializer.save(course=course)
 
@@ -118,12 +120,12 @@ class LessonDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         lesson = self.get_object()
-        if lesson.course.instructor != self.request.user and not self.request.user.is_admin:
+        if lesson.course.instructor != self.request.user and not is_administrative_user(self.request.user):
             raise permissions.PermissionDenied("You can only modify lessons in your own courses.")
         serializer.save()
 
     def perform_destroy(self, instance):
-        if instance.course.instructor != self.request.user and not self.request.user.is_admin:
+        if instance.course.instructor != self.request.user and not is_administrative_user(self.request.user):
             raise permissions.PermissionDenied("You can only delete lessons in your own courses.")
         instance.delete()
 
@@ -142,6 +144,9 @@ class EnrollmentListView(generics.ListCreateAPIView):
         if self.request.user.is_teacher:
             # Teachers see enrollments in their courses
             return Enrollment.objects.filter(course__instructor=self.request.user)
+        elif is_administrative_user(self.request.user):
+            # Administrative users see all enrollments
+            return Enrollment.objects.all()
         elif self.request.user.is_student:
             # Students see their own enrollments
             return Enrollment.objects.filter(student=self.request.user)
@@ -170,6 +175,8 @@ class EnrollmentDetailView(generics.RetrieveUpdateAPIView):
         user = self.request.user
         if user.is_authenticated and hasattr(user, 'is_teacher') and user.is_teacher:
             return Enrollment.objects.filter(course__instructor=user)
+        elif user.is_authenticated and is_administrative_user(user):
+            return Enrollment.objects.all()  # Administrative users see all enrollments
         elif user.is_authenticated:
             return Enrollment.objects.filter(student=user)
         return Enrollment.objects.none()
@@ -230,7 +237,7 @@ class CourseMaterialListView(generics.ListCreateAPIView):
         lesson_id = self.kwargs.get('lesson_id')
         course = get_object_or_404(Course, id=course_id)
 
-        if course.instructor != self.request.user and not self.request.user.is_admin:
+        if course.instructor != self.request.user and not is_administrative_user(self.request.user):
             raise permissions.PermissionDenied("You can only add materials to your own courses.")
 
         lesson = None

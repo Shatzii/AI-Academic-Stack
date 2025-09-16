@@ -1,6 +1,11 @@
 from rest_framework import permissions
 
 
+def is_administrative_user(user):
+    """Helper function to check if user has administrative privileges."""
+    return user.is_admin or user.is_principal or user.is_superintendent
+
+
 class IsInstructorOrReadOnly(permissions.BasePermission):
     """Custom permission to only allow instructors to edit their own courses."""
 
@@ -17,8 +22,8 @@ class IsInstructorOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        # Write permissions only for the instructor or admin
-        return obj.instructor == request.user or request.user.is_admin
+        # Write permissions only for the instructor or administrative users
+        return obj.instructor == request.user or is_administrative_user(request.user)
 
 
 class IsEnrolledOrInstructor(permissions.BasePermission):
@@ -27,6 +32,10 @@ class IsEnrolledOrInstructor(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Allow instructors of the course
         if hasattr(obj, 'course') and obj.course.instructor == request.user:
+            return True
+
+        # Allow administrative users
+        if is_administrative_user(request.user):
             return True
 
         # Allow the student who owns the enrollment
@@ -47,6 +56,10 @@ class IsStudentOrInstructor(permissions.BasePermission):
         if hasattr(obj, 'course') and obj.course.instructor == request.user:
             return True
 
+        # Allow administrative users
+        if is_administrative_user(request.user):
+            return True
+
         # Allow students to see their own data
         if hasattr(obj, 'student') and obj.student == request.user:
             return True
@@ -60,6 +73,10 @@ class IsEnrolledStudent(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Allow instructors
         if hasattr(obj, 'course') and obj.course.instructor == request.user:
+            return True
+
+        # Allow administrative users
+        if is_administrative_user(request.user):
             return True
 
         # Allow enrolled students
