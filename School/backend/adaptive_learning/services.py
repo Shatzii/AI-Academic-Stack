@@ -4,17 +4,55 @@ from django.contrib.auth import get_user_model
 from django.db.models import Avg, Count, Q
 from .models import LearningProfile, PerformanceMetrics, AdaptivePath, StudySession, LearningGoal
 import logging
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
 
 class AdaptiveLearningEngine:
-    """Core adaptive learning engine that personalizes learning paths"""
+    """Core adaptive learning engine that personalizes learning paths with ML algorithms"""
 
     def __init__(self, user):
         self.user = user
         self.profile = self._get_or_create_profile()
         self.path = self._get_or_create_path()
+        
+        # ML models
+        self.performance_predictor = None
+        self.difficulty_adjuster = None
+        self.topic_recommender = None
+        self.learning_style_classifier = None
+        
+        # Initialize ML models
+        self._initialize_ml_models()
+
+    def _initialize_ml_models(self):
+        """Initialize machine learning models"""
+        try:
+            # Performance prediction model
+            self.performance_predictor = RandomForestRegressor(
+                n_estimators=100,
+                random_state=42,
+                max_depth=10
+            )
+            
+            # Difficulty adjustment model
+            self.difficulty_adjuster = RandomForestRegressor(
+                n_estimators=50,
+                random_state=42
+            )
+            
+            # Topic recommender (using collaborative filtering approach)
+            self.topic_recommender = None  # Will be trained on demand
+            
+            logger.info("ML models initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize ML models: {e}")
 
     def _get_or_create_profile(self):
         """Get or create learning profile for user"""
@@ -35,18 +73,271 @@ class AdaptiveLearningEngine:
         )
         return path
 
-    def analyze_performance(self, subject, topic, correct, time_taken):
-        """Analyze student performance and update metrics"""
+class AdaptiveLearningEngine:
+    """Core adaptive learning engine that personalizes learning paths with ML algorithms"""
+
+    def __init__(self, user):
+        self.user = user
+        self.profile = self._get_or_create_profile()
+        self.path = self._get_or_create_path()
+        
+        # ML models
+        self.performance_predictor = None
+        self.difficulty_adjuster = None
+        self.topic_recommender = None
+        self.learning_style_classifier = None
+        
+        # Initialize ML models
+        self._initialize_ml_models()
+
+    def _initialize_ml_models(self):
+        """Initialize machine learning models"""
+        try:
+            # Performance prediction model
+            self.performance_predictor = RandomForestRegressor(
+                n_estimators=100,
+                random_state=42,
+                max_depth=10
+            )
+            
+            # Difficulty adjustment model
+            self.difficulty_adjuster = RandomForestRegressor(
+                n_estimators=50,
+                random_state=42
+            )
+            
+            # Topic recommender (using collaborative filtering approach)
+            self.topic_recommender = None  # Will be trained on demand
+            
+            logger.info("ML models initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize ML models: {e}")
+
+    def analyze_performance_advanced(self, subject, topic, correct, time_taken, question_difficulty=1.0):
+        """Advanced performance analysis using ML algorithms"""
         try:
             metric, created = PerformanceMetrics.objects.get_or_create(
                 user=self.user,
                 subject=subject,
                 topic=topic,
-                defaults={'difficulty_level': 1.0}
+                defaults={'difficulty_level': question_difficulty}
             )
 
-            # Update performance metrics
-            metric.update_performance(correct, time_taken)
+            # Update performance with advanced metrics
+            self._update_performance_with_ml(metric, correct, time_taken, question_difficulty)
+
+            # Adjust difficulty using ML prediction
+            self._ml_difficulty_adjustment(metric)
+
+            # Update learning profile with clustering analysis
+            self._update_learning_profile_clustered(metric)
+
+            return metric
+
+        except Exception as e:
+            logger.error(f"Error in advanced performance analysis: {e}")
+            return None
+
+    def _update_performance_with_ml(self, metric, correct, time_taken, question_difficulty):
+        """Update performance metrics with ML-enhanced calculations"""
+        # Calculate weighted accuracy based on question difficulty
+        weight = question_difficulty / 5.0  # Normalize difficulty
+        weighted_correct = correct * (1 + weight)
+        
+        # Update metrics
+        metric.total_questions += 1
+        if correct:
+            metric.correct_answers += weighted_correct
+        
+        # Calculate moving average time
+        if metric.average_time == 0:
+            metric.average_time = time_taken
+        else:
+            # Exponential moving average
+            alpha = 0.3
+            metric.average_time = alpha * time_taken + (1 - alpha) * metric.average_time
+        
+        # Update mastery level using learning curve analysis
+        self._calculate_mastery_level_ml(metric)
+        
+        metric.save()
+
+    def _calculate_mastery_level_ml(self, metric):
+        """Calculate mastery level using machine learning approach"""
+        try:
+            # Get historical performance data
+            historical_data = PerformanceMetrics.objects.filter(
+                user=self.user,
+                subject=metric.subject
+            ).order_by('-last_practiced')[:20]  # Last 20 sessions
+            
+            if len(historical_data) < 5:
+                # Not enough data, use simple calculation
+                accuracy = metric.correct_answers / metric.total_questions
+                metric.mastery_level = min(1.0, accuracy * 1.2)
+                return
+            
+            # Prepare features for ML prediction
+            features = []
+            for data in historical_data:
+                features.append([
+                    data.correct_answers / data.total_questions,  # accuracy
+                    data.average_time,
+                    data.difficulty_level,
+                    (datetime.now().date() - data.last_practiced.date()).days  # days since practice
+                ])
+            
+            X = np.array(features)
+            y = np.array([data.mastery_level for data in historical_data])
+            
+            # Train model if we have enough data
+            if len(X) >= 10:
+                self.performance_predictor.fit(X, y)
+                
+                # Predict current mastery
+                current_features = np.array([[
+                    metric.correct_answers / metric.total_questions,
+                    metric.average_time,
+                    metric.difficulty_level,
+                    0  # current session
+                ]])
+                
+                predicted_mastery = self.performance_predictor.predict(current_features)[0]
+                metric.mastery_level = max(0.0, min(1.0, predicted_mastery))
+            else:
+                # Fallback to simple calculation
+                accuracy = metric.correct_answers / metric.total_questions
+                metric.mastery_level = min(1.0, accuracy * 1.1)
+                
+        except Exception as e:
+            logger.error(f"ML mastery calculation failed: {e}")
+            # Fallback
+            accuracy = metric.correct_answers / metric.total_questions
+            metric.mastery_level = min(1.0, accuracy)
+
+    def _ml_difficulty_adjustment(self, metric):
+        """Adjust difficulty using ML prediction"""
+        try:
+            # Get recent performance history
+            recent_performance = PerformanceMetrics.objects.filter(
+                user=self.user
+            ).order_by('-last_practiced')[:10]
+            
+            if len(recent_performance) < 5:
+                return self._adjust_difficulty(metric)  # Fallback to rule-based
+            
+            # Prepare training data
+            X = []
+            y = []
+            
+            for perf in recent_performance:
+                features = [
+                    perf.correct_answers / perf.total_questions,  # accuracy
+                    perf.average_time,
+                    perf.mastery_level,
+                    len(self.profile.strengths),  # Number of strengths
+                    len(self.profile.weaknesses),  # Number of weaknesses
+                    self.profile.learning_pace
+                ]
+                X.append(features)
+                y.append(perf.difficulty_level)
+            
+            # Train difficulty adjuster
+            X = np.array(X)
+            y = np.array(y)
+            
+            scaler = StandardScaler()
+            X_scaled = scaler.fit_transform(X)
+            
+            self.difficulty_adjuster.fit(X_scaled, y)
+            
+            # Predict optimal difficulty
+            current_features = np.array([[
+                metric.correct_answers / metric.total_questions,
+                metric.average_time,
+                metric.mastery_level,
+                len(self.profile.strengths),
+                len(self.profile.weaknesses),
+                self.profile.learning_pace
+            ]])
+            
+            current_features_scaled = scaler.transform(current_features)
+            predicted_difficulty = self.difficulty_adjuster.predict(current_features_scaled)[0]
+            
+            # Smooth the adjustment
+            current_difficulty = metric.difficulty_level
+            adjustment = (predicted_difficulty - current_difficulty) * 0.3  # 30% adjustment
+            new_difficulty = max(0.1, min(5.0, current_difficulty + adjustment))
+            
+            metric.difficulty_level = new_difficulty
+            metric.save()
+            
+        except Exception as e:
+            logger.error(f"ML difficulty adjustment failed: {e}")
+            self._adjust_difficulty(metric)  # Fallback
+
+    def _update_learning_profile_clustered(self, metric):
+        """Update learning profile using clustering analysis"""
+        try:
+            # Get all performance data for clustering
+            all_performance = PerformanceMetrics.objects.filter(user=self.user)
+            
+            if len(all_performance) < 10:
+                return self._update_learning_profile(metric)  # Fallback
+            
+            # Prepare data for clustering
+            performance_data = []
+            for perf in all_performance:
+                performance_data.append([
+                    perf.correct_answers / perf.total_questions,  # accuracy
+                    perf.average_time,
+                    perf.mastery_level,
+                    perf.difficulty_level
+                ])
+            
+            X = np.array(performance_data)
+            
+            # Perform clustering to identify learning patterns
+            n_clusters = min(3, len(X))  # Maximum 3 clusters
+            kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+            clusters = kmeans.fit_predict(X)
+            
+            # Analyze clusters to identify patterns
+            cluster_centers = kmeans.cluster_centers_
+            
+            # Find which cluster this performance belongs to
+            current_performance = np.array([[
+                metric.correct_answers / metric.total_questions,
+                metric.average_time,
+                metric.mastery_level,
+                metric.difficulty_level
+            ]])
+            
+            current_cluster = kmeans.predict(current_performance)[0]
+            
+            # Update profile based on cluster analysis
+            cluster_profile = cluster_centers[current_cluster]
+            
+            # Adjust learning pace based on cluster
+            if cluster_profile[1] < 45:  # Fast completion times
+                self.profile.learning_pace = min(2.0, self.profile.learning_pace + 0.05)
+            elif cluster_profile[1] > 90:  # Slow completion times
+                self.profile.learning_pace = max(0.5, self.profile.learning_pace - 0.05)
+            
+            # Update strengths/weaknesses based on cluster performance
+            if cluster_profile[0] > 0.8:  # High accuracy cluster
+                if metric.subject not in self.profile.strengths:
+                    self.profile.strengths.append(metric.subject)
+            elif cluster_profile[0] < 0.6:  # Low accuracy cluster
+                if metric.subject not in self.profile.weaknesses:
+                    self.profile.weaknesses.append(metric.subject)
+            
+            self.profile.save()
+            
+        except Exception as e:
+            logger.error(f"Clustering analysis failed: {e}")
+            self._update_learning_profile(metric)  # Fallback
 
             # Adjust difficulty based on performance
             self._adjust_difficulty(metric)
@@ -58,6 +349,31 @@ class AdaptiveLearningEngine:
 
         except Exception as e:
             logger.error(f"Error analyzing performance: {e}")
+            return None
+
+    def analyze_performance_advanced(self, subject, topic, correct, time_taken, question_difficulty=1.0):
+        """Advanced performance analysis using ML algorithms"""
+        try:
+            metric, created = PerformanceMetrics.objects.get_or_create(
+                user=self.user,
+                subject=subject,
+                topic=topic,
+                defaults={'difficulty_level': question_difficulty}
+            )
+
+            # Update performance with advanced metrics
+            self._update_performance_with_ml(metric, correct, time_taken, question_difficulty)
+
+            # Adjust difficulty using ML prediction
+            self._ml_difficulty_adjustment(metric)
+
+            # Update learning profile with clustering analysis
+            self._update_learning_profile_clustered(metric)
+
+            return metric
+
+        except Exception as e:
+            logger.error(f"Error in advanced performance analysis: {e}")
             return None
 
     def _adjust_difficulty(self, metric):

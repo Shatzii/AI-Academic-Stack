@@ -17,3 +17,13 @@ langchain==0.0.350
 chromadb==0.4.0
 redis==5.0.0
 celery==5.3.0
+Pillow==10.1.0
+opencv-python==4.8.1.78
+timm==0.9.12
+datasets==2.15.0
+PyPDF2==3.0.1
+python-docx==1.1.1
+pytesseract==0.3.10
+nltk==3.8.1
+soundfile==0.12.1
+librosa==0.10.1

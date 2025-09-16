@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Any
 from contextlib import asynccontextmanager
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import httpx
@@ -28,6 +28,21 @@ AI_MODE = os.getenv("AI_MODE", "hybrid")  # 'ollama', 'openai', or 'hybrid'
 # Initialize clients
 ollama_client = OllamaClient(host=OLLAMA_BASE_URL)
 openai_client = openai.OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+
+from huggingface_ai import HuggingFaceAI, CV_MODELS, NLP_MODELS
+from curriculum_converter import CurriculumConverter
+from content_generator import ContentGenerator
+from recommendation_engine import RecommendationEngine
+
+# Initialize AI services
+hf_ai = HuggingFaceAI()
+curriculum_converter = CurriculumConverter()
+content_generator = ContentGenerator()
+recommendation_engine = RecommendationEngine()
+
+# Initialize AI services
+hf_ai = HuggingFaceAI()
+curriculum_converter = CurriculumConverter()
 
 # Available models
 OLLAMA_MODELS = [
@@ -262,6 +277,328 @@ async def create_embeddings(text: str, model: Optional[str] = None):
 
     except Exception as e:
         logger.error(f"Embeddings error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/vision/classify")
+async def classify_image(file: UploadFile = File(...), model: str = "google/vit-base-patch16-224"):
+    """Classify an uploaded image"""
+    try:
+        image_data = await file.read()
+        result = hf_ai.process_image(image_data, task="image-classification", model_name=model)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Image classification error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/vision/detect")
+async def detect_objects(file: UploadFile = File(...), model: str = "facebook/detr-resnet-50"):
+    """Detect objects in an uploaded image"""
+    try:
+        image_data = await file.read()
+        result = hf_ai.process_image(image_data, task="object-detection", model_name=model)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Object detection error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/vision/ocr")
+async def extract_text(file: UploadFile = File(...), model: str = "microsoft/trocr-base-printed"):
+    """Extract text from an uploaded image"""
+    try:
+        image_data = await file.read()
+        result = hf_ai.process_image(image_data, task="ocr", model_name=model)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"OCR error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/nlp/sentiment")
+async def analyze_sentiment(text: str, model: str = "cardiffnlp/twitter-roberta-base-sentiment-latest"):
+    """Analyze sentiment of text"""
+    try:
+        result = hf_ai.process_text_nlp(text, task="sentiment-analysis", model_name=model)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Sentiment analysis error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/nlp/sentiment/batch")
+async def analyze_sentiment_batch(texts: List[str], model: str = "cardiffnlp/twitter-roberta-base-sentiment-latest"):
+    """Analyze sentiment of multiple texts"""
+    try:
+        results = []
+        for text in texts:
+            result = hf_ai.process_text_nlp(text, task="sentiment-analysis", model_name=model)
+            if "error" not in result:
+                results.append(result)
+        
+        return {"results": results, "total_processed": len(results)}
+        
+    except Exception as e:
+        logger.error(f"Batch sentiment analysis error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/nlp/emotion")
+async def analyze_emotion(text: str, model: str = "j-hartmann/emotion-english-distilroberta-base"):
+    """Analyze emotions in text"""
+    try:
+        result = hf_ai.process_text_nlp(text, task="sentiment-analysis", model_name=model)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Emotion analysis error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/nlp/summarize")
+async def summarize_text(text: str, model: str = "facebook/bart-large-cnn"):
+    """Summarize text content"""
+    try:
+        result = hf_ai.process_text_nlp(text, task="summarization", model_name=model)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Summarization error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/curriculum/convert")
+async def convert_curriculum(file: UploadFile = File(...)):
+    """Convert uploaded document to curriculum structure"""
+    try:
+        # Save uploaded file temporarily
+        temp_path = f"/tmp/{file.filename}"
+        with open(temp_path, "wb") as buffer:
+            content = await file.read()
+            buffer.write(content)
+        
+        # Convert to curriculum
+        result = curriculum_converter.convert_to_curriculum(temp_path)
+        
+        # Clean up temp file
+        os.remove(temp_path)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Curriculum conversion error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/speech/stt")
+async def speech_to_text(file: UploadFile = File(...), sample_rate: int = 16000):
+    """Convert uploaded speech audio to text"""
+    try:
+        audio_data = await file.read()
+        result = hf_ai.speech_to_text(audio_data, sample_rate)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Speech-to-text error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/speech/tts")
+async def text_to_speech(text: str):
+    """Convert text to speech audio"""
+    try:
+        result = hf_ai.text_to_speech(text)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        # Return audio data as response
+        from fastapi.responses import Response
+        return Response(
+            content=result["audio_data"],
+            media_type="audio/wav",
+            headers={"Content-Disposition": "attachment; filename=speech.wav"}
+        )
+        
+    except Exception as e:
+        logger.error(f"Text-to-speech error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/content/generate-lesson")
+async def generate_lesson(
+    topic: str,
+    grade_level: str,
+    learning_objectives: List[str],
+    duration: int = 45,
+    difficulty: str = "intermediate"
+):
+    """Generate a complete lesson plan"""
+    try:
+        result = content_generator.generate_lesson(
+            topic=topic,
+            grade_level=grade_level,
+            learning_objectives=learning_objectives,
+            duration=duration,
+            difficulty=difficulty
+        )
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Lesson generation error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/content/generate-quiz")
+async def generate_quiz(
+    topic: str,
+    grade_level: str,
+    num_questions: int = 10,
+    difficulty: str = "intermediate",
+    question_types: Optional[List[str]] = None
+):
+    """Generate a quiz"""
+    try:
+        result = content_generator.generate_quiz(
+            topic=topic,
+            grade_level=grade_level,
+            num_questions=num_questions,
+            difficulty=difficulty,
+            question_types=question_types
+        )
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Quiz generation error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/content/generate-assignment")
+async def generate_assignment(
+    topic: str,
+    grade_level: str,
+    assignment_type: str = "homework",
+    duration: int = 60,
+    difficulty: str = "intermediate"
+):
+    """Generate an assignment"""
+    try:
+        result = content_generator.generate_assignment(
+            topic=topic,
+            grade_level=grade_level,
+            assignment_type=assignment_type,
+            duration=duration,
+            difficulty=difficulty
+        )
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Assignment generation error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/content/generate-study-guide")
+async def generate_study_guide(
+    topic: str,
+    grade_level: str,
+    key_concepts: List[str],
+    study_time: int = 30
+):
+    """Generate a study guide"""
+    try:
+        result = content_generator.generate_study_guide(
+            topic=topic,
+            grade_level=grade_level,
+            key_concepts=key_concepts,
+            study_time=study_time
+        )
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Study guide generation error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/recommendations/courses/{user_id}")
+async def get_course_recommendations(user_id: int, limit: int = 5):
+    """Get personalized course recommendations"""
+    try:
+        recommendations = recommendation_engine.get_course_recommendations(user_id, limit)
+        return {"recommendations": recommendations}
+        
+    except Exception as e:
+        logger.error(f"Course recommendations error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/recommendations/materials/{user_id}")
+async def get_study_material_recommendations(
+    user_id: int,
+    topic: Optional[str] = None,
+    limit: int = 10
+):
+    """Get study material recommendations"""
+    try:
+        recommendations = recommendation_engine.get_study_material_recommendations(
+            user_id, topic, limit
+        )
+        return {"recommendations": recommendations}
+        
+    except Exception as e:
+        logger.error(f"Study material recommendations error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/recommendations/learning-path/{user_id}")
+async def get_learning_path_recommendations(
+    user_id: int,
+    subject: str,
+    current_level: str
+):
+    """Get learning path recommendations"""
+    try:
+        learning_path = recommendation_engine.get_learning_path_recommendations(
+            user_id, subject, current_level
+        )
+        return learning_path
+        
+    except Exception as e:
+        logger.error(f"Learning path recommendations error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
