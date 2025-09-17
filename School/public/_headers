@@ -1,4 +1,5 @@
 # MIME type headers for proper module loading
+
 /assets/*.js
   Content-Type: application/javascript
 
@@ -41,18 +42,14 @@
 /assets/js/utils-vendor-*.js
   Content-Type: application/javascript
 
-# Handle JSX files specifically
 /assets/*.jsx
   Content-Type: application/javascript
 
-# Handle any remaining JSX files
-*.jsx
-  Content-Type: application/javascript
+<!-- Security headers -->
 
-# Security headers
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.openedtex.com wss://api.openedtex.com https://cdn.jsdelivr.net;
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' <https://cdn.jsdelivr.net> <https://cdnjs.cloudflare.com> data:; style-src 'self' 'unsafe-inline' <https://cdn.jsdelivr.net> <https://cdnjs.cloudflare.com> <https://fonts.googleapis.com>; font-src 'self' <https://fonts.gstatic.com> <https://cdnjs.cloudflare.com>; img-src 'self' data: https: blob:; connect-src 'self' <https://api.openedtex.com> wss://api.openedtex.com <https://cdn.jsdelivr.net>;

@@ -60,7 +60,7 @@ const StudentIDAdmin = () => {
       const response = await axios.get('/api/auth/id/admin/stats/')
       setStats(response.data)
     } catch (error) {
-      console.error('Failed to load stats:', error)
+      // console.error('Failed to load stats:', error)
     }
   }
 

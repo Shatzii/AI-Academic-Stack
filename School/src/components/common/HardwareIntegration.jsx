@@ -40,7 +40,7 @@ const HardwareIntegration = () => {
       const ws = new WebSocket('ws://localhost:8001/ws/hardware/')
 
       ws.onopen = () => {
-        console.log('WebSocket connected')
+        // console.log('WebSocket connected')
         setConnectionStatus('connected')
       }
 
@@ -50,20 +50,20 @@ const HardwareIntegration = () => {
       }
 
       ws.onclose = () => {
-        console.log('WebSocket disconnected')
+        // console.log('WebSocket disconnected')
         setConnectionStatus('disconnected')
         // Attempt to reconnect after 5 seconds
         setTimeout(initializeWebSocket, 5000)
       }
 
       ws.onerror = (error) => {
-        console.error('WebSocket error:', error)
+        // console.error('WebSocket error:', error)
         setConnectionStatus('error')
       }
 
       setWsConnection(ws)
     } catch (error) {
-      console.error('Failed to initialize WebSocket:', error)
+      // console.error('Failed to initialize WebSocket:', error)
       setConnectionStatus('error')
     }
   }
@@ -83,7 +83,7 @@ const HardwareIntegration = () => {
         handleDeviceStatus(data)
         break
       default:
-        console.log('Unknown message type:', data.type)
+        // console.log('Unknown message type:', data.type)
     }
   }
 
@@ -150,7 +150,7 @@ const HardwareIntegration = () => {
         oscillator.stop(audioContext.currentTime + 0.5)
       }
     } catch (error) {
-      console.error('Failed to play sound:', error)
+      // console.error('Failed to play sound:', error)
     }
   }
 

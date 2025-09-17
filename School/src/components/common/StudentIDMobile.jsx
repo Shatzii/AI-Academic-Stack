@@ -32,7 +32,7 @@ const StudentIDMobile = () => {
       const response = await axios.get('/api/auth/attendance/?limit=5')
       setRecentAttendance(response.data.results || response.data)
     } catch (error) {
-      console.error('Failed to load recent attendance:', error)
+      // console.error('Failed to load recent attendance:', error)
     }
   }
 

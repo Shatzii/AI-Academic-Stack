@@ -46,7 +46,7 @@ const AchievementNotifications = () => {
           }, 2000) // Show after 2 seconds
         }
       } catch (error) {
-        console.error('Error checking enrollments:', error)
+        // console.error('Error checking enrollments:', error)
       }
     }
 
@@ -85,7 +85,7 @@ const AchievementNotifications = () => {
           }, 3000) // Show after 3 seconds
         }
       } catch (error) {
-        console.error('Error checking ID card:', error)
+        // console.error('Error checking ID card:', error)
       }
     }
 
@@ -127,7 +127,7 @@ const AchievementNotifications = () => {
           }, 1000)
         }
       } catch (error) {
-        console.error('Error checking completions:', error)
+        // console.error('Error checking completions:', error)
       }
     }
 
@@ -167,7 +167,7 @@ const AchievementNotifications = () => {
           }, 1500)
         }
       } catch (error) {
-        console.error('Error checking multiple enrollments:', error)
+        // console.error('Error checking multiple enrollments:', error)
       }
     }
 

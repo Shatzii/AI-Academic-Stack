@@ -54,7 +54,7 @@ const BrandingManager = () => {
       const response = await axios.get('/api/auth/branding-presets/')
       setPresets(response.data)
     } catch (error) {
-      console.error('Error fetching presets:', error)
+      // console.error('Error fetching presets:', error)
     }
   }
 
@@ -96,7 +96,7 @@ const BrandingManager = () => {
       updateBranding(response.data)
       toast.success('Branding updated successfully!')
     } catch (error) {
-      console.error('Error updating branding:', error)
+      // console.error('Error updating branding:', error)
       toast.error('Failed to update branding')
     } finally {
       setLoading(false)
@@ -109,7 +109,7 @@ const BrandingManager = () => {
       updateBranding(response.data)
       toast.success('Preset applied successfully!')
     } catch (error) {
-      console.error('Error applying preset:', error)
+      // console.error('Error applying preset:', error)
       toast.error('Failed to apply preset')
     }
   }

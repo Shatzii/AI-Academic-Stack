@@ -54,7 +54,7 @@ const ClassroomDetail = () => {
 
     } catch (err) {
       setError('Failed to load classroom')
-      console.error('Error fetching classroom:', err)
+      // console.error('Error fetching classroom:', err)
     } finally {
       setLoading(false)
     }
@@ -65,7 +65,7 @@ const ClassroomDetail = () => {
     wsRef.current = new WebSocket(wsUrl)
 
     wsRef.current.onopen = () => {
-      console.log('WebSocket connected')
+      // console.log('WebSocket connected')
     }
 
     wsRef.current.onmessage = (event) => {
@@ -74,11 +74,11 @@ const ClassroomDetail = () => {
     }
 
     wsRef.current.onclose = () => {
-      console.log('WebSocket disconnected')
+      // console.log('WebSocket disconnected')
     }
 
     wsRef.current.onerror = (error) => {
-      console.error('WebSocket error:', error)
+      // console.error('WebSocket error:', error)
     }
   }
 
@@ -105,7 +105,7 @@ const ClassroomDetail = () => {
       connectWebSocket()
       fetchClassroom() // Refresh data
     } catch (err) {
-      console.error('Error joining classroom:', err)
+      // console.error('Error joining classroom:', err)
     }
   }
 
@@ -117,7 +117,7 @@ const ClassroomDetail = () => {
         wsRef.current.close()
       }
     } catch (err) {
-      console.error('Error leaving classroom:', err)
+      // console.error('Error leaving classroom:', err)
     }
   }
 
@@ -133,7 +133,7 @@ const ClassroomDetail = () => {
       }))
       setNewMessage('')
     } catch (err) {
-      console.error('Error sending message:', err)
+      // console.error('Error sending message:', err)
     }
   }
 

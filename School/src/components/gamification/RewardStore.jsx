@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import './RewardStore.css';
 
 const RewardStore = ({ userPoints, onRedeemReward }) => {
@@ -29,7 +29,7 @@ const RewardStore = ({ userPoints, onRedeemReward }) => {
       setRewards(mockRewards);
     } catch (err) {
       setError('Failed to load rewards');
-      console.error('Rewards fetch error:', err);
+      // console.error('Rewards fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -176,7 +176,7 @@ const RewardStore = ({ userPoints, onRedeemReward }) => {
       await onRedeemReward(reward);
       alert(`Successfully redeemed: ${reward.name}!`);
     } catch (err) {
-      console.error('Redemption error:', err);
+      // console.error('Redemption error:', err);
       alert('Failed to redeem reward. Please try again.');
     }
   };

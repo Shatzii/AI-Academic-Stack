@@ -67,7 +67,7 @@ const StudyGroups = () => {
       setGroups(mockGroups)
     } catch (err) {
       setError('Failed to load study groups')
-      console.error('Error fetching study groups:', err)
+      // console.error('Error fetching study groups:', err)
     } finally {
       setLoading(false)
     }
@@ -95,7 +95,7 @@ const StudyGroups = () => {
       })
       setShowCreateForm(false)
     } catch (err) {
-      console.error('Error creating study group:', err)
+      // console.error('Error creating study group:', err)
     }
   }
 
@@ -108,7 +108,7 @@ const StudyGroups = () => {
           : group
       ))
     } catch (err) {
-      console.error('Error joining study group:', err)
+      // console.error('Error joining study group:', err)
     }
   }
 

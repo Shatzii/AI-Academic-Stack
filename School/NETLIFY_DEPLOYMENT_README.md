@@ -14,22 +14,26 @@
 ## 🛠️ Local Development Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/your-username/openedtex.git
    cd openedtex
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start development server**
+
    ```bash
    npm run dev
    ```
 
 4. **Build for production**
+
    ```bash
    npm run build:netlify
    ```
@@ -46,21 +50,25 @@
 ### Option 2: Manual CLI Deployment
 
 1. **Install Netlify CLI**
+
    ```bash
    npm install -g netlify-cli
    ```
 
 2. **Login to Netlify**
+
    ```bash
    netlify login
    ```
 
 3. **Deploy to preview**
+
    ```bash
    npm run netlify:preview
    ```
 
 4. **Deploy to production**
+
    ```bash
    npm run netlify:deploy
    ```

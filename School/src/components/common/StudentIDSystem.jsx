@@ -56,7 +56,7 @@ const StudentIDSystem = () => {
       const response = await axios.get('/api/auth/attendance/stats/')
       setStats(response.data)
     } catch (error) {
-      console.error('Failed to load stats:', error)
+      // console.error('Failed to load stats:', error)
     }
   }
 

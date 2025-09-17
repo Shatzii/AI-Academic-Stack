@@ -26,7 +26,7 @@ const StudentIDSystemSummary = () => {
       setSystemStats(statsResponse.data)
       setRecentActivity(activityResponse.data.results || activityResponse.data)
     } catch (error) {
-      console.error('Failed to load system summary:', error)
+      // console.error('Failed to load system summary:', error)
       toast.error('Failed to load system summary')
     } finally {
       setLoading(false)

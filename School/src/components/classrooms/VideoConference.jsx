@@ -41,7 +41,7 @@ const VideoConference = ({ classroomId, isActive }) => {
 
       setIsConnected(true)
     } catch (error) {
-      console.error('Error accessing media devices:', error)
+      // console.error('Error accessing media devices:', error)
       // Fallback for demo purposes
       setIsConnected(false)
     }
@@ -74,7 +74,7 @@ const VideoConference = ({ classroomId, isActive }) => {
     peerConnectionRef.current.onicecandidate = (event) => {
       if (event.candidate) {
         // Send ICE candidate to signaling server
-        console.log('ICE candidate:', event.candidate)
+        // console.log('ICE candidate:', event.candidate)
       }
     }
   }
@@ -131,7 +131,7 @@ const VideoConference = ({ classroomId, isActive }) => {
         stopScreenShare()
       }
     } catch (error) {
-      console.error('Error sharing screen:', error)
+      // console.error('Error sharing screen:', error)
     }
   }
 

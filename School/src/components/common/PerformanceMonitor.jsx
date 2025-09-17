@@ -222,7 +222,7 @@ const PerformanceMonitor = () => {
 
     // Log to console in development
     if (process.env.NODE_ENV === 'development') {
-      console.log('Performance Metrics:', performanceData)
+      // console.log('Performance Metrics:', performanceData)
     }
   }, [metrics, connectionType])
 

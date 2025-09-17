@@ -1,5 +1,4 @@
 // frontend/src/utils/performanceMonitor.js
-import React from 'react';
 import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
 import api from '../api.js';
 
@@ -7,27 +6,27 @@ export const initPerformanceMonitoring = () => {
   // Track Core Web Vitals
   if (typeof window !== 'undefined') {
     getCLS((metric) => {
-      console.log('CLS:', metric);
+      // console.log('CLS:', metric);
       sendMetricToAnalytics('cls', metric.value, metric.id);
     });
 
     getFID((metric) => {
-      console.log('FID:', metric);
+      // console.log('FID:', metric);
       sendMetricToAnalytics('fid', metric.value, metric.id);
     });
 
     getFCP((metric) => {
-      console.log('FCP:', metric);
+      // console.log('FCP:', metric);
       sendMetricToAnalytics('fcp', metric.value, metric.id);
     });
 
     getLCP((metric) => {
-      console.log('LCP:', metric);
+      // console.log('LCP:', metric);
       sendMetricToAnalytics('lcp', metric.value, metric.id);
     });
 
     getTTFB((metric) => {
-      console.log('TTFB:', metric);
+      // console.log('TTFB:', metric);
       sendMetricToAnalytics('ttfb', metric.value, metric.id);
     });
   }
@@ -58,24 +57,24 @@ const sendMetricToAnalytics = async (metric, value, id) => {
       userAgent: navigator.userAgent
     });
   } catch (error) {
-    console.warn('Failed to send performance metric:', error);
+    // console.warn('Failed to send performance metric:', error);
   }
 };
 
 // Track component render times in development
-export const withPerformance = (Component, componentName) => {
-  return (props) => {
-    const start = performance.now();
-    const result = React.createElement(Component, props);
-    const end = performance.now();
+// export const withPerformance = (Component, componentName) => {
+//   return (props) => {
+//     const start = performance.now();
+//     const result = React.createElement(Component, props);
+//     const end = performance.now();
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`${componentName} render time: ${(end - start).toFixed(2)}ms`);
-    }
+//     if (process.env.NODE_ENV === 'development') {
+//       // console.log(`${componentName} render time: ${(end - start).toFixed(2)}ms`);
+//     }
 
-    return result;
-  };
-};
+//     return result;
+//   };
+// };
 
 // Legacy performance monitor for backward compatibility
 export const performanceMonitor = {
@@ -83,7 +82,7 @@ export const performanceMonitor = {
     if (window.performance && window.performance.timing) {
       const timing = window.performance.timing;
       const pageLoadTime = timing.loadEventEnd - timing.navigationStart;
-      console.log(`Page load time: ${pageLoadTime}ms`);
+      // console.log(`Page load time: ${pageLoadTime}ms`);
       return pageLoadTime;
     }
     return null;
@@ -94,7 +93,7 @@ export const performanceMonitor = {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.name === 'first-contentful-paint') {
-            console.log(`First Contentful Paint: ${entry.startTime}ms`);
+            // console.log(`First Contentful Paint: ${entry.startTime}ms`);
           }
         }
       });
@@ -105,8 +104,8 @@ export const performanceMonitor = {
   measureLCP: () => {
     if ('PerformanceObserver' in window) {
       const observer = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          console.log(`Largest Contentful Paint: ${entry.startTime}ms`);
+        for (const _entry of list.getEntries()) {
+          // console.log(`Largest Contentful Paint: ${_entry.startTime}ms`);
         }
       });
       observer.observe({ entryTypes: ['largest-contentful-paint'] });
@@ -118,7 +117,7 @@ export const performanceMonitor = {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.initiatorType === 'fetch' || entry.initiatorType === 'xmlhttprequest') {
-            console.log(`Network request: ${entry.name} - ${entry.duration}ms`);
+            // console.log(`Network request: ${entry.name} - ${entry.duration}ms`);
           }
         }
       });
@@ -137,7 +136,7 @@ export const performanceMonitor = {
     performanceMonitor.measureLCP();
     performanceMonitor.monitorNetworkRequests();
 
-    console.log('Legacy performance monitoring initialized');
+    // console.log('Legacy performance monitoring initialized');
   }
 };
 

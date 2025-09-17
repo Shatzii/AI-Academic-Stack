@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import './Leaderboard.css';
 
 const Leaderboard = ({ currentUserId }) => {
@@ -28,7 +28,7 @@ const Leaderboard = ({ currentUserId }) => {
       setLeaderboardData(mockData);
     } catch (err) {
       setError('Failed to load leaderboard data');
-      console.error('Leaderboard fetch error:', err);
+      // console.error('Leaderboard fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -69,7 +69,7 @@ const Leaderboard = ({ currentUserId }) => {
     }
   };
 
-  const getScoreLabel = (tab) => {
+  const _getScoreLabel = (tab) => {
     switch (tab) {
       case 'weekly': return 'Streak Days';
       case 'monthly': return 'Courses This Month';

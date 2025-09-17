@@ -6,8 +6,7 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime"
+    "plugin:react/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -21,8 +20,16 @@
   ],
   "rules": {
     "react/prop-types": "off",
-    "no-unused-vars": "warn",
-    "no-console": "warn",
+    "no-unused-vars": ["warn", {
+      "vars": "all",
+      "args": "after-used",
+      "ignoreRestSiblings": true,
+      "varsIgnorePattern": "^_",
+      "argsIgnorePattern": "^_"
+    }],
+    "no-console": ["warn", {
+      "allow": ["warn", "error"]
+    }],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-unknown-property": ["error", { "ignore": ["jsx"] }]

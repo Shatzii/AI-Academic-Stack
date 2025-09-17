@@ -30,7 +30,7 @@ const ClassroomList = () => {
       setClassrooms(response.data)
     } catch (err) {
       setError('Failed to load classrooms')
-      console.error('Error fetching classrooms:', err)
+      // console.error('Error fetching classrooms:', err)
     } finally {
       setLoading(false)
     }
