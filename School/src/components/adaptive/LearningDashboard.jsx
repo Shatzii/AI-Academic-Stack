@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchPerformanceMetrics,
   getRecommendation,
   fetchLearningGoals
 } from '../../slices/adaptiveSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import RecommendationCard from './RecommendationCard'
 import ProgressOverview from './ProgressOverview'
 import QuickStats from './QuickStats'
@@ -100,7 +100,7 @@ const LearningDashboard = () => {
     <div className="learning-dashboard">
       <div className="dashboard-header">
         <h2>📊 Your Learning Dashboard</h2>
-        <p>Welcome back, {user?.username}! Here's your personalized learning overview.</p>
+        <p>Welcome back, {user?.username}! Here&apos;s your personalized learning overview.</p>
       </div>
 
       {/* Quick Stats */}
@@ -173,7 +173,7 @@ const LearningDashboard = () => {
           <h3>🚀 Keep Learning!</h3>
           <p>
             {dashboardData.currentStreak > 0
-              ? `You're on a ${dashboardData.currentStreak}-day learning streak! Keep it up!`
+              ? `You&apos;re on a ${dashboardData.currentStreak}-day learning streak! Keep it up!`
               : "Start your learning journey today and build a consistent study habit!"
             }
           </p>

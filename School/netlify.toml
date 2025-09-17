@@ -1,0 +1,68 @@
+[build]
+  # Build command for the frontend
+  command = "npm run build"
+  # Directory to publish (Vite's dist folder)
+  publish = "dist"
+
+[build.environment]
+  # Node version for Netlify
+  NODE_VERSION = "18"
+  # Build environment variables
+  NODE_ENV = "production"
+
+# Redirect API calls to backend service
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-django-backend.herokuapp.com/api/:splat"
+  status = 200
+  force = true
+
+# Handle client-side routing for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.openedtex.com wss://api.openedtex.com;"
+
+# Cache static assets aggressively
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache other static files
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Netlify Functions configuration (if using serverless functions)
+[functions]
+  directory = "netlify/functions"
+
+# Build hooks for continuous deployment
+[build.hooks]
+  prebuild = "echo 'Starting build process...'"
+
+# Environment variables for production
+[context.production.environment]
+  VITE_API_URL = "https://your-django-backend.herokuapp.com/api"
+  VITE_APP_ENV = "production"
+
+# Branch-specific configurations
+[context.branch-deploy.environment]
+  VITE_API_URL = "https://staging-api.openedtex.com/api"
+  VITE_APP_ENV = "staging"
+
+[context.deploy-preview.environment]
+  VITE_API_URL = "https://dev-api.openedtex.com/api"
+  VITE_APP_ENV = "development"

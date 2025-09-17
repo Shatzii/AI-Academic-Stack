@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const AchievementNotifications = () => {
@@ -150,7 +150,7 @@ const AchievementNotifications = () => {
                 </div>
                 <div className="celebration-content">
                   <h6 className="mb-1">📚 Learning Enthusiast!</h6>
-                  <p className="mb-0 small">You've enrolled in 3 courses!</p>
+                  <p className="mb-0 small">You&apos;ve enrolled in 3 courses!</p>
                 </div>
               </div>,
               {

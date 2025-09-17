@@ -1,5 +1,4 @@
-import React from 'react'
-import { useBranding } from '../../context/BrandingContext.jsx'
+import { useBranding } from '../../context/BrandingContext'
 
 const Footer = () => {
   const { branding } = useBranding()

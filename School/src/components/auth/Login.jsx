@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../slices/authSlice'
@@ -141,7 +141,7 @@ const Login = () => {
 
                 <div className="text-center">
                   <p className="mb-0">
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?{' '}
                     <Link to="/register" className="text-primary fw-semibold text-decoration-none">
                       Sign up here
                     </Link>

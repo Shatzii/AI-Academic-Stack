@@ -7,14 +7,15 @@ class ErrorBoundary extends React.Component {
     this.state = { hasError: false, error: null, errorInfo: null }
   }
 
-  static getDerivedStateFromError(error) {
+  // eslint-disable-next-line no-unused-vars
+  static getDerivedStateFromError(_error) {
     // Update state so the next render will show the fallback UI
     return { hasError: true }
   }
 
   componentDidCatch(error, errorInfo) {
     // Log the error to console and analytics
-    console.error('Error caught by boundary:', error, errorInfo)
+    // console.error('Error caught by boundary:', error, errorInfo)
 
     // Send error to analytics if available
     if (window.gtag) {
@@ -51,7 +52,7 @@ class ErrorBoundary extends React.Component {
                       Oops! Something went wrong
                     </h2>
                     <p className="card-text text-muted mb-4">
-                      We're sorry, but something unexpected happened. This error has been logged and our team will look into it.
+                      We&apos;re sorry, but something unexpected happened. This error has been logged and our team will look into it.
                     </p>
                     <div className="d-grid gap-2 d-md-flex justify-content-md-center">
                       <button

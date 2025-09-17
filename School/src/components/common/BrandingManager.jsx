@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { useAuth } from '../../context/AuthContext.jsx'
-import { useBranding } from '../../context/BrandingContext.jsx'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../../context/AuthContext'
+import { useBranding } from '../../context/BrandingContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
@@ -134,7 +134,7 @@ const BrandingManager = () => {
       <div className="container mt-4">
         <div className="alert alert-danger">
           <h4>Access Denied</h4>
-          <p>You don't have permission to manage branding settings.</p>
+          <p>You don&apos;t have permission to manage branding settings.</p>
         </div>
       </div>
     )

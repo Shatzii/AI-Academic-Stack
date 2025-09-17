@@ -9,8 +9,8 @@ export default defineConfig({
     splitVendorChunkPlugin()
   ],
   build: {
-    // Enable source maps for production debugging
-    sourcemap: false,
+    // Enable source maps for production debugging (set to true for Netlify)
+    sourcemap: process.env.NODE_ENV === 'production' ? false : true,
     // Optimize chunk size
     rollupOptions: {
       output: {
@@ -45,7 +45,7 @@ export default defineConfig({
             return 'course-components'
           }
         },
-        // Optimize chunk file names
+        // Optimize chunk file names for Netlify
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
@@ -61,19 +61,23 @@ export default defineConfig({
         }
       }
     },
-    // Optimize build
+    // Optimize build for Netlify
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug']
+        drop_console: process.env.NODE_ENV === 'production',
+        drop_debugger: process.env.NODE_ENV === 'production',
+        pure_funcs: process.env.NODE_ENV === 'production' ? ['console.log', 'console.info', 'console.debug'] : []
       }
     },
     // Set chunk size warning limit
     chunkSizeWarningLimit: 1000,
     // Enable CSS code splitting
-    cssCodeSplit: true
+    cssCodeSplit: true,
+    // Optimize for Netlify's CDN
+    target: 'esnext',
+    // Generate .br files for better compression
+    brotliSize: false
   },
   // Optimize dev server
   server: {
@@ -103,5 +107,11 @@ export default defineConfig({
   preview: {
     port: 4173,
     strictPort: true
+  },
+  // Netlify-specific configuration
+  base: process.env.NODE_ENV === 'production' ? '/' : '/',
+  // Environment variables for Netlify
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '1.0.0'),
   }
 })

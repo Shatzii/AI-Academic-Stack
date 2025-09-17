@@ -1,5 +1,3 @@
-import React from 'react';
-
 const APIMarketplace = () => {
   // Placeholder for API marketplace UI
   return (

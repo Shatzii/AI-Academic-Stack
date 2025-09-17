@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../slices/authSlice'
-import { useBranding } from '../../context/BrandingContext.jsx'
 import toast from 'react-hot-toast'
 
 const Register = () => {
@@ -24,7 +23,6 @@ const Register = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { loading, error } = useSelector(state => state.auth)
-  const { branding } = useBranding()
 
   useEffect(() => {
     if (error) {
@@ -73,12 +71,12 @@ const Register = () => {
     }
 
     try {
-      const result = await dispatch(registerUser({
+      await dispatch(registerUser({
         ...formData,
         grade_level: '', // Skip grade level in quick mode
         subjects: [] // Skip subjects in quick mode
       })).unwrap()
-      toast.success('Welcome to OpenEdTex! Let\'s get you started with your first course.')
+      toast.success('Welcome to OpenEdTex! Let&apos;s get you started with your first course.')
       navigate('/onboarding')
     } catch (error) {
       // Error is handled by the slice and displayed via toast
@@ -115,7 +113,7 @@ const Register = () => {
     }
 
     try {
-      const result = await dispatch(registerUser(formData)).unwrap()
+      await dispatch(registerUser(formData)).unwrap()
       toast.success('Registration successful! Please check your email to verify your account.')
       navigate('/login')
     } catch (error) {
@@ -399,7 +397,7 @@ const Register = () => {
                           required
                         />
                         <div className="form-text">
-                          We'll send you a verification link to confirm your account
+                          We&apos;ll send you a verification link to confirm your account
                         </div>
                       </div>
 

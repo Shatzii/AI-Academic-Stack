@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchCourses } from '../../slices/coursesSlice'
 import { fetchClassrooms } from '../../slices/classroomsSlice'
 import { fetchAnalyticsSummary } from '../../slices/analyticsSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -35,7 +35,7 @@ const Dashboard = () => {
                     Welcome back, {user?.first_name || 'Student'}!
                   </h1>
                   <p className="lead mb-0">
-                    Ready to continue your learning journey? Here's what's happening today.
+                    Ready to continue your learning journey? Here&apos;s what&apos;s happening today.
                   </p>
                 </div>
                 <div className="col-md-4 text-center">

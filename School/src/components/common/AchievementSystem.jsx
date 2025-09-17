@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchCourses } from '../../slices/coursesSlice'
 import { fetchAnalyticsSummary } from '../../slices/analyticsSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const AchievementSystem = () => {
