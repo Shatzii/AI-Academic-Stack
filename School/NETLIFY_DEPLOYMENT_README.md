@@ -86,15 +86,30 @@ Use the provided deployment script:
 
 Set these in your Netlify dashboard (`Site settings > Environment variables`):
 
-```bash
-# Required
-VITE_API_URL=https://your-backend-api.com/api
+**Required Variables:**
 
-# Optional
+```bash
+VITE_API_URL=https://your-django-backend.herokuapp.com/api
 VITE_APP_ENV=production
+```
+
+**Optional Variables:**
+
+```bash
+VITE_APP_NAME=OpenEdTex
+VITE_APP_VERSION=2.1.0
 VITE_GA_TRACKING_ID=GA_MEASUREMENT_ID
 VITE_HOTJAR_ID=your_hotjar_id
+VITE_ENABLE_ANALYTICS=true
+VITE_ENABLE_PWA=true
 ```
+
+**Important Notes:**
+
+- Replace `https://your-django-backend.herokuapp.com/api` with your actual backend API URL
+- `VITE_API_URL` must include the full URL with protocol (https://)
+- Environment variables are case-sensitive
+- Changes to environment variables require a new deployment
 
 ### Build Settings
 
