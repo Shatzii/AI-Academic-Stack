@@ -226,6 +226,12 @@ npm install
 npm run build:netlify
 ```
 
+**Common Build Issues:**
+
+- **Missing build tools**: Ensure `vite` and `@vitejs/plugin-react` are in `dependencies`, not `devDependencies`
+- **Prepare script errors**: Remove `prepare` scripts that depend on devDependencies
+- **Node version mismatch**: Ensure Node.js 18+ is specified in Netlify settings
+
 #### API Connection Issues
 
 ```bash
