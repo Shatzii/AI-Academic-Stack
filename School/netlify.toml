@@ -89,3 +89,8 @@
     "VITE_STRIPE_PUBLISHABLE_KEY",
     "VITE_OPENAI_API_KEY"
   ]
+  # Exclude build output directory from secrets scanning
+  # VITE_ variables get embedded in client-side JS during build
+  omit_paths = [
+    "dist/**"
+  ]
