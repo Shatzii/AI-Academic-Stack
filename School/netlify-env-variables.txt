@@ -1,0 +1,34 @@
+# Netlify Environment Variables for universalone.netlify.app
+# Copy these variables to your Netlify dashboard: Site Settings > Environment Variables
+
+# Required Variables
+VITE_API_URL=https://your-backend-api.com/api
+VITE_APP_ENV=production
+
+# Application Configuration
+VITE_APP_NAME=OpenEdTex
+VITE_APP_VERSION=2.1.0
+
+# Analytics (Optional - leave empty if not using)
+VITE_GA_TRACKING_ID=
+VITE_HOTJAR_ID=
+
+# Social Media (Optional - leave empty if not using)
+VITE_FACEBOOK_APP_ID=
+VITE_GOOGLE_CLIENT_ID=
+
+# Feature Flags
+VITE_ENABLE_ANALYTICS=true
+VITE_ENABLE_CHAT=true
+VITE_ENABLE_NOTIFICATIONS=true
+
+# Security
+VITE_CSP_ENABLED=true
+
+# Performance
+VITE_ENABLE_PWA=true
+VITE_ENABLE_SERVICE_WORKER=true
+
+# External Services (Optional - leave empty if not using)
+VITE_STRIPE_PUBLISHABLE_KEY=
+VITE_OPENAI_API_KEY=
