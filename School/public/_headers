@@ -41,6 +41,14 @@
 /assets/js/utils-vendor-*.js
   Content-Type: application/javascript
 
+# Handle JSX files specifically
+/assets/*.jsx
+  Content-Type: application/javascript
+
+# Handle any remaining JSX files
+*.jsx
+  Content-Type: application/javascript
+
 # Security headers
 /*
   X-Frame-Options: DENY
