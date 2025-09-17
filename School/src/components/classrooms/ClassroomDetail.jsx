@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import api from '../../api'
@@ -54,7 +54,6 @@ const ClassroomDetail = () => {
 
     } catch (err) {
       setError('Failed to load classroom')
-      console.error('Error fetching classroom:', err)
     } finally {
       setLoading(false)
     }
@@ -65,7 +64,7 @@ const ClassroomDetail = () => {
     wsRef.current = new WebSocket(wsUrl)
 
     wsRef.current.onopen = () => {
-      console.log('WebSocket connected')
+      // WebSocket connected
     }
 
     wsRef.current.onmessage = (event) => {
@@ -74,11 +73,11 @@ const ClassroomDetail = () => {
     }
 
     wsRef.current.onclose = () => {
-      console.log('WebSocket disconnected')
+      // WebSocket disconnected
     }
 
-    wsRef.current.onerror = (error) => {
-      console.error('WebSocket error:', error)
+    wsRef.current.onerror = () => {
+      // WebSocket error occurred
     }
   }
 
@@ -105,7 +104,7 @@ const ClassroomDetail = () => {
       connectWebSocket()
       fetchClassroom() // Refresh data
     } catch (err) {
-      console.error('Error joining classroom:', err)
+      // Error joining classroom
     }
   }
 
@@ -117,7 +116,7 @@ const ClassroomDetail = () => {
         wsRef.current.close()
       }
     } catch (err) {
-      console.error('Error leaving classroom:', err)
+      // Error leaving classroom
     }
   }
 
@@ -133,7 +132,7 @@ const ClassroomDetail = () => {
       }))
       setNewMessage('')
     } catch (err) {
-      console.error('Error sending message:', err)
+      // Error sending message
     }
   }
 

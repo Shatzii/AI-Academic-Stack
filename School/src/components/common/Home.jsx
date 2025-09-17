@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useCallback, memo } from 'react'
+import { useEffect, useState, useCallback, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { useBranding } from '../../context/BrandingContext'
+// import { useBranding } from '../../context/BrandingContext'
 import CourseRecommendations from './CourseRecommendations'
 import Footer from './Footer'
 
 const Home = memo(() => {
   const { isAuthenticated } = useAuth()
-  const { branding } = useBranding()
+  // const { branding } = useBranding() // Commented out - not used
   const [isVisible, setIsVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -27,9 +27,9 @@ const Home = memo(() => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  const handleOnboardingToggle = useCallback(() => {
-    setShowOnboarding(prev => !prev)
-  }, [])
+  // const handleOnboardingToggle = useCallback(() => {
+  //   setShowOnboarding(prev => !prev)
+  // }, []) // Commented out - not used
 
   const handleOnboardingClose = useCallback(() => {
     setShowOnboarding(false)
@@ -254,7 +254,7 @@ const Home = memo(() => {
                         </div>
                         <div className="flex-grow-1">
                           <div className="text-muted small mb-1">AI Assistant • 2 min ago</div>
-                          <div className="small">"Need help with derivatives? I can explain the chain rule with interactive examples!"</div>
+                          <div className="small">&quot;Need help with derivatives? I can explain the chain rule with interactive examples!&quot;</div>
                         </div>
                       </div>
                     </div>
@@ -665,7 +665,7 @@ const Home = memo(() => {
                       ))}
                     </div>
                     <p className="card-text text-muted mb-4">
-                      "OpenEdTex completely changed how I approach learning. The AI tutor helped me understand complex math concepts that I struggled with for years."
+                      &quot;OpenEdTex completely changed how I approach learning. The AI tutor helped me understand complex math concepts that I struggled with for years.&quot;
                     </p>
                     <div className="d-flex align-items-center gap-3">
                       <div className="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px' }}>
@@ -690,7 +690,7 @@ const Home = memo(() => {
                       ))}
                     </div>
                     <p className="card-text text-muted mb-4">
-                      "As a working professional, I needed flexible learning options. OpenEdTex's mobile app and offline access allowed me to study during my commute."
+                      &quot;As a working professional, I needed flexible learning options. OpenEdTex&apos;s mobile app and offline access allowed me to study during my commute.&quot;
                     </p>
                     <div className="d-flex align-items-center gap-3">
                       <div className="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px' }}>
@@ -715,7 +715,7 @@ const Home = memo(() => {
                       ))}
                     </div>
                     <p className="card-text text-muted mb-4">
-                      "The live classroom feature connected me with amazing instructors and peers from around the world. The collaborative projects helped me build real-world skills."
+                      &quot;The live classroom feature connected me with amazing instructors and peers from around the world. The collaborative projects helped me build real-world skills.&quot;
                     </p>
                     <div className="d-flex align-items-center gap-3">
                       <div className="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px' }}>
@@ -909,7 +909,7 @@ const Home = memo(() => {
                   <h5 className="fw-bold text-center mb-4">Frequently Asked Questions</h5>
                   <div className="mb-3">
                     <div className="fw-semibold mb-2">Can I cancel anytime?</div>
-                    <div className="text-muted small">Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your billing period.</div>
+                    <div className="text-muted small">Yes, you can cancel your subscription at any time. You&apos;ll continue to have access until the end of your billing period.</div>
                   </div>
                   <div className="mb-3">
                     <div className="fw-semibold mb-2">Is there a free trial?</div>
@@ -985,7 +985,7 @@ const Home = memo(() => {
                 <div className="bg-white text-dark rounded-4 p-4 shadow-lg h-100">
                   <div className="text-center mb-4">
                     <i className="fas fa-gift text-warning fa-3x mb-3"></i>
-                    <h4 className="fw-bold">What You'll Get</h4>
+                    <h4 className="fw-bold">What You&apos;ll Get</h4>
                     <p className="text-muted">Exclusive content and resources every week</p>
                   </div>
                   <div className="row g-3">
@@ -1303,5 +1303,7 @@ const Home = memo(() => {
     </div>
   )
 })
+
+Home.displayName = 'Home'
 
 export default Home

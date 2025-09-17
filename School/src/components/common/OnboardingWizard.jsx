@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext'
+// import { useAuth } from '../../context/AuthContext'
 import { fetchCourses, enrollInCourse } from '../../slices/coursesSlice'
 import toast from 'react-hot-toast'
 
@@ -13,7 +13,7 @@ const OnboardingWizard = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { user } = useAuth()
+  // const { user } = useAuth()
   const { courses, loading } = useSelector(state => state.courses)
 
   useEffect(() => {

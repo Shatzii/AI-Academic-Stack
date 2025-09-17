@@ -75,7 +75,7 @@ const PWAService = () => {
       setDeferredPrompt(null)
       setIsInstallable(false)
     } catch (error) {
-      console.error('Error installing PWA:', error)
+      // Error installing PWA
     }
   }
 
@@ -88,7 +88,7 @@ const PWAService = () => {
           url
         })
       } catch (error) {
-        console.error('Error sharing:', error)
+        // Error sharing
         // Fallback to clipboard
         navigator.clipboard.writeText(`${title}\n${text}\n${url}`)
       }
@@ -140,8 +140,8 @@ const PWAService = () => {
             }
           })
         })
-        .catch((error) => {
-          console.error('Service Worker registration failed:', error)
+        .catch(() => {
+          // Service Worker registration failed
         })
     }
   }, [])

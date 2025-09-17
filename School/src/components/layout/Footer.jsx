@@ -1,4 +1,3 @@
-import React from 'react'
 import { useBranding } from '../../context/BrandingContext.jsx'
 
 const Footer = () => {

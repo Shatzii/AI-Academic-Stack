@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 const InternationalizationSettings = () => {
-  const { user } = useAuth()
-  const dispatch = useDispatch()
 
   const [currentLanguage, setCurrentLanguage] = useState('en')
   const [availableLanguages, setAvailableLanguages] = useState([])
-  const [translations, setTranslations] = useState({})
   const [loading, setLoading] = useState(false)
   const [contributeTranslations, setContributeTranslations] = useState(false)
 
@@ -162,24 +157,6 @@ const InternationalizationSettings = () => {
     if (completion >= 70) return { color: 'warning', text: 'Good' }
     if (completion >= 50) return { color: 'info', text: 'Partial' }
     return { color: 'secondary', text: 'Limited' }
-  }
-
-  const contributeTranslation = async (languageCode, key, translation) => {
-    try {
-      // Mock API call - in real app, this would submit translation contribution
-      toast.success('Translation contribution submitted for review!')
-    } catch (error) {
-      toast.error('Failed to submit translation')
-    }
-  }
-
-  const reportTranslationIssue = async (languageCode, key, issue) => {
-    try {
-      // Mock API call - in real app, this would report translation issue
-      toast.success('Translation issue reported!')
-    } catch (error) {
-      toast.error('Failed to report issue')
-    }
   }
 
   return (

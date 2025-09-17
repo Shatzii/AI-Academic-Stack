@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
 const StudentIDAdmin = () => {
-  const { user } = useAuth()
-  const dispatch = useDispatch()
 
   // State management
   const [activeTab, setActiveTab] = useState('cards')
@@ -17,7 +13,6 @@ const StudentIDAdmin = () => {
   const [loading, setLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCard, setSelectedCard] = useState(null)
-  const [showModal, setShowModal] = useState(false)
 
   // Form states
   const [newAccessPoint, setNewAccessPoint] = useState({
@@ -60,7 +55,7 @@ const StudentIDAdmin = () => {
       const response = await axios.get('/api/auth/id/admin/stats/')
       setStats(response.data)
     } catch (error) {
-      console.error('Failed to load stats:', error)
+      // Failed to load stats
     }
   }
 

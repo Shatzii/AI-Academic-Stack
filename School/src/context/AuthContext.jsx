@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserProfile, logout as logoutAction } from '../slices/authSlice'
+import { createContext, useContext, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { login, register, logout, getProfile } from '../slices/authSlice'
 
 const AuthContext = createContext()
 
@@ -14,36 +14,47 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch()
-  const { user, isAuthenticated, loading } = useSelector(state => state.auth)
-  const [isInitialized, setIsInitialized] = useState(false)
+  const { user, isAuthenticated, loading, error } = useSelector(state => state.auth)
 
+  // Initialize auth state from localStorage on mount
   useEffect(() => {
-    const initializeAuth = async () => {
-      const token = localStorage.getItem('access_token')
-      if (token && !isAuthenticated) {
-        try {
-          await dispatch(getUserProfile()).unwrap()
-        } catch (error) {
-          // Token is invalid, logout
-          dispatch(logoutAction())
-        }
-      }
-      setIsInitialized(true)
+    const token = localStorage.getItem('access_token')
+    if (token && !user) {
+      // Try to get user profile if we have a token but no user
+      dispatch(getProfile())
     }
+  }, [dispatch, user])
 
-    initializeAuth()
-  }, [dispatch, isAuthenticated])
+  const loginUser = async (credentials) => {
+    try {
+      const result = await dispatch(login(credentials)).unwrap()
+      return { success: true, data: result }
+    } catch (error) {
+      return { success: false, error }
+    }
+  }
 
-  const logout = () => {
-    dispatch(logoutAction())
+  const registerUser = async (userData) => {
+    try {
+      const result = await dispatch(register(userData)).unwrap()
+      return { success: true, data: result }
+    } catch (error) {
+      return { success: false, error }
+    }
+  }
+
+  const logoutUser = () => {
+    dispatch(logout())
   }
 
   const value = {
     user,
     isAuthenticated,
     loading,
-    isInitialized,
-    logout,
+    error,
+    login: loginUser,
+    register: registerUser,
+    logout: logoutUser,
   }
 
   return (
@@ -52,3 +63,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   )
 }
+
+export default AuthContext

@@ -8,11 +8,11 @@ import './styles/index.css'
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
+      .then(() => {
         // Service Worker registered successfully
       })
-      .catch((error) => {
-        console.error('Service Worker registration failed:', error)
+      .catch(() => {
+        // Service Worker registration failed
       })
   })
 }

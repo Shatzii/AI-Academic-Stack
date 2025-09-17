@@ -170,7 +170,7 @@ const gamificationSlice = createSlice({
       })
 
       // Reward Redemption
-      .addCase(redeemReward.fulfilled, (state, action) => {
+      .addCase(redeemReward.fulfilled, () => {
         // Refresh rewards and stats after redemption
         // This would trigger refetch in the component
       })

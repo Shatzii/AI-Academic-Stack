@@ -1,5 +1,3 @@
-import React from 'react';
-
 const AssessmentDashboard = () => {
   // Placeholder for assessment and proctoring UI
   return (

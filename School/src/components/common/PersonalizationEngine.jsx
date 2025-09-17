@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 const PersonalizationEngine = () => {
-  const { user } = useAuth()
-  const dispatch = useDispatch()
 
   const [recommendations, setRecommendations] = useState([])
   const [learningPath, setLearningPath] = useState([])
@@ -150,7 +146,7 @@ const PersonalizationEngine = () => {
     }
   }
 
-  const enrollInCourse = async (courseId) => {
+  const enrollInCourse = async () => {
     try {
       // Mock API call - in real app, this would enroll user in course
       toast.success('Successfully enrolled in course!')

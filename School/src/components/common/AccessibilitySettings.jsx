@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useState, useEffect } from 'react'
+// import { useAuth } from '../../context/AuthContext.jsx'
 import toast from 'react-hot-toast'
 
 const AccessibilitySettings = () => {
-  const { user } = useAuth()
-  const dispatch = useDispatch()
+  // const { user } = useAuth()
+  // const dispatch = useDispatch()
 
   // Accessibility settings state
   const [settings, setSettings] = useState({

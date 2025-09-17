@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { sendMessage, fetchConversation, clearConversation } from '../../slices/aiSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
+// import { useAuth } from '../../context/AuthContext.jsx' // Commented out - not used
 import toast from 'react-hot-toast'
 
 const AIAssistant = () => {
   const dispatch = useDispatch()
-  const { user } = useAuth()
+  // const { user } = useAuth() // Commented out - not used
   const { messages, loading, conversationId, aiServiceInfo } = useSelector(state => state.ai)
 
   const [inputMessage, setInputMessage] = useState('')
@@ -146,18 +146,18 @@ const AIAssistant = () => {
                     <i className="fas fa-brain fa-4x text-primary mb-4"></i>
                     <h5 className="text-muted mb-3">Welcome to your AI Learning Assistant!</h5>
                     <p className="text-muted mb-4">
-                      I'm here to help you with your studies. Ask me questions about any subject,
+                      I&apos;m here to help you with your studies. Ask me questions about any subject,
                       get explanations for difficult concepts, or request study tips and resources.
                     </p>
                     <div className="suggestion-chips">
                       <span className="badge bg-primary me-2 mb-2 p-2">
-                        "Explain photosynthesis"
+                        &quot;Explain photosynthesis&quot;
                       </span>
                       <span className="badge bg-success me-2 mb-2 p-2">
-                        "Help with algebra problems"
+                        &quot;Help with algebra problems&quot;
                       </span>
                       <span className="badge bg-info me-2 mb-2 p-2">
-                        "Study tips for history"
+                        &quot;Study tips for history&quot;
                       </span>
                     </div>
                   </div>

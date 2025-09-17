@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import PWAService from './PWAService'
 import './PWAInstallPrompt.css'
 

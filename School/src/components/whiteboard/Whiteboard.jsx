@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Whiteboard = () => {
   // Placeholder for interactive whiteboard UI
   return (

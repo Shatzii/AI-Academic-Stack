@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
 const HardwareIntegration = () => {
-  const { user } = useAuth()
   const [accessPoints, setAccessPoints] = useState([])
   const [selectedPoint, setSelectedPoint] = useState(null)
   const [connectionStatus, setConnectionStatus] = useState('disconnected')
-  const [scanMode, setScanMode] = useState(false)
   const [lastScan, setLastScan] = useState(null)
   const [scanHistory, setScanHistory] = useState([])
   const [loading, setLoading] = useState(false)
@@ -40,7 +37,6 @@ const HardwareIntegration = () => {
       const ws = new WebSocket('ws://localhost:8001/ws/hardware/')
 
       ws.onopen = () => {
-        console.log('WebSocket connected')
         setConnectionStatus('connected')
       }
 
@@ -50,20 +46,17 @@ const HardwareIntegration = () => {
       }
 
       ws.onclose = () => {
-        console.log('WebSocket disconnected')
         setConnectionStatus('disconnected')
         // Attempt to reconnect after 5 seconds
         setTimeout(initializeWebSocket, 5000)
       }
 
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error)
+      ws.onerror = () => {
         setConnectionStatus('error')
       }
 
       setWsConnection(ws)
     } catch (error) {
-      console.error('Failed to initialize WebSocket:', error)
       setConnectionStatus('error')
     }
   }
@@ -83,7 +76,7 @@ const HardwareIntegration = () => {
         handleDeviceStatus(data)
         break
       default:
-        console.log('Unknown message type:', data.type)
+        // Unknown message type
     }
   }
 
@@ -150,14 +143,14 @@ const HardwareIntegration = () => {
         oscillator.stop(audioContext.currentTime + 0.5)
       }
     } catch (error) {
-      console.error('Failed to play sound:', error)
+      // Failed to play sound
     }
   }
 
   const connectToDevice = async (pointId) => {
     setLoading(true)
     try {
-      const response = await axios.post(`/api/auth/id/access-points/${pointId}/connect/`)
+      await axios.post(`/api/auth/id/access-points/${pointId}/connect/`)
       setSelectedPoint(pointId)
       toast.success('Connected to device successfully')
     } catch (error) {
@@ -179,7 +172,7 @@ const HardwareIntegration = () => {
 
   const testDevice = async (pointId) => {
     try {
-      const response = await axios.post(`/api/auth/id/access-points/${pointId}/test/`)
+      await axios.post(`/api/auth/id/access-points/${pointId}/test/`)
       toast.success('Device test successful')
     } catch (error) {
       toast.error('Device test failed')

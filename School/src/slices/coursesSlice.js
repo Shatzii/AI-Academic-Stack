@@ -90,7 +90,7 @@ const coursesSlice = createSlice({
       .addCase(enrollInCourse.pending, (state) => {
         state.loading = true
       })
-      .addCase(enrollInCourse.fulfilled, (state, action) => {
+      .addCase(enrollInCourse.fulfilled, (state) => {
         state.loading = false
         // You can update the enrolled courses list here if needed
       })

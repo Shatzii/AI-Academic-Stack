@@ -1,7 +1,7 @@
 // Cookie Consent Banner Implementation
 // This is a simple example. For production, use a library like 'react-cookie-consent' and ensure compliance with GDPR, LFPDPPP, and CCPA.
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const CookieConsent = () => {
   const [visible, setVisible] = useState(() => {

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
 const StudentIDSystem = () => {
   const { user } = useAuth()
-  const dispatch = useDispatch()
 
   // State management
   const [activeTab, setActiveTab] = useState('my-card')
@@ -56,7 +54,7 @@ const StudentIDSystem = () => {
       const response = await axios.get('/api/auth/attendance/stats/')
       setStats(response.data)
     } catch (error) {
-      console.error('Failed to load stats:', error)
+      // Failed to load stats
     }
   }
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import './AchievementCard.css';
 
 const AchievementCard = ({ achievement, isUnlocked, progress, onClick }) => {

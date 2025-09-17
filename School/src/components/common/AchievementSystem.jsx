@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+// import { Link } from 'react-router-dom'
 import { fetchCourses } from '../../slices/coursesSlice'
 import { fetchAnalyticsSummary } from '../../slices/analyticsSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
-import toast from 'react-hot-toast'
+// import { useAuth } from '../../context/AuthContext.jsx'
+// import toast from 'react-hot-toast'
 
 const AchievementSystem = () => {
   const dispatch = useDispatch()
-  const { user } = useAuth()
-  const { courses } = useSelector(state => state.courses)
-  const { analytics } = useSelector(state => state.analytics)
+  // const { user } = useAuth()
+  // const { courses } = useSelector(state => state.courses)
+  // const { analytics } = useSelector(state => state.analytics)
 
   const [achievements, setAchievements] = useState([])
-  const [userProgress, setUserProgress] = useState({
+  const [userProgress] = useState({
     coursesCompleted: 0,
     totalStudyTime: 0,
     streakDays: 0,

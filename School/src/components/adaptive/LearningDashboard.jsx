@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchPerformanceMetrics,
@@ -100,7 +100,7 @@ const LearningDashboard = () => {
     <div className="learning-dashboard">
       <div className="dashboard-header">
         <h2>📊 Your Learning Dashboard</h2>
-        <p>Welcome back, {user?.username}! Here's your personalized learning overview.</p>
+        <p>Welcome back, {user?.username}! Here&apos;s your personalized learning overview.</p>
       </div>
 
       {/* Quick Stats */}

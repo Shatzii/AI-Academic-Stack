@@ -7,27 +7,22 @@ export const initPerformanceMonitoring = () => {
   // Track Core Web Vitals
   if (typeof window !== 'undefined') {
     getCLS((metric) => {
-      console.log('CLS:', metric);
       sendMetricToAnalytics('cls', metric.value, metric.id);
     });
 
     getFID((metric) => {
-      console.log('FID:', metric);
       sendMetricToAnalytics('fid', metric.value, metric.id);
     });
 
     getFCP((metric) => {
-      console.log('FCP:', metric);
       sendMetricToAnalytics('fcp', metric.value, metric.id);
     });
 
     getLCP((metric) => {
-      console.log('LCP:', metric);
       sendMetricToAnalytics('lcp', metric.value, metric.id);
     });
 
     getTTFB((metric) => {
-      console.log('TTFB:', metric);
       sendMetricToAnalytics('ttfb', metric.value, metric.id);
     });
   }
@@ -58,19 +53,17 @@ const sendMetricToAnalytics = async (metric, value, id) => {
       userAgent: navigator.userAgent
     });
   } catch (error) {
-    console.warn('Failed to send performance metric:', error);
+    // Failed to send performance metric
   }
 };
 
 // Track component render times in development
-export const withPerformance = (Component, componentName) => {
+export const withPerformance = (Component) => {
   return (props) => {
-    const start = performance.now();
     const result = React.createElement(Component, props);
-    const end = performance.now();
 
     if (process.env.NODE_ENV === 'development') {
-      console.log(`${componentName} render time: ${(end - start).toFixed(2)}ms`);
+      // Component render time tracking
     }
 
     return result;
@@ -83,7 +76,6 @@ export const performanceMonitor = {
     if (window.performance && window.performance.timing) {
       const timing = window.performance.timing;
       const pageLoadTime = timing.loadEventEnd - timing.navigationStart;
-      console.log(`Page load time: ${pageLoadTime}ms`);
       return pageLoadTime;
     }
     return null;
@@ -94,7 +86,7 @@ export const performanceMonitor = {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.name === 'first-contentful-paint') {
-            console.log(`First Contentful Paint: ${entry.startTime}ms`);
+            // First Contentful Paint measurement
           }
         }
       });
@@ -104,10 +96,8 @@ export const performanceMonitor = {
 
   measureLCP: () => {
     if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          console.log(`Largest Contentful Paint: ${entry.startTime}ms`);
-        }
+      const observer = new PerformanceObserver(() => {
+        // Largest Contentful Paint measurement
       });
       observer.observe({ entryTypes: ['largest-contentful-paint'] });
     }
@@ -118,7 +108,7 @@ export const performanceMonitor = {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.initiatorType === 'fetch' || entry.initiatorType === 'xmlhttprequest') {
-            console.log(`Network request: ${entry.name} - ${entry.duration}ms`);
+            // Network request monitoring
           }
         }
       });
@@ -137,7 +127,7 @@ export const performanceMonitor = {
     performanceMonitor.measureLCP();
     performanceMonitor.monitorNetworkRequests();
 
-    console.log('Legacy performance monitoring initialized');
+    // Legacy performance monitoring initialized
   }
 };
 
