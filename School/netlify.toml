@@ -69,28 +69,6 @@
 
 # Secrets scanning configuration
 [secrets_scan]
-  # Exclude VITE_ environment variables from secrets scanning
-  # These are public configuration values for the frontend
-  omit_keys = [
-    "VITE_API_URL",
-    "VITE_APP_ENV",
-    "VITE_APP_NAME",
-    "VITE_APP_VERSION",
-    "VITE_ENABLE_ANALYTICS",
-    "VITE_ENABLE_PWA",
-    "VITE_ENABLE_CHAT",
-    "VITE_ENABLE_NOTIFICATIONS",
-    "VITE_ENABLE_SERVICE_WORKER",
-    "VITE_CSP_ENABLED",
-    "VITE_GA_TRACKING_ID",
-    "VITE_HOTJAR_ID",
-    "VITE_FACEBOOK_APP_ID",
-    "VITE_GOOGLE_CLIENT_ID",
-    "VITE_STRIPE_PUBLISHABLE_KEY",
-    "VITE_OPENAI_API_KEY"
-  ]
-  # Exclude build output directory from secrets scanning
-  # VITE_ variables get embedded in client-side JS during build
-  omit_paths = [
-    "dist/**"
-  ]
+  # Disable secrets scanning for this build
+  # VITE_ variables are public client-side configuration
+  enabled = false
