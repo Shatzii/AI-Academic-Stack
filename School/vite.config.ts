@@ -60,6 +60,13 @@ export default defineConfig({
           }
           return 'assets/[name]-[hash][extname]'
         }
+      },
+      external: (id) => {
+        // Don't include JSX files in the build output
+        if (id.endsWith('.jsx') || id.endsWith('.tsx')) {
+          return true
+        }
+        return false
       }
     },
     chunkSizeWarningLimit: 1000,

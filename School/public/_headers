@@ -1,0 +1,50 @@
+# MIME type headers for proper module loading
+/assets/*.js
+  Content-Type: application/javascript
+
+/assets/js/*.js
+  Content-Type: application/javascript
+
+/assets/css/*.css
+  Content-Type: text/css
+
+/assets/js/vendor-*.js
+  Content-Type: application/javascript
+
+/assets/js/react-vendor-*.js
+  Content-Type: application/javascript
+
+/assets/js/index-*.js
+  Content-Type: application/javascript
+
+/assets/js/Home-*.js
+  Content-Type: application/javascript
+
+/assets/js/App-*.jsx
+  Content-Type: application/javascript
+
+/assets/js/Login-*.js
+  Content-Type: application/javascript
+
+/assets/js/Dashboard-*.js
+  Content-Type: application/javascript
+
+/assets/js/state-vendor-*.js
+  Content-Type: application/javascript
+
+/assets/js/course-components-*.js
+  Content-Type: application/javascript
+
+/assets/js/ai-components-*.js
+  Content-Type: application/javascript
+
+/assets/js/utils-vendor-*.js
+  Content-Type: application/javascript
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.openedtex.com wss://api.openedtex.com https://cdn.jsdelivr.net;
