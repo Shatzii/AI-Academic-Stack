@@ -154,5 +154,6 @@ export const { logout, clearError, setTokens } = authSlice.actions
 export const loginUser = login
 export const registerUser = register
 export const logoutUser = logout
+export const getUserProfile = getProfile
 
 export default authSlice.reducer

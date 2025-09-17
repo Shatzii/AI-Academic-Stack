@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProfile, logout as logoutAction } from '../slices/authSlice'
+import { getUserProfile, logout as logoutAction } from '../slices/authSlice'
 
 const AuthContext = createContext()
 
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('access_token')
       if (token && !isAuthenticated) {
         try {
-          await dispatch(getProfile()).unwrap()
+          await dispatch(getUserProfile()).unwrap()
         } catch (error) {
           // Token is invalid, logout
           dispatch(logoutAction())

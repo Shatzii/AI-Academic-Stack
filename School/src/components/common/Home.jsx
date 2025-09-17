@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, memo } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
-import { useBranding } from '../../context/BrandingContext.jsx'
+import { useAuth } from '../../context/AuthContext'
+import { useBranding } from '../../context/BrandingContext'
 import CourseRecommendations from './CourseRecommendations'
 import Footer from './Footer'
 

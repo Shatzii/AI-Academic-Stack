@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import { fetchCourses, enrollInCourse } from '../../slices/coursesSlice'
 import toast from 'react-hot-toast'
 

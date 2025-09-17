@@ -29,6 +29,7 @@ class UserAchievementViewSet(viewsets.ReadOnlyModelViewSet):
     """View user's achievements"""
     serializer_class = UserAchievementSerializer
     permission_classes = [IsAuthenticated]
+    queryset = UserAchievement.objects.all()
 
     def get_queryset(self):
         return UserAchievement.objects.filter(user=self.request.user)
@@ -45,6 +46,7 @@ class UserBadgeViewSet(viewsets.ReadOnlyModelViewSet):
     """View user's badges"""
     serializer_class = UserBadgeSerializer
     permission_classes = [IsAuthenticated]
+    queryset = UserBadge.objects.all()
 
     def get_queryset(self):
         return UserBadge.objects.filter(user=self.request.user)
@@ -70,6 +72,7 @@ class LeaderboardViewSet(viewsets.ReadOnlyModelViewSet):
 
 class GamificationProfileViewSet(viewsets.ModelViewSet):
     """Manage gamification profile"""
+    queryset = GamificationProfile.objects.all()
     serializer_class = GamificationProfileSerializer
     permission_classes = [IsAuthenticated]
 
@@ -110,6 +113,7 @@ class GamificationProfileViewSet(viewsets.ModelViewSet):
 
 class RewardViewSet(viewsets.ReadOnlyModelViewSet):
     """View available rewards"""
+    queryset = Reward.objects.filter(is_active=True)
     serializer_class = RewardSerializer
     permission_classes = [IsAuthenticated]
 
@@ -121,6 +125,7 @@ class RewardViewSet(viewsets.ReadOnlyModelViewSet):
 
 class UserRewardViewSet(viewsets.ModelViewSet):
     """Manage user's rewards"""
+    queryset = UserReward.objects.all()
     serializer_class = UserRewardSerializer
     permission_classes = [IsAuthenticated]
 

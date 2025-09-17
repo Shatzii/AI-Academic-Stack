@@ -1,11 +1,11 @@
 import React, { useState, memo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
-import { useBranding } from '../../context/BrandingContext.jsx'
+import { useAuth } from '../../context/AuthContext'
+import { useBranding } from '../../context/BrandingContext'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../slices/authSlice'
 import toast from 'react-hot-toast'
-import ThemeToggle from '../common/ThemeToggle.jsx'
+import ThemeToggle from '../common/ThemeToggle'
 
 const Navbar = memo(() => {
   const { user, isAuthenticated } = useAuth()

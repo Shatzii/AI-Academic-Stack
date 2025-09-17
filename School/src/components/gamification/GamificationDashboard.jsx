@@ -7,7 +7,7 @@ import {
   fetchLeaderboards,
   fetchAvailableRewards
 } from '../../slices/gamificationSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import AchievementCard from './AchievementCard'
 import Leaderboard from './Leaderboard'
 import RewardStore from './RewardStore'

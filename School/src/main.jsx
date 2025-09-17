@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import ErrorBoundary from './components/common/ErrorBoundary.jsx'
+import App from './App'
+import ErrorBoundary from './components/common/ErrorBoundary'
 import './styles/index.css'
 
 // Register service worker for caching

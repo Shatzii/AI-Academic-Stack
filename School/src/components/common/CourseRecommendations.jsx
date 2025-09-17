@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchCourses, enrollInCourse } from '../../slices/coursesSlice'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 
 const CourseRecommendations = ({ maxCourses = 6, showTitle = true }) => {

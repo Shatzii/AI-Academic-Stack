@@ -18,6 +18,7 @@ class LearningProfileViewSet(viewsets.ModelViewSet):
     """Manage learning profiles"""
     serializer_class = LearningProfileSerializer
     permission_classes = [IsAuthenticated]
+    queryset = LearningProfile.objects.all()
 
     def get_queryset(self):
         return LearningProfile.objects.filter(user=self.request.user)
@@ -30,6 +31,7 @@ class PerformanceMetricsViewSet(viewsets.ModelViewSet):
     """Manage performance metrics"""
     serializer_class = PerformanceMetricsSerializer
     permission_classes = [IsAuthenticated]
+    queryset = PerformanceMetrics.objects.all()
 
     def get_queryset(self):
         return PerformanceMetrics.objects.filter(user=self.request.user)
@@ -65,6 +67,7 @@ class AdaptivePathViewSet(viewsets.ModelViewSet):
     """Manage adaptive learning paths"""
     serializer_class = AdaptivePathSerializer
     permission_classes = [IsAuthenticated]
+    queryset = AdaptivePath.objects.all()
 
     def get_queryset(self):
         return AdaptivePath.objects.filter(user=self.request.user)
@@ -125,6 +128,7 @@ class StudySessionViewSet(viewsets.ModelViewSet):
     """Manage study sessions"""
     serializer_class = StudySessionSerializer
     permission_classes = [IsAuthenticated]
+    queryset = StudySession.objects.all()
 
     def get_queryset(self):
         return StudySession.objects.filter(user=self.request.user)
@@ -156,6 +160,7 @@ class LearningGoalViewSet(viewsets.ModelViewSet):
     """Manage learning goals"""
     serializer_class = LearningGoalSerializer
     permission_classes = [IsAuthenticated]
+    queryset = LearningGoal.objects.all()
 
     def get_queryset(self):
         return LearningGoal.objects.filter(user=self.request.user)

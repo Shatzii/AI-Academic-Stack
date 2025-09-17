@@ -33,8 +33,8 @@ const ClassroomDetail = lazy(() => import('./components/classrooms/ClassroomDeta
 const StudyGroups = lazy(() => import('./components/common/StudyGroups'))
 
 // Context
-import { AuthProvider } from './context/AuthContext.jsx'
-import { BrandingProvider } from './context/BrandingContext.jsx'
+import { AuthProvider } from './context/AuthContext'
+import { BrandingProvider } from './context/BrandingContext'
 
 // Components
 import AchievementNotifications from './components/common/AchievementNotifications'
