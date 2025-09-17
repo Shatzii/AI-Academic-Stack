@@ -45,6 +45,42 @@
   [headers.values]
     Content-Type = "text/css"
 
+# MIME type headers for JSX files (shouldn't be served directly)
+[[headers]]
+  for = "/*.jsx"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+# MIME type headers for all JS files in dist
+[[headers]]
+  for = "/assets/js/*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+# MIME type headers for all CSS files in dist
+[[headers]]
+  for = "/assets/css/*.css"
+  [headers.values]
+    Content-Type = "text/css"
+
+# MIME type headers for vendor files
+[[headers]]
+  for = "/assets/js/vendor-*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+# MIME type headers for React vendor files
+[[headers]]
+  for = "/assets/js/react-vendor-*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+# Catch-all MIME type headers for all assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+
 # Cache static assets aggressively
 [[headers]]
   for = "/assets/*"

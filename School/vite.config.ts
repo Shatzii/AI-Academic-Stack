@@ -32,14 +32,9 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
+            src: 'vite.svg',
+            sizes: 'any',
+            type: 'image/svg+xml'
           }
         ]
       }
@@ -55,10 +50,20 @@ export default defineConfig({
           ui: ['bootstrap', 'react-bootstrap'],
           charts: ['chart.js', 'react-chartjs-2'],
           utils: ['axios', 'date-fns']
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.js')) {
+            return 'assets/js/[name]-[hash][extname]'
+          }
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'assets/css/[name]-[hash][extname]'
+          }
+          return 'assets/[name]-[hash][extname]'
         }
       }
     },
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 4096
   },
   server: {
     proxy: {
