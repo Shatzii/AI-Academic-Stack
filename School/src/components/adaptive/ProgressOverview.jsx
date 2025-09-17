@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ProgressOverview = ({ metrics, goals }) => {
   // Calculate subject-wise progress
   const subjectProgress = metrics.reduce((acc, metric) => {

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext.jsx'
 import toast from 'react-hot-toast'
 
@@ -46,7 +45,7 @@ const AchievementNotifications = () => {
           }, 2000) // Show after 2 seconds
         }
       } catch (error) {
-        console.error('Error checking enrollments:', error)
+        // Error checking enrollments
       }
     }
 
@@ -85,7 +84,7 @@ const AchievementNotifications = () => {
           }, 3000) // Show after 3 seconds
         }
       } catch (error) {
-        console.error('Error checking ID card:', error)
+        // Error checking ID card
       }
     }
 
@@ -127,7 +126,7 @@ const AchievementNotifications = () => {
           }, 1000)
         }
       } catch (error) {
-        console.error('Error checking completions:', error)
+        // Error checking completions
       }
     }
 
@@ -150,7 +149,7 @@ const AchievementNotifications = () => {
                 </div>
                 <div className="celebration-content">
                   <h6 className="mb-1">📚 Learning Enthusiast!</h6>
-                  <p className="mb-0 small">You've enrolled in 3 courses!</p>
+                  <p className="mb-0 small">You&apos;ve enrolled in 3 courses!</p>
                 </div>
               </div>,
               {
@@ -167,7 +166,7 @@ const AchievementNotifications = () => {
           }, 1500)
         }
       } catch (error) {
-        console.error('Error checking multiple enrollments:', error)
+        // Error checking multiple enrollments
       }
     }
 

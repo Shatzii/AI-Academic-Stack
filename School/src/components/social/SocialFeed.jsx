@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SocialFeed = () => {
   // Placeholder for social feed UI
   return (

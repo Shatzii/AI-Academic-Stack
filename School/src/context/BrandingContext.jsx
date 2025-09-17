@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 
 const BrandingContext = createContext()
@@ -34,7 +34,7 @@ export const BrandingProvider = ({ children }) => {
         document.head.appendChild(style)
       }
     } catch (err) {
-      console.error('Error fetching branding:', err)
+      // console.error('Error fetching branding:', err)
       setError(err.message)
       // Use default branding if API fails
       setBranding({

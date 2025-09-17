@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchUserAchievements,
@@ -45,7 +45,8 @@ const GamificationDashboard = () => {
     }
   }, [dispatch, user])
 
-  const handleRedeemReward = async (reward) => {
+  const handleRedeemReward = async () => {
+    // const handleRedeemReward = async (reward) => {
     // Implement reward redemption logic
     // This would typically dispatch an action to redeem the reward
   }

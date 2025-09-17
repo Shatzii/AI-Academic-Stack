@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useBranding } from '../../context/BrandingContext.jsx'
 import axios from 'axios'
@@ -54,7 +54,7 @@ const BrandingManager = () => {
       const response = await axios.get('/api/auth/branding-presets/')
       setPresets(response.data)
     } catch (error) {
-      console.error('Error fetching presets:', error)
+      // console.error('Error fetching presets:', error)
     }
   }
 
@@ -96,7 +96,7 @@ const BrandingManager = () => {
       updateBranding(response.data)
       toast.success('Branding updated successfully!')
     } catch (error) {
-      console.error('Error updating branding:', error)
+      // console.error('Error updating branding:', error)
       toast.error('Failed to update branding')
     } finally {
       setLoading(false)
@@ -109,7 +109,7 @@ const BrandingManager = () => {
       updateBranding(response.data)
       toast.success('Preset applied successfully!')
     } catch (error) {
-      console.error('Error applying preset:', error)
+      // console.error('Error applying preset:', error)
       toast.error('Failed to apply preset')
     }
   }
@@ -134,7 +134,7 @@ const BrandingManager = () => {
       <div className="container mt-4">
         <div className="alert alert-danger">
           <h4>Access Denied</h4>
-          <p>You don't have permission to manage branding settings.</p>
+          <p>You don&apos;t have permission to manage branding settings.</p>
         </div>
       </div>
     )

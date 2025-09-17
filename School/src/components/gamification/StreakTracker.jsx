@@ -1,4 +1,3 @@
-import React from 'react';
 import './StreakTracker.css';
 
 const StreakTracker = ({ stats }) => {

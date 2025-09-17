@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 const VideoConference = ({ classroomId, isActive }) => {
   const localVideoRef = useRef(null)
   const remoteVideoRef = useRef(null)
   const [isConnected, setIsConnected] = useState(false)
-  const [participants, setParticipants] = useState([])
+  const [participants] = useState([])
   const [isMuted, setIsMuted] = useState(false)
   const [isVideoOff, setIsVideoOff] = useState(false)
   const [isScreenSharing, setIsScreenSharing] = useState(false)
@@ -41,7 +41,7 @@ const VideoConference = ({ classroomId, isActive }) => {
 
       setIsConnected(true)
     } catch (error) {
-      console.error('Error accessing media devices:', error)
+      // Error accessing media devices
       // Fallback for demo purposes
       setIsConnected(false)
     }
@@ -74,7 +74,6 @@ const VideoConference = ({ classroomId, isActive }) => {
     peerConnectionRef.current.onicecandidate = (event) => {
       if (event.candidate) {
         // Send ICE candidate to signaling server
-        console.log('ICE candidate:', event.candidate)
       }
     }
   }
@@ -131,7 +130,7 @@ const VideoConference = ({ classroomId, isActive }) => {
         stopScreenShare()
       }
     } catch (error) {
-      console.error('Error sharing screen:', error)
+      // Error sharing screen
     }
   }
 

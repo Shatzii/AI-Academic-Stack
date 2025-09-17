@@ -1,6 +1,6 @@
-import React, { useState, memo } from 'react'
+import { useState, memo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../context/AuthContext.jsx'
 import { useBranding } from '../../context/BrandingContext'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../slices/authSlice'

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
-import api from '../../api'
+// import api from '../../api'
 
 const StudyGroups = () => {
   const { user, isAuthenticated } = useAuth()
@@ -67,7 +67,6 @@ const StudyGroups = () => {
       setGroups(mockGroups)
     } catch (err) {
       setError('Failed to load study groups')
-      console.error('Error fetching study groups:', err)
     } finally {
       setLoading(false)
     }
@@ -95,7 +94,7 @@ const StudyGroups = () => {
       })
       setShowCreateForm(false)
     } catch (err) {
-      console.error('Error creating study group:', err)
+      // Error creating study group
     }
   }
 
@@ -108,7 +107,7 @@ const StudyGroups = () => {
           : group
       ))
     } catch (err) {
-      console.error('Error joining study group:', err)
+      // Error joining study group
     }
   }
 

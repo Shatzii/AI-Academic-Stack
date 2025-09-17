@@ -1,5 +1,3 @@
-import React from 'react'
-
 const RecommendationCard = ({ recommendation }) => {
   const getRecommendationIcon = (type) => {
     switch (type) {

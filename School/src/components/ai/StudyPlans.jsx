@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { aiAPI } from '../../api'
 import toast from 'react-hot-toast'
 
 const StudyPlans = () => {
-  const dispatch = useDispatch()
   const [studyPlans, setStudyPlans] = useState([])
   const [loading, setLoading] = useState(false)
   const [generating, setGenerating] = useState(false)
@@ -43,7 +41,7 @@ const StudyPlans = () => {
 
     try {
       setGenerating(true)
-      const response = await aiAPI.generateStudyPlan(formData)
+      await aiAPI.generateStudyPlan(formData)
       toast.success('Study plan generated successfully!')
       fetchStudyPlans() // Refresh the list
       // Reset form

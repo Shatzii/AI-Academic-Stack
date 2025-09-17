@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import toast from 'react-hot-toast'
 import axios from 'axios'
@@ -7,7 +7,6 @@ const StudentIDMobile = () => {
   const { user } = useAuth()
   const [myCard, setMyCard] = useState(null)
   const [recentAttendance, setRecentAttendance] = useState([])
-  const [loading, setLoading] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [showBarcode, setShowBarcode] = useState(false)
 
@@ -32,7 +31,7 @@ const StudentIDMobile = () => {
       const response = await axios.get('/api/auth/attendance/?limit=5')
       setRecentAttendance(response.data.results || response.data)
     } catch (error) {
-      console.error('Failed to load recent attendance:', error)
+      // Failed to load recent attendance
     }
   }
 

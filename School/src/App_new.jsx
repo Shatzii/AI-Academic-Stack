@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store'
@@ -39,7 +38,6 @@ import Analytics from './components/analytics/Analytics'
 // Common Components
 import Home from './components/common/Home'
 import NotFound from './components/common/NotFound'
-import Loading from './components/common/Loading'
 
 // Context
 import { AuthProvider } from './context/AuthContext.jsx'

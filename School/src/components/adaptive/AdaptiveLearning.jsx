@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchLearningProfile, updateLearningProfile } from '../../slices/adaptiveSlice'
+import { fetchLearningProfile } from '../../slices/adaptiveSlice'
 import { useAuth } from '../../context/AuthContext.jsx'
 import LearningDashboard from './LearningDashboard'
 import StudyPlanner from './StudyPlanner'

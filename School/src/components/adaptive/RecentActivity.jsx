@@ -1,5 +1,3 @@
-import React from 'react'
-
 const RecentActivity = ({ metrics }) => {
   // Sort metrics by last practiced date
   const recentMetrics = metrics

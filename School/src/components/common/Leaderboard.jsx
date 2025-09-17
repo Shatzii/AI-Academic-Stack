@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
 
 const Leaderboard = () => {
-  const dispatch = useDispatch()
   const { user } = useAuth()
   const [leaderboard, setLeaderboard] = useState([])
   const [timeframe, setTimeframe] = useState('weekly')
@@ -223,7 +221,7 @@ const Leaderboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {leaderboard.map((learner, index) => (
+                      {leaderboard.map((learner) => (
                         <tr key={learner.id} className={learner.name === user?.first_name + ' ' + user?.last_name ? 'table-primary' : ''}>
                           <td className="fw-bold">
                             <span className="rank-icon me-2">{getRankIcon(learner.rank)}</span>
