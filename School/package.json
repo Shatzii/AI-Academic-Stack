@@ -20,8 +20,7 @@
     "serve:optimized": "npm run build:production && npm run preview",
     "netlify:build": "npm run build:netlify",
     "netlify:deploy": "npm run build:netlify && netlify deploy --prod",
-    "netlify:preview": "npm run build:netlify && netlify deploy --dir=dist",
-    "prepare": "husky"
+    "netlify:preview": "npm run build:netlify && netlify deploy --dir=dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",

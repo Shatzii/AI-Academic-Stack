@@ -102,8 +102,19 @@ The `netlify.toml` file contains optimized build settings:
 
 - **Build command**: `npm run build`
 - **Publish directory**: `dist`
+- **Functions directory**: `netlify/functions`
 - **Node version**: 18
 - **Environment**: Production optimizations enabled
+
+### Additional Netlify Settings
+
+- **Base directory**: `School` (directory containing package.json)
+- **Package directory**: `School` (directory containing package.json)
+- **Deploy log visibility**: Public (anyone with deploy URL can access logs)
+- **Build status**: Active (automatic builds on push)
+- **Preview Server command**: Not set (uses local settings)
+- **Target port**: Not set (auto-detected)
+- **Preview Server size**: 1 vCPU, 4 GB RAM, 20 GB Storage
 
 ### Redirects & Headers
 
@@ -117,11 +128,13 @@ The `netlify.toml` file contains optimized build settings:
 Since this is a frontend-only deployment, you'll need a separate backend:
 
 ### Option 1: Django on Heroku/Railway
+
 1. Deploy your Django backend to Heroku/Railway
 2. Update `VITE_API_URL` in Netlify environment variables
 3. Update `netlify.toml` redirect rules
 
 ### Option 2: Netlify Functions
+
 1. Create serverless functions in `netlify/functions/`
 2. Update API calls to use relative paths
 3. Functions will be available at `/.netlify/functions/`
@@ -129,6 +142,7 @@ Since this is a frontend-only deployment, you'll need a separate backend:
 ## 📊 Performance Optimizations
 
 ### Build Optimizations
+
 - ✅ Code splitting by route and component
 - ✅ Vendor chunk separation
 - ✅ Tree shaking
@@ -137,6 +151,7 @@ Since this is a frontend-only deployment, you'll need a separate backend:
 - ✅ Asset optimization
 
 ### CDN Optimizations
+
 - ✅ Static asset caching (1 year)
 - ✅ Gzip compression
 - ✅ Brotli compression
@@ -144,6 +159,7 @@ Since this is a frontend-only deployment, you'll need a separate backend:
 - ✅ Font optimization
 
 ### Runtime Optimizations
+
 - ✅ Service Worker for caching
 - ✅ Lazy loading for components
 - ✅ Image optimization
@@ -152,6 +168,7 @@ Since this is a frontend-only deployment, you'll need a separate backend:
 ## 🔍 Testing & Quality Assurance
 
 ### Automated Checks
+
 ```bash
 # Run all quality checks
 npm run optimize
@@ -167,6 +184,7 @@ npm run build:analyze
 ```
 
 ### Performance Testing
+
 ```bash
 # Run Lighthouse audit
 npx lighthouse https://your-netlify-site.netlify.app
@@ -178,6 +196,7 @@ npm run build:analyze
 ## 🚀 Deployment Workflow
 
 ### For Development Teams
+
 1. **Feature Branch**: Create feature branch
 2. **Development**: Test locally with `npm run dev`
 3. **Build Test**: Run `npm run build:netlify`
@@ -186,6 +205,7 @@ npm run build:analyze
 6. **Production**: Merge to main branch for auto-deployment
 
 ### For Individual Developers
+
 1. **Local Testing**: `npm run dev`
 2. **Build Test**: `npm run build:netlify`
 3. **Deploy**: `./deploy-netlify.sh production`
@@ -194,7 +214,8 @@ npm run build:analyze
 
 ### Common Issues
 
-**Build Fails**
+#### Build Fails
+
 ```bash
 # Check build logs
 npm run build:netlify
@@ -205,7 +226,8 @@ npm install
 npm run build:netlify
 ```
 
-**API Connection Issues**
+#### API Connection Issues
+
 ```bash
 # Check environment variables
 echo $VITE_API_URL
@@ -214,7 +236,8 @@ echo $VITE_API_URL
 curl https://your-api.com/api/health
 ```
 
-**Performance Issues**
+#### Performance Issues
+
 ```bash
 # Analyze bundle size
 npm run build:analyze
@@ -225,12 +248,14 @@ npx lighthouse https://your-site.netlify.app
 
 ### Netlify-Specific Issues
 
-**Redirects Not Working**
+#### Redirects Not Working
+
 - Check `netlify.toml` redirect rules
 - Ensure `_redirects` file is in `public/` directory
 - Test with `curl -I https://your-site.netlify.app/some-route`
 
-**Environment Variables Not Loading**
+#### Environment Variables Not Loading
+
 - Check Netlify dashboard for variable names
 - Ensure variables are set for correct context (production/preview)
 - Restart deployment if variables were added after initial deploy
@@ -238,11 +263,13 @@ npx lighthouse https://your-site.netlify.app
 ## 📈 Monitoring & Analytics
 
 ### Performance Monitoring
+
 - **Netlify Analytics**: Built-in performance metrics
 - **Lighthouse**: Automated performance audits
 - **Web Vitals**: Core Web Vitals tracking
 
 ### Error Tracking
+
 - **Netlify Functions**: Monitor serverless function errors
 - **Browser Console**: Check for JavaScript errors
 - **Network Tab**: Monitor API calls and responses
@@ -250,16 +277,19 @@ npx lighthouse https://your-site.netlify.app
 ## 🔒 Security Considerations
 
 ### Content Security Policy
+
 - Configured in `netlify.toml`
 - Allows necessary CDNs and APIs
 - Blocks inline scripts for security
 
-### Environment Variables
+#### Environment Variables Security
+
 - Never commit secrets to repository
 - Use Netlify's encrypted environment variables
 - Rotate API keys regularly
 
 ### HTTPS & SSL
+
 - Netlify provides automatic HTTPS
 - SSL certificates managed automatically
 - HSTS headers configured
@@ -286,6 +316,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Happy Deploying! 🎉**
+Happy Deploying! 🎉
 
 For support or questions, please open an issue on GitHub.
