@@ -170,7 +170,7 @@ const gamificationSlice = createSlice({
       })
 
       // Reward Redemption
-      .addCase(redeemReward.fulfilled, (state, action) => {
+      .addCase(redeemReward.fulfilled, (_state, _action) => {
         // Refresh rewards and stats after redemption
         // This would trigger refetch in the component
       })
@@ -183,9 +183,6 @@ const gamificationSlice = createSlice({
         state.loading = false
         state.error = action.payload
       })
-      .addCase(fetchUserAchievements.fulfilled, (state) => {
-        state.loading = false
-      })
 
       .addCase(fetchGamificationStats.pending, (state) => {
         state.loading = true
@@ -193,9 +190,6 @@ const gamificationSlice = createSlice({
       .addCase(fetchGamificationStats.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
-      })
-      .addCase(fetchGamificationStats.fulfilled, (state) => {
-        state.loading = false
       })
   },
 })
