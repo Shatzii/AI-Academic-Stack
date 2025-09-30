@@ -11,6 +11,8 @@
   NODE_ENV = "production"
   # Vite specific environment variables
   VITE_APP_ENV = "production"
+  # Skip Next.js plugin since this is a Vite project
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 # Redirect API calls to backend service
 [[redirects]]
