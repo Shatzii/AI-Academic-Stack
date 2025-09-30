@@ -5,7 +5,11 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // Ensure JSX is properly transformed
+      jsxRuntime: 'automatic',
+      include: /\.(jsx|js|ts|tsx)$/,
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
@@ -43,13 +47,29 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          redux: ['@reduxjs/toolkit', 'react-redux'],
-          ui: ['bootstrap', 'react-bootstrap'],
-          charts: ['chart.js', 'react-chartjs-2'],
-          utils: ['axios', 'date-fns']
+        manualChunks: (id) => {
+          // Separate vendor chunks for better caching
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor'
+            }
+            if (id.includes('react-router-dom')) {
+              return 'router'
+            }
+            if (id.includes('bootstrap') || id.includes('react-bootstrap') || id.includes('react-icons')) {
+              return 'ui'
+            }
+            if (id.includes('@reduxjs/toolkit') || id.includes('react-redux')) {
+              return 'redux'
+            }
+            if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+              return 'charts'
+            }
+            if (id.includes('axios') || id.includes('date-fns')) {
+              return 'utils'
+            }
+            return 'vendor'
+          }
         },
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.js')) {
