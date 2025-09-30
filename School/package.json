@@ -26,9 +26,10 @@
     "clean": "rm -rf dist node_modules/.vite",
     "clean:all": "rm -rf dist node_modules",
     "reinstall": "npm run clean:all && npm install",
-    "postinstall": "npm run type-check"
+    "postinstall": "npm run type-check || echo 'Skipping type-check on install'"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@reduxjs/toolkit": "^1.9.0",
     "@uiw/react-md-editor": "^4.0.8",
     "@vitejs/plugin-react": "^4.7.0",

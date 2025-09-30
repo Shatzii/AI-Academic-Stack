@@ -1,11 +1,12 @@
-import React, { useState, memo } from 'react'
+import { useState, memo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { useAuth } from '../../context/AuthContext'
 import { useBranding } from '../../context/BrandingContext'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../slices/authSlice'
 import toast from 'react-hot-toast'
 import ThemeToggle from '../common/ThemeToggle'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const Navbar = memo(() => {
   const { user, isAuthenticated } = useAuth()
@@ -13,11 +14,18 @@ const Navbar = memo(() => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { loginWithRedirect, logout: auth0Logout, isAuthenticated: isAuth0Authenticated, isLoading: isAuth0Loading, user: auth0User } = useAuth0()
+
+  const auth0Enabled = Boolean(import.meta.env.VITE_AUTH0_DOMAIN && import.meta.env.VITE_AUTH0_CLIENT_ID)
 
   const handleLogout = () => {
-    dispatch(logout())
-    toast.success('Logged out successfully')
-    navigate('/')
+    if (auth0Enabled) {
+      auth0Logout({ returnTo: window.location.origin })
+    } else {
+      dispatch(logout())
+      toast.success('Logged out successfully')
+      navigate('/')
+    }
   }
 
   Navbar.displayName = 'Navbar'
@@ -61,7 +69,7 @@ const Navbar = memo(() => {
               </Link>
             </li>
 
-            {isAuthenticated && (
+            {(isAuthenticated || (auth0Enabled && isAuth0Authenticated)) && (
               <>
                 <li className="nav-item">
                   <Link className="nav-link px-3 py-2" to="/courses" onClick={() => setIsMenuOpen(false)}>
@@ -98,7 +106,7 @@ const Navbar = memo(() => {
             <li className="nav-item d-flex align-items-center me-3">
               <ThemeToggle />
             </li>
-            {isAuthenticated ? (
+            {(isAuthenticated || (auth0Enabled && isAuth0Authenticated)) ? (
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -109,7 +117,7 @@ const Navbar = memo(() => {
                   aria-expanded="false"
                 >
                   <i className="fas fa-user me-1"></i>
-                  {user?.first_name || user?.username}
+                  {auth0Enabled ? (auth0User?.name || auth0User?.email) : (user?.first_name || user?.username)}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
@@ -122,7 +130,7 @@ const Navbar = memo(() => {
                       <i className="fas fa-id-card me-2"></i>Student ID
                     </Link>
                   </li>
-                  {user?.role === 'admin' && (
+                  {!auth0Enabled && user?.role === 'admin' && (
                     <>
                       <li>
                         <Link className="dropdown-item" to="/admin/student-id" onClick={() => setIsMenuOpen(false)}>
@@ -146,16 +154,26 @@ const Navbar = memo(() => {
               </li>
             ) : (
               <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login" onClick={() => setIsMenuOpen(false)}>
-                    <i className="fas fa-sign-in-alt me-1"></i>Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register" onClick={() => setIsMenuOpen(false)}>
-                    <i className="fas fa-user-plus me-1"></i>Register
-                  </Link>
-                </li>
+                {auth0Enabled ? (
+                  <li className="nav-item">
+                    <button className="btn btn-primary" onClick={() => loginWithRedirect()} disabled={isAuth0Loading}>
+                      <i className="fas fa-sign-in-alt me-1"></i>Login
+                    </button>
+                  </li>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/login" onClick={() => setIsMenuOpen(false)}>
+                        <i className="fas fa-sign-in-alt me-1"></i>Login
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/register" onClick={() => setIsMenuOpen(false)}>
+                        <i className="fas fa-user-plus me-1"></i>Register
+                      </Link>
+                    </li>
+                  </>
+                )}
               </>
             )}
           </ul>

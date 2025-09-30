@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchAuth0AccessToken } from './auth/auth0TokenBridge';
 
 // Create axios instance with base configuration
 const api = axios.create({
@@ -9,18 +10,27 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add auth token
+// Request interceptor to add auth token (prefers Auth0 token when available)
 api.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    // Try Auth0 token first
+    const auth0Token = await fetchAuth0AccessToken({
+      // scope can be customized per-call via config.__auth0Scopes if needed
+      scope: config.__auth0Scopes,
+    });
+    if (auth0Token) {
+      config.headers.Authorization = `Bearer ${auth0Token}`;
+      return config;
+    }
+
+    // Fallback to existing local JWT (SimpleJWT)
     const token = localStorage.getItem('access_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Response interceptor to handle token refresh
@@ -33,6 +43,14 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        // If using Auth0, attempt to fetch a fresh token and retry
+        const newAuth0Token = await fetchAuth0AccessToken({ ignoreCache: true });
+        if (newAuth0Token) {
+          originalRequest.headers.Authorization = `Bearer ${newAuth0Token}`;
+          return api(originalRequest);
+        }
+
+        // Fallback: try SimpleJWT refresh flow
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
           const response = await axios.post(

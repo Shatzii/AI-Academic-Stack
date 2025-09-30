@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import axios from 'axios'
+import { createContext, useContext, useEffect, useState } from 'react'
+import api from '../api'
 
 const BrandingContext = createContext()
 
@@ -23,7 +23,7 @@ export const BrandingProvider = ({ children }) => {
   const fetchBranding = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('/api/auth/branding/active/')
+  const response = await api.get('/auth/branding/active/')
       setBranding(response.data)
       setError(null)
 
