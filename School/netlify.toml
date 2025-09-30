@@ -36,11 +36,19 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://cdn.auth0.com data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.openedtex.com wss://api.openedtex.com https://cdn.jsdelivr.net https://www.google-analytics.com https://your-tenant.us.auth0.com https://cdn.auth0.com https://your-django-backend.herokuapp.com; frame-src 'self' https://your-tenant.us.auth0.com https://cdn.auth0.com;"# Cache static assets aggressively
+
+# Content Security Policy (simplified)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://cdn.auth0.com data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.openedtex.com wss://api.openedtex.com https://cdn.jsdelivr.net https://www.google-analytics.com https://*.auth0.com https://your-django-backend.herokuapp.com; frame-src 'self' https://*.auth0.com;"
+
+# Cache static assets aggressively
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    X-Content-Type-Options = "nosniff"
 
 # Cache other static files
 [[headers]]
@@ -52,46 +60,6 @@
   for = "/manifest.json"
   [headers.values]
     Cache-Control = "public, max-age=86400"
-
-# MIME type headers for JavaScript modules
-[[headers]]
-  for = "/assets/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# MIME type headers for CSS modules
-[[headers]]
-  for = "/assets/*.css"
-    [headers.values]
-    Content-Type = "text/css"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# MIME type headers for images
-[[headers]]
-  for = "/assets/*.png"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/assets/*.jpg"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/assets/*.jpeg"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/assets/*.webp"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/assets/*.svg"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
 
 # Prevent direct access to source files
 [[headers]]
@@ -112,49 +80,6 @@
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
     Cache-Control = "no-cache, no-store, must-revalidate"
-    Content-Type = "application/javascript"
-
-# MIME type headers for all JS files in dist
-[[headers]]
-  for = "/assets/js/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
-# MIME type headers for all CSS files in dist
-[[headers]]
-  for = "/assets/css/*.css"
-  [headers.values]
-    Content-Type = "text/css"
-
-# MIME type headers for vendor files
-[[headers]]
-  for = "/assets/js/vendor-*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
-# MIME type headers for React vendor files
-[[headers]]
-  for = "/assets/js/react-vendor-*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
-# Catch-all MIME type headers for all assets
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-
-# Cache static assets aggressively
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Cache other static files
-[[headers]]
-  for = "/static/*"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
 
 # Netlify Functions configuration (if using serverless functions)
 [functions]
