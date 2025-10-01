@@ -13,6 +13,8 @@
   VITE_APP_ENV = "production"
   # Skip Next.js plugin since this is a Vite project
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  # Disable secrets scanning for VITE_ variables (client-side config)
+  SECRETS_SCAN_ENABLED = "false"
 
 # Redirect API calls to backend service
 [[redirects]]
@@ -102,9 +104,3 @@
 [context.deploy-preview.environment]
   VITE_API_URL = "https://dev-api.openedtex.com/api"
   VITE_APP_ENV = "development"
-
-# Secrets scanning configuration
-[secrets_scan]
-  # Disable secrets scanning for this build
-  # VITE_ variables are public client-side configuration
-  enabled = false
