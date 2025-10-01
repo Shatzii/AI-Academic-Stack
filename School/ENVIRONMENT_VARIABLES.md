@@ -54,8 +54,8 @@ Set these in your **Heroku Dashboard** → **Settings** → **Config Vars** (or 
 DEBUG=False
 SECRET_KEY=your-super-secret-django-key-here-make-it-long-and-random
 DATABASE_URL=postgresql://user:password@host:port/database
-ALLOWED_HOSTS=your-netlify-domain.netlify.app,your-custom-domain.com
-CORS_ALLOWED_ORIGINS=https://your-netlify-domain.netlify.app,https://your-custom-domain.com
+ALLOWED_HOSTS=go4itacademy.netlify.app,your-custom-domain.com
+CORS_ALLOWED_ORIGINS=https://go4itacademy.netlify.app,https://your-custom-domain.com
 DJANGO_SETTINGS_MODULE=config.settings
 ```
 
@@ -75,11 +75,11 @@ DJANGO_SETTINGS_MODULE=config.settings
 
 - **`ALLOWED_HOSTS`**: Comma-separated list of allowed hostnames
   - Include your Netlify domain and any custom domains
-  - Example: `your-site.netlify.app,www.your-site.com`
+  - Example: `go4itacademy.netlify.app,www.your-site.com`
 
 - **`CORS_ALLOWED_ORIGINS`**: Origins allowed to make cross-origin requests
   - Should match your frontend domains
-  - Example: `https://your-site.netlify.app,https://www.your-site.com`
+  - Example: `https://go4itacademy.netlify.app,https://www.your-site.com`
 
 - **`DJANGO_SETTINGS_MODULE`**: Points to your Django settings file
   - Usually: `config.settings`
@@ -98,23 +98,23 @@ DJANGO_SETTINGS_MODULE=config.settings
 ### 3. Configure Application Settings
 
 **Basic Settings:**
-- **Application Logo**: `https://your-netlify-site.netlify.app/logo.png` (optional)
-- **Application Login URI**: `https://your-netlify-site.netlify.app`
+- **Application Logo**: `https://go4itacademy.netlify.app/logo.png` (optional)
+- **Application Login URI**: `https://go4itacademy.netlify.app`
 
 **Application URIs:**
 - **Allowed Callback URLs**:
   ```text
-  https://your-netlify-site.netlify.app,
+  https://go4itacademy.netlify.app,
   http://localhost:5173
   ```
 - **Allowed Logout URLs**:
   ```
-  https://your-netlify-site.netlify.app,
+  https://go4itacademy.netlify.app,
   http://localhost:5173
   ```
 - **Allowed Web Origins**:
   ```
-  https://your-netlify-site.netlify.app,
+  https://go4itacademy.netlify.app,
   http://localhost:5173
   ```
 
@@ -123,7 +123,7 @@ DJANGO_SETTINGS_MODULE=config.settings
 - **Cross-Origin Authentication**: ✅ Enabled
 - **Allowed Origins (CORS)**:
   ```
-  https://your-netlify-site.netlify.app,
+  https://go4itacademy.netlify.app,
   http://localhost:5173
   ```
 
