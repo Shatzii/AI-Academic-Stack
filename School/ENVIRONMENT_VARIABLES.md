@@ -6,42 +6,51 @@ This file contains all the environment variables needed to run the OpenEdTex app
 
 Set these in your **Netlify Dashboard** → **Site Settings** → **Environment Variables**:
 
-```
+### Required Variables
+
+```bash
 VITE_API_URL=https://your-backend-domain.herokuapp.com/api
-VITE_AUTH0_DOMAIN=your-tenant.us.auth0.com
-VITE_AUTH0_CLIENT_ID=your-auth0-client-id
-VITE_AUTH0_AUDIENCE=https://openedtex.api
 NODE_ENV=production
 VITE_APP_ENV=production
 ```
 
-### Variable Explanations:
+### Optional Auth0 Variables (only if using authentication)
+
+```bash
+VITE_AUTH0_DOMAIN=your-tenant.us.auth0.com
+VITE_AUTH0_CLIENT_ID=your-auth0-client-id
+VITE_AUTH0_AUDIENCE=https://openedtex.api
+```
+
+**Note**: If you don't set the Auth0 variables, the app will run without authentication.
+
+### Variable Explanations
 
 - **`VITE_API_URL`**: URL of your Django backend API endpoint
   - Example: `https://your-django-app.herokuapp.com/api`
   - Default (dev): `http://localhost:8000/api`
 
-- **`VITE_AUTH0_DOMAIN`**: Your Auth0 tenant domain
-  - Example: `dev-abc123.us.auth0.com`
-  - Get this from your Auth0 dashboard
-
-- **`VITE_AUTH0_CLIENT_ID`**: Your Auth0 application client ID
-  - Example: `abcdefghijklmnopqrstuvwx123456789`
-  - Get this from your Auth0 application settings
-
-- **`VITE_AUTH0_AUDIENCE`**: Your Auth0 API identifier
-  - Example: `https://openedtex.api`
-  - Must match the API identifier in your Auth0 dashboard
-
 - **`NODE_ENV`**: Set to `production` for production builds
 
 - **`VITE_APP_ENV`**: Set to `production` for production environment
+
+- **`VITE_AUTH0_DOMAIN`**: Your Auth0 tenant domain (optional)
+  - Example: `dev-abc123.us.auth0.com`
+  - Get this from your Auth0 dashboard
+
+- **`VITE_AUTH0_CLIENT_ID`**: Your Auth0 application client ID (optional)
+  - Example: `abcdefghijklmnopqrstuvwx123456789`
+  - Get this from your Auth0 application settings
+
+- **`VITE_AUTH0_AUDIENCE`**: Your Auth0 API identifier (optional)
+  - Example: `https://openedtex.api`
+  - Must match the API identifier in your Auth0 dashboard
 
 ## Backend Environment Variables (Heroku/Django)
 
 Set these in your **Heroku Dashboard** → **Settings** → **Config Vars** (or equivalent for your hosting platform):
 
-```
+```bash
 DEBUG=False
 SECRET_KEY=your-super-secret-django-key-here-make-it-long-and-random
 DATABASE_URL=postgresql://user:password@host:port/database
@@ -50,7 +59,7 @@ CORS_ALLOWED_ORIGINS=https://your-netlify-domain.netlify.app,https://your-custom
 DJANGO_SETTINGS_MODULE=config.settings
 ```
 
-### Backend Variable Explanations:
+### Backend Variable Explanations
 
 - **`DEBUG`**: Set to `False` in production for security
   - Development: `True`
@@ -77,20 +86,63 @@ DJANGO_SETTINGS_MODULE=config.settings
 
 ## Auth0 Configuration Steps
 
-1. **Create Auth0 Account**: Go to [auth0.com](https://auth0.com) and sign up
-2. **Create Tenant**: Set up your tenant (e.g., `your-tenant.us.auth0.com`)
-3. **Create Application**:
-   - Type: Single Page Application
-   - Allowed Callback URLs: `http://localhost:5173` (dev) + your Netlify domain
-   - Allowed Logout URLs: Same as above
-   - Allowed Web Origins: Same as above
-4. **Create API**:
-   - Identifier: `https://openedtex.api`
-   - Signing Algorithm: RS256
-5. **Get Values**:
-   - Domain: From tenant settings
-   - Client ID: From application settings
-   - Audience: The API identifier
+### 1. Create Auth0 Account
+- Go to [auth0.com](https://auth0.com) and sign up for a free account
+- Choose your tenant region (US, EU, AU, etc.)
+
+### 2. Create Application
+- **Application Type**: Single Page Application
+- **Name**: OpenEdTex Platform
+- **Description**: Academic platform for course management
+
+### 3. Configure Application Settings
+
+**Basic Settings:**
+- **Application Logo**: `https://your-netlify-site.netlify.app/logo.png` (optional)
+- **Application Login URI**: `https://your-netlify-site.netlify.app`
+
+**Application URIs:**
+- **Allowed Callback URLs**:
+  ```text
+  https://your-netlify-site.netlify.app,
+  http://localhost:5173
+  ```
+- **Allowed Logout URLs**:
+  ```
+  https://your-netlify-site.netlify.app,
+  http://localhost:5173
+  ```
+- **Allowed Web Origins**:
+  ```
+  https://your-netlify-site.netlify.app,
+  http://localhost:5173
+  ```
+
+**Advanced Settings:**
+- **Grant Types**: Authorization Code, Implicit, Refresh Token
+- **Cross-Origin Authentication**: ✅ Enabled
+- **Allowed Origins (CORS)**:
+  ```
+  https://your-netlify-site.netlify.app,
+  http://localhost:5173
+  ```
+
+**Token Settings:**
+- **ID Token Expiration**: 36000 seconds (10 hours)
+- **Refresh Token Expiration**: 2592000 seconds (30 days)
+- **Refresh Token Rotation**: ✅ Enabled
+
+### 4. Create API
+- **Name**: OpenEdTex API
+- **Identifier**: `https://openedtex.api`
+- **Signing Algorithm**: RS256
+
+### 5. Get Your Credentials
+After setup, you'll get:
+- **Domain**: `your-tenant.us.auth0.com` (from Auth0 dashboard)
+- **Client ID**: `abcdefghijklmnopqrstuvwx123456789` (from application settings)
+- **Client Secret**: (keep secret, not needed for SPA)
+- **Audience**: `https://openedtex.api`
 
 ## Quick Setup Checklist
 
