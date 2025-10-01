@@ -9,7 +9,7 @@ Set these in your **Netlify Dashboard** → **Site Settings** → **Environment 
 ### Required Variables
 
 ```bash
-VITE_API_URL=https://your-backend-domain.herokuapp.com/api
+VITE_API_URL=https://your-actual-backend-api-url/api
 NODE_ENV=production
 VITE_APP_ENV=production
 ```
