@@ -90,17 +90,3 @@
 # Build hooks for continuous deployment
 [build.hooks]
   prebuild = "echo 'Starting build process...'"
-
-# Environment variables for production
-[context.production.environment]
-  VITE_API_URL = "https://your-django-backend.herokuapp.com/api"
-  VITE_APP_ENV = "production"
-
-# Branch-specific configurations
-[context.branch-deploy.environment]
-  VITE_API_URL = "https://staging-api.openedtex.com/api"
-  VITE_APP_ENV = "staging"
-
-[context.deploy-preview.environment]
-  VITE_API_URL = "https://dev-api.openedtex.com/api"
-  VITE_APP_ENV = "development"
