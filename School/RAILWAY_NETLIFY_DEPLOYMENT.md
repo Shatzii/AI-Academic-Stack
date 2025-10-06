@@ -57,7 +57,8 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 - **Builder**: Dockerfile (auto-detected when railway.json is removed)
 - **Dockerfile Path**: `Dockerfile` (in root directory)
 - **Important**: If Railway still tries to use Railpack, add a `railway.json` file with `"builder": "dockerfile"` to force Docker deployment
-- No custom commands needed.
+- **Pre-deploy commands**: Handled automatically in Dockerfile CMD (migrations and static files run on container startup)
+- No custom commands needed in Railway UI.
 
 ### Step 4: Set Environment Variables
 
