@@ -19,21 +19,29 @@ This guide covers deploying the AI Academic Stack: a Django REST API backend on 
 ### Steps
 
 1. Create a new service in Railway from your GitHub repo.
-2. Switch builder to "Dockerfile" and set path to `backend/Dockerfile`.
-3. Add a Postgres plugin and copy the DATABASE_URL.
-4. Set environment variables:
+2. **Option A: Docker (recommended if working)**
+   - Switch builder to "Dockerfile" and set path to `backend/Dockerfile`.
+   - No custom commands needed.
+3. **Option B: Railpack (if Docker fails)**
+   - Keep default Railpack builder.
+   - Set Root Directory to `backend`.
+   - Build Command: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
+   - Pre-deploy Command: `python manage.py migrate --noinput`
+   - Start Command: `bash start.sh`
+4. Add a Postgres plugin and copy the DATABASE_URL.
+5. Set environment variables:
    - DEBUG=False
    - ENVIRONMENT=production
    - DJANGO_SETTINGS_MODULE=config.settings
    - SECRET_KEY=long-random-string
    - JWT_SECRET_KEY=long-random-string
-   - ALLOWED_HOSTS=your-railway-app.railway.app
-   - FRONTEND_URL=<https://your-netlify-site.netlify.app>
-   - CORS_ALLOWED_ORIGINS=<https://your-netlify-site.netlify.app>
-   - CSRF_TRUSTED_ORIGINS=<https://your-netlify-site.netlify.app>
+   - ALLOWED_HOSTS=aiacademy-production-941d.up.railway.app
+   - FRONTEND_URL=<https://go4itacademy.netlify.app>
+   - CORS_ALLOWED_ORIGINS=<https://go4itacademy.netlify.app>
+   - CSRF_TRUSTED_ORIGINS=<https://go4itacademy.netlify.app>
    - DATABASE_URL=postgres://... (from Postgres plugin)
-5. Set Healthcheck Path to `/health/`.
-6. Deploy.
+6. Set Healthcheck Path to `/health/`.
+7. Deploy.
 
 ### Verification
 
