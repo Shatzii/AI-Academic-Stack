@@ -43,7 +43,7 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 #### For Railpack (Recommended)
 
 - **Builder**: Railpack (default)
-- **Root Directory**: `backend`
+- **Root Directory**: `backend` (CRITICAL - must be set to find manage.py)
 - **Build Command**: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
 - **Pre-deploy Command**: `python manage.py migrate --noinput`
 - **Start Command**: `bash start.sh`
@@ -150,6 +150,7 @@ The Netlify site is already configured to proxy `/api/*` to your Railway backend
   - Wrong Root Directory (should be `backend` for Railpack, root for Docker).
   - Missing env vars (especially `DATABASE_URL`, `SECRET_KEY`).
   - Migrations failed (check DB connection).
+  - **Root Directory not set**: For Railpack, you MUST set Root Directory to `backend` in Railway service settings, otherwise it can't find manage.py.
   - **Dockerfile not found**: Ensure `Dockerfile` is in root directory when using Docker builder.
   - **railway.json conflict**: Remove `railway.json` if present - it forces Railpack and prevents Docker detection. If issues persist, add `railway.json` with `"builder": "dockerfile"` to explicitly force Docker deployment.
 - **500 Internal Server Error**: Check Railway logs for Django errors.
