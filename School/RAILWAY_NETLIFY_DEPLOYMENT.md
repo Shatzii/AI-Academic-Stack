@@ -54,8 +54,9 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 
 #### For Docker (Alternative)
 
-- **Builder**: Dockerfile
+- **Builder**: Dockerfile (auto-detected when railway.json is removed)
 - **Dockerfile Path**: `Dockerfile` (in root directory)
+- **Important**: Remove `railway.json` from your repository if it exists, as it forces Railpack deployment
 - No custom commands needed.
 
 ### Step 4: Set Environment Variables
@@ -149,6 +150,7 @@ The Netlify site is already configured to proxy `/api/*` to your Railway backend
   - Missing env vars (especially `DATABASE_URL`, `SECRET_KEY`).
   - Migrations failed (check DB connection).
   - **Dockerfile not found**: Ensure `Dockerfile` is in root directory when using Docker builder.
+  - **railway.json conflict**: Remove `railway.json` if present - it forces Railpack and prevents Docker detection.
 - **500 Internal Server Error**: Check Railway logs for Django errors.
 
 ### Frontend Issues
