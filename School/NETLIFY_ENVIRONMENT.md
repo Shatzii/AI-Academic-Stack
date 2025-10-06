@@ -16,14 +16,14 @@ Set these as per your backend domain. Values below are examples; replace with yo
 
 Required
 
-- VITE_API_URL: <https://ai-academic-stack-production.up.railway.app/api>
+- VITE_API_URL: <https://aiacademy-production-941d.up.railway.app/api>
 - VITE_APP_ENV: production
 
 Optional (turn on only if you will use Auth0)
 
 - VITE_AUTH0_DOMAIN: your-tenant.us.auth0.com
 - VITE_AUTH0_CLIENT_ID: abc123...
-- VITE_AUTH0_AUDIENCE: <https://ai-academic-stack-production.up.railway.app/> (if using API authorization)
+- VITE_AUTH0_AUDIENCE: <https://aiacademy-production-941d.up.railway.app/> (if using API authorization)
 
 Notes
 
@@ -71,7 +71,7 @@ API Redirect (optional proxy)
 ```toml
 [[redirects]]
   from = "/api/*"
-  to = "https://ai-academic-stack-production.up.railway.app/api/:splat"
+  to = "https://aiacademy-production-941d.up.railway.app/api/:splat"
   status = 200
   force = true
 ```
@@ -84,7 +84,7 @@ Content Security Policy
 - Update `connect-src` to include your backend origin:
 
 ```text
-... connect-src 'self' https://ai-academic-stack-production.up.railway.app ...;
+... connect-src 'self' https://aiacademy-production-941d.up.railway.app ...;
 ```
 
 ## Typical deployment steps
@@ -93,7 +93,7 @@ Content Security Policy
 
 1. Under Site settings > Environment variables, add:
 
-- VITE_API_URL=<https://ai-academic-stack-production.up.railway.app/api>
+- VITE_API_URL=<https://aiacademy-production-941d.up.railway.app/api>
 - VITE_APP_ENV=production
 - Optionally VITE_AUTH0_* if using Auth0.
 
