@@ -3,5 +3,9 @@
   "build": {
     "builder": "railpack",
     "rootDirectory": "backend"
+  },
+  "deploy": {
+    "startCommand": "bash start.sh",
+    "healthcheckPath": "/health/"
   }
 }
