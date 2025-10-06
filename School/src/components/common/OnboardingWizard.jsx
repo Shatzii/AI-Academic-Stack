@@ -54,7 +54,7 @@ const OnboardingWizard = () => {
 
   const handleCompleteOnboarding = () => {
     setCompletedSteps([...completedSteps, 3])
-    toast.success('Welcome to OpenEdTex! Your learning journey begins now.')
+    toast.success('Welcome to Go4it Sports Academy! Your athletic journey begins now.')
     navigate('/dashboard')
   }
 
@@ -79,9 +79,8 @@ const OnboardingWizard = () => {
               <div className="card-body p-5">
                 {/* Header */}
                 <div className="text-center mb-4">
-                  <h2 className="fw-bold text-primary mb-3">
-                    <i className="fas fa-magic me-2"></i>
-                    Welcome to OpenEdTex!
+                                    <h2 className="text-center mb-4">
+                    Welcome to Go4it Sports Academy!
                   </h2>
                   <p className="text-muted mb-4">
                     Let&apos;s personalize your learning experience in just a few steps
@@ -282,7 +281,7 @@ const OnboardingWizard = () => {
                         You&apos;re All Set!
                       </h4>
                       <p className="text-muted mb-4">
-                        Welcome to OpenEdTex! Your learning journey is about to begin.
+                        Welcome to Go4it Sports Academy! Your athletic journey is about to begin.
                       </p>
                     </div>
 

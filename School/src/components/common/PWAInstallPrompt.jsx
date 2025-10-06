@@ -33,7 +33,7 @@ const PWAInstallPrompt = () => {
 
   const handleShare = async () => {
     await pwaService.shareContent(
-      'OpenEdTex - AI-Powered Learning',
+      'Go4it Sports Academy - Elite Athlete Training',
       'Experience the future of education with AI-powered learning assistant and interactive courses.',
       window.location.href
     )
@@ -49,7 +49,7 @@ const PWAInstallPrompt = () => {
           <div className="prompt-content">
             <div className="prompt-icon">📱</div>
             <div className="prompt-text">
-              <h3>Install OpenEdTex</h3>
+              <h3>Install Go4it Sports Academy</h3>
               <p>Get the full experience with offline access, push notifications, and native app feel!</p>
             </div>
             <div className="prompt-actions">

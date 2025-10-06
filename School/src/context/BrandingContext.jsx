@@ -38,8 +38,8 @@ export const BrandingProvider = ({ children }) => {
       setError(err.message)
       // Use default branding if API fails
       setBranding({
-        school_name: 'OpenEdTex University',
-        school_tagline: 'Empowering Education Through Technology',
+        school_name: 'Go4it Sports Academy',
+        school_tagline: 'Elite Training for NCAA & Professional Athletes',
         primary_color: '#007bff',
         secondary_color: '#6c757d',
         accent_color: '#28a745',
@@ -47,9 +47,9 @@ export const BrandingProvider = ({ children }) => {
         text_color: '#212529',
         primary_font: "'Inter', sans-serif",
         heading_font: "'Inter', sans-serif",
-        support_email: 'support@openedtex.edu',
-        website_url: 'https://openedtex.edu',
-        footer_text: '© 2025 OpenEdTex University. All rights reserved.',
+        support_email: 'support@go4itacademy.netlify.app',
+        website_url: 'https://go4itacademy.netlify.app',
+        footer_text: '© 2025 Go4it Sports Academy. All rights reserved.',
         logo_url: '/static/images/default-logo.png',
         small_logo_url: '/static/images/default-logo-small.png',
         favicon_url: '/static/favicon.ico'

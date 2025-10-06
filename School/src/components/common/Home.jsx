@@ -32,36 +32,36 @@ const Home = memo(() => {
                 {/* Hero Badge */}
                 <div className="mb-4">
                   <span className="badge bg-white text-primary px-3 py-2 rounded-pill shadow-sm">
-                    <i className="fas fa-sparkles me-2"></i>
-                    AI-Powered Learning Platform
+                    <i className="fas fa-trophy me-2"></i>
+                    Elite Sports & Academic Training
                   </span>
                 </div>
 
                 {/* Hero Title */}
                 <h1 className="display-4 fw-bold text-white mb-4">
-                  Transform Your Learning Experience with
-                  <span className="text-warning"> OpenEdTex</span>
+                  Train Like a Champion with
+                  <span className="text-warning"> Go4it Sports Academy</span>
                 </h1>
 
                 {/* Hero Subtitle */}
                 <p className="lead text-white-50 mb-4">
-                  Experience the future of education with our cutting-edge AI-powered platform.
-                  Interactive courses, real-time collaboration, and personalized learning paths.
+                  The ultimate training platform for student athletes pursuing NCAA sports and professional FIFA soccer careers.
+                  Combine elite athletic training with academic excellence.
                 </p>
 
                 {/* Feature Highlights */}
                 <div className="d-flex flex-wrap gap-3 mb-4">
                   <div className="d-flex align-items-center text-white-50">
-                    <i className="fas fa-brain me-2 text-warning"></i>
-                    <span>AI Tutor</span>
+                    <i className="fas fa-futbol me-2 text-warning"></i>
+                    <span>FIFA Training</span>
                   </div>
                   <div className="d-flex align-items-center text-white-50">
-                    <i className="fas fa-users me-2 text-warning"></i>
-                    <span>Live Classes</span>
+                    <i className="fas fa-trophy me-2 text-warning"></i>
+                    <span>NCAA Prep</span>
                   </div>
                   <div className="d-flex align-items-center text-white-50">
                     <i className="fas fa-chart-line me-2 text-warning"></i>
-                    <span>Analytics</span>
+                    <span>Performance Analytics</span>
                   </div>
                 </div>
 
@@ -74,7 +74,7 @@ const Home = memo(() => {
                     <input
                       type="text"
                       className="form-control border-0 ps-0"
-                      placeholder="Search for courses, subjects, or skills..."
+                      placeholder="Search for sports training, academic courses, or skills..."
                       style={{ boxShadow: 'none' }}
                     />
                     <button className="btn btn-primary rounded-pill px-4">
@@ -83,9 +83,9 @@ const Home = memo(() => {
                     </button>
                   </div>
                   <div className="d-flex gap-2 mt-2">
-                    <span className="badge bg-light text-muted rounded-pill px-3 py-1">Python</span>
-                    <span className="badge bg-light text-muted rounded-pill px-3 py-1">Data Science</span>
-                    <span className="badge bg-light text-muted rounded-pill px-3 py-1">Machine Learning</span>
+                    <span className="badge bg-light text-muted rounded-pill px-3 py-1">FIFA Skills</span>
+                    <span className="badge bg-light text-muted rounded-pill px-3 py-1">NCAA Prep</span>
+                    <span className="badge bg-light text-muted rounded-pill px-3 py-1">Athlete Performance</span>
                   </div>
                 </div>
 
@@ -106,11 +106,11 @@ const Home = memo(() => {
                     <>
                       <Link to="/register" className="btn btn-warning btn-lg px-4 py-3 rounded-pill">
                         <i className="fas fa-rocket me-2"></i>
-                        Start Learning Free
+                        Start Training Free
                       </Link>
                       <Link to="/login" className="btn btn-outline-light btn-lg px-4 py-3 rounded-pill">
                         <i className="fas fa-sign-in-alt me-2"></i>
-                        Sign In
+                        Athlete Login
                       </Link>
                     </>
                   )}
@@ -119,13 +119,13 @@ const Home = memo(() => {
                 {/* Stats */}
                 <div className="row mt-5 pt-4">
                   <div className="col-4 text-center">
-                    <div className="text-white-50 mb-1">Students</div>
+                    <div className="text-white-50 mb-1">Student Athletes</div>
                     <div className="h3 text-white fw-bold">
                       {isLoading ? '...' : `${animatedStats.students.toLocaleString()}+`}
                     </div>
                   </div>
                   <div className="col-4 text-center">
-                    <div className="text-white-50 mb-1">Courses</div>
+                    <div className="text-white-50 mb-1">Training Programs</div>
                     <div className="h3 text-white fw-bold">
                       {isLoading ? '...' : `${animatedStats.courses}+`}
                     </div>
@@ -150,15 +150,15 @@ const Home = memo(() => {
                         <div className="bg-warning rounded-circle" style={{ width: '12px', height: '12px' }}></div>
                         <div className="bg-success rounded-circle" style={{ width: '12px', height: '12px' }}></div>
                       </div>
-                      <span className="text-muted small">OpenEdTex Dashboard</span>
+                      <span className="text-muted small">Go4it Sports Academy Dashboard</span>
                     </div>
                   </div>
 
                   <div className="mb-4">
                     <div className="d-flex gap-2 mb-3">
-                      <span className="badge bg-primary">Courses</span>
-                      <span className="badge bg-light text-muted">Progress</span>
-                      <span className="badge bg-light text-muted">AI Assistant</span>
+                      <span className="badge bg-primary">Training</span>
+                      <span className="badge bg-light text-muted">Performance</span>
+                      <span className="badge bg-light text-muted">AI Coach</span>
                     </div>
 
                     <div className="border rounded-3 p-3 mb-3">
@@ -168,8 +168,8 @@ const Home = memo(() => {
                             <i className="fas fa-brain text-primary"></i>
                           </div>
                           <div>
-                            <div className="fw-semibold">Advanced Mathematics</div>
-                            <div className="text-muted small">Chapter 3: Calculus Fundamentals</div>
+                            <div className="fw-semibold">Elite FIFA Training Program</div>
+                            <div className="text-muted small">Module 4: Advanced Ball Control & Dribbling</div>
                           </div>
                         </div>
                         <span className="badge bg-warning text-dark">In Progress</span>
@@ -379,7 +379,7 @@ const Home = memo(() => {
                 <span className="text-success"> 3 Simple Steps</span>
               </h2>
               <p className="lead text-muted">
-                Get started with OpenEdTex and transform your educational experience
+                Get started with Go4it Sports Academy and transform your athletic career
               </p>
             </div>
           </div>
@@ -593,7 +593,7 @@ const Home = memo(() => {
                 What Our <span className="text-success">Students Say</span>
               </h2>
               <p className="lead text-muted">
-                Real experiences from learners who transformed their education with OpenEdTex
+                Real experiences from athletes who transformed their careers with Go4it Sports Academy
               </p>
             </div>
           </div>
@@ -611,7 +611,7 @@ const Home = memo(() => {
                       ))}
                     </div>
                     <p className="card-text text-muted mb-4">
-                      &quot;OpenEdTex completely changed how I approach learning. The AI tutor helped me understand complex math concepts that I struggled with for years.&quot;
+                      &quot;Go4it Sports Academy completely transformed my soccer skills. The FIFA training modules and AI coach helped me improve my ball control and get noticed by college scouts.&quot;
                     </p>
                     <div className="d-flex align-items-center gap-3">
                       <div className="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px' }}>
@@ -636,7 +636,7 @@ const Home = memo(() => {
                       ))}
                     </div>
                     <p className="card-text text-muted mb-4">
-                      &quot;As a working professional, I needed flexible learning options. OpenEdTex&apos;s mobile app and offline access allowed me to study during my commute.&quot;
+                      &quot;As a student athlete balancing academics and sports, I needed a platform that understood both. Go4it&apos;s integrated training and study programs helped me excel in both areas.&quot;
                     </p>
                     <div className="d-flex align-items-center gap-3">
                       <div className="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px' }}>
@@ -1112,7 +1112,7 @@ const Home = memo(() => {
                 <div className="bg-white bg-opacity-10 rounded-4 p-4 backdrop-blur h-100">
                   <div className="text-center mb-4">
                     <i className="fas fa-graduation-cap text-info fa-3x mb-3"></i>
-                    <h3 className="fw-bold text-white mb-3">Why Choose OpenEdTex?</h3>
+                    <h3 className="fw-bold text-white mb-3">Why Choose Go4it Sports Academy?</h3>
                     <p className="text-white-50">Experience the future of education</p>
                   </div>
                   <div className="row g-3">
@@ -1178,7 +1178,7 @@ const Home = memo(() => {
         <div className="onboarding-modal-overlay" onClick={() => setShowOnboarding(false)}>
           <div className="onboarding-modal" onClick={(e) => e.stopPropagation()}>
             <div className="onboarding-header">
-              <h3>Welcome to OpenEdTex! 🎉</h3>
+              <h3>Welcome to Go4it Sports Academy! 🎉</h3>
               <button
                 className="onboarding-close"
                 onClick={handleOnboardingClose}

@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-section">
             <div className="footer-logo">
-              <h3>OpenEdTex</h3>
+              <h3>Go4it Sports Academy</h3>
               <p>Transforming Education Through AI</p>
             </div>
             <p className="footer-description">
@@ -96,7 +96,7 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="footer-bottom-content">
             <p className="copyright">
-              © 2025 OpenEdTex. All rights reserved.
+              © 2025 Go4it Sports Academy. All rights reserved.
             </p>
             <div className="footer-badges">
               <span className="badge-modern badge-small">

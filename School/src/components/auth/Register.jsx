@@ -76,7 +76,7 @@ const Register = () => {
         grade_level: '', // Skip grade level in quick mode
         subjects: [] // Skip subjects in quick mode
       })).unwrap()
-      toast.success('Welcome to OpenEdTex! Let&apos;s get you started with your first course.')
+      toast.success('Welcome to Go4it Sports Academy! Let&apos;s get you started with your first training program.')
       navigate('/onboarding')
     } catch (error) {
       // Error is handled by the slice and displayed via toast
