@@ -52,7 +52,7 @@ Set these in your **Heroku Dashboard** → **Settings** → **Config Vars** (or 
 
 ```bash
 DEBUG=False
-SECRET_KEY=your-super-secret-django-key-here-make-it-long-and-random
+SECRET_KEY=QVBXknDNu_8r7vvIDJ5WFoG2n4fIOJZFPXbTUY2oONy4Vv_4UpxM-t9YNAb2ijDzUjA
 DATABASE_URL=postgresql://user:password@host:port/database
 ALLOWED_HOSTS=go4itacademy.netlify.app,your-custom-domain.com
 CORS_ALLOWED_ORIGINS=https://go4itacademy.netlify.app,https://your-custom-domain.com

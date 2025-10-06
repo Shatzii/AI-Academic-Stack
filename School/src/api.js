@@ -3,7 +3,7 @@ import { fetchAuth0AccessToken } from './auth/auth0TokenBridge';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8001/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -53,10 +53,9 @@ api.interceptors.response.use(
         // Fallback: try SimpleJWT refresh flow
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
-          const response = await axios.post(
-            `${import.meta.env.VITE_API_URL || 'http://localhost:8001/api'}/auth/token/refresh/`,
-            { refresh: refreshToken }
-          );
+          // Prefer the axios instance baseURL to avoid port mismatches
+          const refreshUrl = `${api.defaults.baseURL}/auth/token/refresh/`;
+          const response = await axios.post(refreshUrl, { refresh: refreshToken });
 
           const { access } = response.data;
           localStorage.setItem('access_token', access);

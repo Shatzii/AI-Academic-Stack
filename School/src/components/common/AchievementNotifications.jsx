@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useAuth } from '../../context/AuthContext'
+import { coursesAPI } from '../../api'
 import toast from 'react-hot-toast'
+// Removed unused imports
 
 const AchievementNotifications = () => {
   const { user } = useAuth()
@@ -13,12 +14,7 @@ const AchievementNotifications = () => {
     // Check for first enrollment milestone
     const checkFirstEnrollment = async () => {
       try {
-        const response = await fetch('/api/courses/enrollments/', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        })
-        const enrollments = await response.json()
+        const { data: enrollments } = await coursesAPI.getEnrollments()
 
         if (enrollments.length === 1 && !shownNotifications.has('first-enrollment')) {
           setTimeout(() => {
@@ -92,12 +88,7 @@ const AchievementNotifications = () => {
     // Check for course completion milestone
     const checkCourseCompletion = async () => {
       try {
-        const response = await fetch('/api/courses/enrollments/', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        })
-        const enrollments = await response.json()
+        const { data: enrollments } = await coursesAPI.getEnrollments()
 
         const completedCourses = enrollments.filter(e => e.progress_percentage === 100)
 
@@ -134,12 +125,7 @@ const AchievementNotifications = () => {
     // Check for multiple enrollments milestone
     const checkMultipleEnrollments = async () => {
       try {
-        const response = await fetch('/api/courses/enrollments/', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        })
-        const enrollments = await response.json()
+        const { data: enrollments } = await coursesAPI.getEnrollments()
 
         if (enrollments.length === 3 && !shownNotifications.has('three-enrollments')) {
           setTimeout(() => {
