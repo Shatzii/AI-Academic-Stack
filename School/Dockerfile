@@ -28,8 +28,8 @@ RUN apt-get update \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project
-COPY . .
+# Copy backend project files
+COPY backend/ .
 
 # Create logs directory
 RUN mkdir -p logs
