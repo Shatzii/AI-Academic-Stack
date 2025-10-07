@@ -7,6 +7,8 @@
 [build.environment]
   # Use latest LTS Node version for better performance
   NODE_VERSION = "20"
+  # Force Python 3.11 for compatibility with psycopg2-binary wheels
+  PYTHON_VERSION = "3.11"
   # Build environment variables
   NODE_ENV = "production"
   # Vite specific environment variables
