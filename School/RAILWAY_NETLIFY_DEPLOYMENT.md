@@ -16,7 +16,9 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 1. Go to [railway.app](https://railway.app) and sign up/login.
 2. Click "New Project" → "Deploy from GitHub repo".
 3. Connect your GitHub account and select the `AI-Academic-Stack` repo.
-4. Choose the `School` directory if prompted.
+4. If Railway prompts for a subdirectory, choose `School`.
+
+  Note: If you skip this and deploy from the repo root, you'll later need to reference paths with `School/...` (see Step 3A).
 
 ### Step 2: Set Up Database
 
@@ -37,28 +39,52 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 
 ### Step 3: Configure Backend Service
 
-1. In your project, select the service (should be auto-created from GitHub).
-2. Go to **Settings** tab.
+1. In your project, select the service (auto-created from GitHub).
+2. Go to the service **Settings** tab.
 
-#### For Docker (Currently Active - More Reliable)
+#### Step 3A: Set the correct source directory (monorepo)
 
-- **Builder**: Dockerfile (forced via railway.json)
-- **Dockerfile Path**: `Dockerfile` (in root directory)
-- **Pre-deploy commands**: Handled automatically in Dockerfile CMD (migrations and static files run on container startup)
-- **Healthcheck**: Built into Dockerfile
-- No custom commands needed in Railway UI.
+In Settings → Source:
+
+- Monorepo subdirectory: If you selected `School` in Step 1, this will already be `School`. If it's blank (repo root), set it to `School` now and redeploy, or keep it blank and use `School/...` paths below.
+
+Keep this in mind for all paths:
+
+- If Source root is `School`: use `backend` and `Dockerfile`.
+- If Source root is repo root: use `School/backend` and `School/Dockerfile`.
+
+Can't find the Monorepo subdirectory setting?
+
+- Where it usually is: Service → Settings → Source → "Monorepo" (toggle) → Subdirectory. Enter `School` and Save. If you see a pencil/edit icon next to the Repository name, click it to reveal the Directory field.
+- If still not visible: Service → Settings → GitHub (Repository card) → Edit/Manage → set Directory/Path to `School`. Save and Redeploy.
+- Last resort (quick and safe): Delete only the broken service (keep your Postgres plugin), then New Service → Deploy from GitHub → select your repo → when prompted, choose the subdirectory `School` before confirming.
+- Immediate workaround without changing Source: use Nixpacks with Root Directory `School/backend` (see below). This works even if your Source remains the repo root.
+
+#### For Docker (Recommended)
+
+- Builder: Dockerfile (this repo includes a Dockerfile at `School/Dockerfile`)
+- Dockerfile Path:
+  - If Source root = `School`: `Dockerfile`
+  - If Source root = repo root: `School/Dockerfile`
+- Pre-deploy commands: Handled automatically in Dockerfile CMD (migrations and static files run on container startup)
+- Healthcheck: Built into Dockerfile
+- No additional commands needed in Railway UI.
 
 #### For Railpack (Alternative)
 
-- **Builder**: Railpack (default)
-- **Root Directory**: `backend` (CRITICAL - must be set to find manage.py)
-- **Build Command**: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
-- **Pre-deploy Command**: `python manage.py migrate --noinput`
-- **Start Command**: `bash start.sh`
-- **Healthcheck Path**: `/health/`
-- **Serverless**: Off
-- **Restart Policy**: On Failure, Max retries: 10
-- **Watch Paths**: `backend/**`
+- Builder: Railpack (auto)
+- Root Directory:
+  - If Source root = `School`: `backend`
+  - If Source root = repo root: `School/backend`
+- Build Command: `pip install -r requirements.txt && python manage.py collectstatic --noinput`
+- Pre-deploy Command: `python manage.py migrate --noinput`
+- Start Command: `bash start.sh`
+- Healthcheck Path: `/health/`
+- Serverless: Off
+- Restart Policy: On Failure, Max retries: 10
+- Watch Paths: match the Root Directory above (e.g., `backend/**` or `School/backend/**`)
+
+Note: The Django `manage.py` lives at `School/backend/manage.py`. If Railpack can't find `backend`, you're likely pointing at the repo root; use `School/backend`.
 
 ### Step 4: Set Environment Variables
 
@@ -154,6 +180,61 @@ The Netlify site is already configured to proxy `/api/*` to your Railway backend
   - **Dockerfile not found**: Ensure `Dockerfile` is in root directory when using Docker builder.
   - **railway.json conflict**: Remove `railway.json` if present - it forces Railpack and prevents Docker detection. If issues persist, add `railway.json` with `"builder": "dockerfile"` to explicitly force Docker deployment.
 - **500 Internal Server Error**: Check Railway logs for Django errors.
+
+#### Specific error: "Could not find root directory: backend"
+
+This happens when the service is pointing at the repository root while the guide assumes your source root is `School`.
+
+- Fix Option A (recommended): In Service → Settings → Source, set Monorepo subdirectory to `School`, then redeploy. After this, Root Directory for Railpack can be `backend` and Dockerfile path can be `Dockerfile`.
+- Fix Option B: Keep Source at repo root, but update paths accordingly:
+  - Railpack Root Directory: `School/backend`
+  - Watch Paths (if used): `School/backend/**`
+  - Dockerfile Path: `School/Dockerfile`
+  - Healthcheck Path remains `/health/`
+
+### Using a Railway Config File (railway.json)
+
+You can manage builder selection via a config file committed to your repo. This is helpful to avoid Railpack auto-detection picking the wrong runtime in a monorepo.
+
+File location (monorepo):
+
+- If your Railway service Source is set to `School` (recommended), place the file at `School/railway.json`.
+- If your service Source is the repo root, place it at the repo root as `railway.json` and adjust paths accordingly.
+
+Minimal config to force Dockerfile (recommended):
+
+```json
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "dockerfile"
+  }
+}
+``;
+
+Notes:
+
+- With Source set to `School`, Railway will pick `School/Dockerfile` automatically when `builder` is `dockerfile`. If Source is repo root, set the Dockerfile Path in the UI to `School/Dockerfile`.
+- The config file does not set your Source/Monorepo subdirectory. You must set that in the Railway UI (Settings → Source).
+
+Alternative: use Nixpacks (if Dockerfile builder isn’t available):
+
+```json
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "nixpacks"
+  }
+}
+```
+
+Then in the Railway UI, set Root Directory to `backend` (since manage.py is under `School/backend`) and fill in commands:
+
+- Build: `pip install -r requirements.txt`
+- Pre-deploy: `python manage.py migrate --noinput && python manage.py collectstatic --noinput`
+- Start: `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 3`
+
+This ensures Nixpacks selects the Python runtime and runs Django correctly.
 
 ### Frontend Issues
 

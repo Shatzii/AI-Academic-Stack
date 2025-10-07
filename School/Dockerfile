@@ -25,6 +25,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
+# The top-level requirements.txt includes "-r backend/requirements.txt",
+# so ensure that path exists in the image before installing.
+RUN mkdir -p backend
+COPY backend/requirements.txt backend/requirements.txt
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
