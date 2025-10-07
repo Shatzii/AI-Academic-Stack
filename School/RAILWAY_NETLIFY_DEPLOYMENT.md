@@ -40,7 +40,15 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 1. In your project, select the service (should be auto-created from GitHub).
 2. Go to **Settings** tab.
 
-#### For Railpack (Recommended)
+#### For Docker (Currently Active - More Reliable)
+
+- **Builder**: Dockerfile (auto-detected via railway.json)
+- **Dockerfile Path**: `Dockerfile` (in root directory)
+- **Pre-deploy commands**: Handled automatically in Dockerfile CMD (migrations and static files run on container startup)
+- **Healthcheck**: Built into Dockerfile
+- No custom commands needed in Railway UI.
+
+#### For Railpack (Alternative)
 
 - **Builder**: Railpack (default)
 - **Root Directory**: `backend` (CRITICAL - must be set to find manage.py)
@@ -51,14 +59,6 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 - **Serverless**: Off
 - **Restart Policy**: On Failure, Max retries: 10
 - **Watch Paths**: `backend/**`
-
-#### For Docker (Alternative)
-
-- **Builder**: Dockerfile (auto-detected when railway.json is removed)
-- **Dockerfile Path**: `Dockerfile` (in root directory)
-- **Important**: If Railway still tries to use Railpack, add a `railway.json` file with `"builder": "dockerfile"` to force Docker deployment
-- **Pre-deploy commands**: Handled automatically in Dockerfile CMD (migrations and static files run on container startup)
-- No custom commands needed in Railway UI.
 
 ### Step 4: Set Environment Variables
 
