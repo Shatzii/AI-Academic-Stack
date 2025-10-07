@@ -42,7 +42,7 @@ This guide provides step-by-step instructions for deploying the AI Academic Stac
 
 #### For Docker (Currently Active - More Reliable)
 
-- **Builder**: Dockerfile (auto-detected - no railway.json needed)
+- **Builder**: Dockerfile (forced via railway.json)
 - **Dockerfile Path**: `Dockerfile` (in root directory)
 - **Pre-deploy commands**: Handled automatically in Dockerfile CMD (migrations and static files run on container startup)
 - **Healthcheck**: Built into Dockerfile
