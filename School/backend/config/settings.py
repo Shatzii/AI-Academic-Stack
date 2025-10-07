@@ -21,42 +21,44 @@ DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 # Environment detection
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
-# AWS Secrets Manager Integration for Production
-if ENVIRONMENT == 'production':
+# AWS Secrets Manager Integration for Production (optional)
+USE_AWS_SECRETS = os.getenv('USE_AWS_SECRETS', 'false').lower() == 'true'
+
+if ENVIRONMENT == 'production' and USE_AWS_SECRETS:
     try:
+        import json
         import boto3
-        from botocore.exceptions import ClientError
-        
-        def get_secret(secret_name, region_name="us-east-1"):
-            """Retrieve secret from AWS Secrets Manager"""
-            session = boto3.session.Session()
-            client = session.client(
-                service_name='secretsmanager',
-                region_name=region_name
-            )
-            
+        from botocore.exceptions import ClientError, NoCredentialsError, BotoCoreError
+
+        def get_secret(secret_name: str, region_name: str = None):
+            """Retrieve secret from AWS Secrets Manager. Returns JSON string or None on failure."""
+            if not region_name:
+                region_name = os.getenv('AWS_REGION', os.getenv('AWS_DEFAULT_REGION', 'us-east-1'))
+
+            client = boto3.client('secretsmanager', region_name=region_name)
             try:
-                get_secret_value_response = client.get_secret_value(
-                    SecretId=secret_name
-                )
-            except ClientError as e:
-                print(f"Error retrieving secret {secret_name}: {e}")
+                resp = client.get_secret_value(SecretId=secret_name)
+            except (ClientError, NoCredentialsError, BotoCoreError) as e:
+                print(f"AWS Secrets Manager error for '{secret_name}': {e}. Falling back to environment variables.")
                 return None
-            
-            if 'SecretString' in get_secret_value_response:
-                return get_secret_value_response['SecretString']
-            return None
-        
-        # Load secrets from AWS Secrets Manager
-        aws_secrets = get_secret('openedtex/production/secrets')
+
+            return resp.get('SecretString')
+
+        secret_name = os.getenv('AWS_SECRET_NAME', 'openedtex/production/secrets')
+        aws_secrets = get_secret(secret_name)
         if aws_secrets:
-            import json
-            secrets = json.loads(aws_secrets)
-            for key, value in secrets.items():
-                os.environ[key] = value
-        
+            try:
+                loaded = json.loads(aws_secrets)
+                # Only set env vars that are not already defined
+                for key, value in loaded.items():
+                    if not os.getenv(key):
+                        os.environ[key] = str(value)
+            except Exception as e:
+                print(f"Failed to parse AWS secret '{secret_name}': {e}. Using existing environment variables.")
     except ImportError:
-        print("AWS SDK not available, using environment variables")
+        print("boto3 not available. Skipping AWS Secrets Manager and using environment variables.")
+    except Exception as e:
+        print(f"Unexpected error during AWS Secrets Manager setup: {e}. Using environment variables.")
 
 # Security settings - Enhanced for production
 SECURE_BROWSER_XSS_FILTER = True
