@@ -9,6 +9,8 @@
   NODE_VERSION = "20"
   # Force Python 3.11 for compatibility with psycopg2-binary wheels
   PYTHON_VERSION = "3.11"
+  # Skip Python dependency installation for Node.js builds
+  NETLIFY_SKIP_PYTHON_DEPENDENCY_INSTALL = "true"
   # Build environment variables
   NODE_ENV = "production"
   # Vite specific environment variables
