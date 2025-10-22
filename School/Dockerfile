@@ -1,5 +1,4 @@
-# Use Python 3.11 slim image for production
-FROM python:3.11-slim
+﻿FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -42,13 +41,12 @@ RUN mkdir -p logs
 RUN chown -R appuser:appuser /app
 USER appuser
 
-# Health check
+# Health check (respect Railway's PORT env)
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health/ || exit 1
+    CMD curl -f http://localhost:${PORT:-8000}/health/ || exit 1
 
 # Expose port
 EXPOSE 8000
 
-# Run the application with gunicorn for production, binding to $PORT (Railway) or default 8000
-# First run migrations, then collect static files, then start gunicorn
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py collectstatic --noinput --clear && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --worker-class sync"]
+# Run the start script which handles migrations and starts Gunicorn
+CMD [ "./start.sh" ]
