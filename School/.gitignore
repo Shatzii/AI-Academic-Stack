@@ -1,0 +1,47 @@
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+.env.prod
+.env.production.local
+
+# Secrets and keys
+secrets/
+*.key
+*.pem
+*.crt
+*.p12
+.secrets.*
+__pycache__/
+*.pyc
+
+# AWS credentials
+.aws/
+
+# Database dumps
+*.sql
+*.dump
+
+# Logs
+logs/
+*.log
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp

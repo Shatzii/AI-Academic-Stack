@@ -1,0 +1,44 @@
+{
+  "name": "OpenEdTex - AI-Powered Educational Platform",
+  "short_name": "OpenEdTex",
+  "description": "Experience the future of education with AI-powered learning assistant, interactive courses, and real-time classrooms.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "AI Assistant",
+      "short_name": "AI Chat",
+      "description": "Chat with your AI learning assistant",
+      "url": "/ai-assistant",
+      "icons": [{ "src": "/vite.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Courses",
+      "short_name": "My Courses",
+      "description": "Browse and manage your courses",
+      "url": "/courses",
+      "icons": [{ "src": "/vite.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your learning progress",
+      "url": "/dashboard",
+      "icons": [{ "src": "/vite.svg", "sizes": "any" }]
+    }
+  ]
+}

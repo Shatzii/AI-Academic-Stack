@@ -1,0 +1,17 @@
+# API Proxy - Redirect all API calls to backend
+/api/*  https://your-django-backend.herokuapp.com/api/:splat  200
+
+# SPA Fallback - Handle client-side routing
+/*      /index.html   200
+
+# Prevent direct access to source files
+/assets/*.jsx  /index.html  302
+/assets/*.js.map  /index.html  302
+/src/*  /index.html  302
+
+# Health check endpoint
+/health  /index.html  200
+
+# Sitemap and robots
+/sitemap.xml  /sitemap.xml  200
+/robots.txt  /robots.txt  200

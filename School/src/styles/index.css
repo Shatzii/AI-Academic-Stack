@@ -1,0 +1,27 @@
+/* ===========================================
+   OPENEDTEX STYLES - MAIN ENTRY POINT
+   ===========================================
+
+   This file imports all CSS modules in the correct order:
+   1. Design System (variables, reset, base styles)
+   2. Component-specific styles
+   3. Utility classes
+   4. Bootstrap (for compatibility)
+   =========================================== */
+
+/* ===== DESIGN SYSTEM ===== */
+@import './design-system.css';
+
+/* ===== COMPONENT STYLES ===== */
+@import './components/layout.css';
+@import './components/home.css';
+@import './components/auth.css';
+@import './components/courses.css';
+@import '../components/common/ThemeToggle.css';
+
+/* ===== UTILITY CLASSES ===== */
+@import './utilities.css';
+
+/* ===== EXTERNAL LIBRARIES ===== */
+/* Bootstrap is imported last to allow our custom styles to override defaults */
+@import 'bootstrap/dist/css/bootstrap.min.css';

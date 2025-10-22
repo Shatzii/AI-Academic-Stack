@@ -1,0 +1,243 @@
+/* PWA Install Prompt Styles */
+
+.pwa-install-prompt {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.prompt-content {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+}
+
+.prompt-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.prompt-text {
+  flex: 1;
+}
+
+.prompt-text h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.prompt-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-install, .btn-dismiss {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.btn-install {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-install:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-dismiss {
+  background: transparent;
+  color: white;
+  opacity: 0.8;
+}
+
+.btn-dismiss:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Offline Indicator */
+.offline-indicator {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.offline-content {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.offline-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.offline-text {
+  flex: 1;
+}
+
+.offline-text h4 {
+  margin: 0 0 2px 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.offline-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+.btn-share {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-share:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pwa-install-prompt,
+  .offline-indicator {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .prompt-content,
+  .offline-content {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .prompt-icon,
+  .offline-icon {
+    font-size: 1.5rem;
+  }
+
+  .prompt-text h3,
+  .offline-text h4 {
+    font-size: 1rem;
+  }
+
+  .prompt-text p,
+  .offline-text p {
+    font-size: 0.8rem;
+  }
+
+  .btn-install,
+  .btn-dismiss,
+  .btn-share {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .prompt-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .prompt-content,
+  .offline-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .prompt-actions {
+    width: 100%;
+  }
+
+  .btn-install,
+  .btn-dismiss {
+    flex: 1;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .pwa-install-prompt {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  }
+
+  .offline-indicator {
+    background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .pwa-install-prompt,
+  .offline-indicator {
+    animation: none;
+  }
+}

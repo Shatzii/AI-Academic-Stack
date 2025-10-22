@@ -1,0 +1,108 @@
+# Netlify Environment Variables for OpenEdTex Deployment
+# Copy these variables to your Netlify dashboard: Site Settings > Environment Variables
+
+# ==========================================
+# REQUIRED VARIABLES (Must be set)
+# ==========================================
+
+# API Configuration - UPDATE THIS WITH YOUR ACTUAL BACKEND URL
+VITE_API_URL=https://your-production-backend-api.com/api
+VITE_APP_ENV=production
+
+# Application Configuration
+VITE_APP_NAME=OpenEdTex
+VITE_APP_VERSION=2.1.0
+VITE_APP_TITLE=OpenEdTex - AI-Powered Learning Platform
+
+# ==========================================
+# OPTIONAL VARIABLES (Set as needed)
+# ==========================================
+
+# Analytics (Leave empty if not using)
+VITE_GA_TRACKING_ID=
+VITE_GTM_ID=
+VITE_HOTJAR_ID=
+VITE_MIXPANEL_TOKEN=
+
+# Social Media (Leave empty if not using)
+VITE_FACEBOOK_APP_ID=
+VITE_GOOGLE_CLIENT_ID=
+VITE_TWITTER_HANDLE=@openedtex
+
+# Feature Flags
+VITE_ENABLE_ANALYTICS=true
+VITE_ENABLE_CHAT=true
+VITE_ENABLE_NOTIFICATIONS=true
+VITE_ENABLE_PWA=true
+VITE_ENABLE_SERVICE_WORKER=true
+VITE_ENABLE_OFFLINE_MODE=false
+
+# Performance & Security
+VITE_CSP_ENABLED=true
+VITE_ENABLE_ERROR_REPORTING=true
+VITE_ENABLE_PERFORMANCE_MONITORING=true
+
+# External Services
+VITE_STRIPE_PUBLISHABLE_KEY=
+VITE_PAYPAL_CLIENT_ID=
+VITE_SENTRY_DSN=
+
+# CDN & Assets
+VITE_CDN_URL=
+VITE_ASSETS_URL=
+
+# ==========================================
+# BUILD-TIME VARIABLES (Used during build)
+# ==========================================
+
+# Build Configuration
+NODE_ENV=production
+GENERATE_SOURCEMAP=false
+CI=true
+
+# ==========================================
+# BACKEND API ENDPOINTS
+# ==========================================
+
+# Authentication
+VITE_AUTH_ENDPOINT=/api/auth
+VITE_LOGIN_ENDPOINT=/api/auth/login
+VITE_REGISTER_ENDPOINT=/api/auth/register
+VITE_LOGOUT_ENDPOINT=/api/auth/logout
+VITE_PROFILE_ENDPOINT=/api/auth/profile
+
+# Courses & Content
+VITE_COURSES_ENDPOINT=/api/courses
+VITE_LESSONS_ENDPOINT=/api/courses/lessons
+VITE_ENROLLMENTS_ENDPOINT=/api/courses/enrollments
+
+# AI Features
+VITE_AI_CHAT_ENDPOINT=/api/ai/chat
+VITE_AI_QUIZ_ENDPOINT=/api/ai/quizzes
+VITE_AI_STUDY_PLAN_ENDPOINT=/api/ai/study-plans
+
+# ==========================================
+# DEPLOYMENT CHECKLIST
+# ==========================================
+#
+# Before deploying to Netlify:
+# 1. ✅ Set VITE_API_URL to your production backend URL
+# 2. ✅ Configure any analytics IDs if using analytics
+# 3. ✅ Set up payment keys if using payments
+# 4. ✅ Configure social media IDs if using social features
+# 5. ✅ Update VITE_APP_VERSION to match your release
+# 6. ✅ Test build locally: npm run build:netlify
+# 7. ✅ Test preview: npm run netlify:serve
+# 8. ✅ Deploy to Netlify: npm run netlify:deploy
+#
+# After deployment:
+# 1. ✅ Verify API connections work
+# 2. ✅ Test authentication flow
+# 3. ✅ Check analytics are working
+# 4. ✅ Verify PWA functionality
+# 5. ✅ Test on mobile devices
+# 6. ✅ Check performance metrics
+
+# External Services (Optional - leave empty if not using)
+VITE_STRIPE_PUBLISHABLE_KEY=
+VITE_OPENAI_API_KEY=

@@ -1,0 +1,96 @@
+[build]
+  # Build command for the frontend
+  command = "npm run build:netlify"
+  # Directory to publish (Vite's dist folder)
+  publish = "dist"
+
+[build.environment]
+  # Use latest LTS Node version for better performance
+  NODE_VERSION = "20"
+  # Force Python 3.11 for compatibility with psycopg2-binary wheels
+  PYTHON_VERSION = "3.11"
+  # Skip Python dependency installation for Node.js builds
+  NETLIFY_SKIP_PYTHON_DEPENDENCY_INSTALL = "true"
+  # Build environment variables
+  NODE_ENV = "production"
+  # Vite specific environment variables
+  VITE_APP_ENV = "production"
+  # Skip Next.js plugin since this is a Vite project
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  # Disable secrets scanning for VITE_ variables (client-side config)
+  SECRETS_SCAN_ENABLED = "false"
+
+# Redirect API calls to backend service
+[[redirects]]
+  from = "/api/*"
+  to = "https://aiacademy-production-941d.up.railway.app/api/:splat"
+  status = 200
+  force = true
+
+# Handle client-side routing for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers for all routes
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Content Security Policy (simplified)
+[[headers]]
+  for = "/*"
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://cdn.auth0.com data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.openedtex.com wss://api.openedtex.com https://cdn.jsdelivr.net https://www.google-analytics.com https://*.auth0.com https://aiacademy-production-941d.up.railway.app wss://aiacademy-production-941d.up.railway.app; frame-src 'self' https://*.auth0.com;"
+
+# Cache static assets aggressively
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    X-Content-Type-Options = "nosniff"
+
+# Cache other static files
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Prevent direct access to source files
+[[headers]]
+  for = "/*.jsx"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/*.js.map"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# API routes headers
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# Netlify Functions configuration (if using serverless functions)
+[functions]
+  directory = "netlify/functions"
+
+# Build hooks for continuous deployment
+[build.hooks]
+  prebuild = "echo 'Starting build process...'"

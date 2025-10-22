@@ -1,0 +1,86 @@
+import { createContext, useContext, useEffect, useState } from 'react'
+import api from '../api'
+
+const BrandingContext = createContext()
+
+export const useBranding = () => {
+  const context = useContext(BrandingContext)
+  if (!context) {
+    throw new Error('useBranding must be used within a BrandingProvider')
+  }
+  return context
+}
+
+export const BrandingProvider = ({ children }) => {
+  const [branding, setBranding] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    fetchBranding()
+  }, [])
+
+  const fetchBranding = async () => {
+    try {
+      setLoading(true)
+  const response = await api.get('/auth/branding/active/')
+      setBranding(response.data)
+      setError(null)
+
+      // Apply CSS variables to document root
+      if (response.data.css_variables) {
+        const style = document.createElement('style')
+        style.textContent = response.data.css_variables
+        document.head.appendChild(style)
+      }
+    } catch (err) {
+      // console.error('Error fetching branding:', err)
+      setError(err.message)
+      // Use default branding if API fails
+      setBranding({
+        school_name: 'Go4it Sports Academy',
+        school_tagline: 'Elite Training for NCAA & Professional Athletes',
+        primary_color: '#007bff',
+        secondary_color: '#6c757d',
+        accent_color: '#28a745',
+        background_color: '#ffffff',
+        text_color: '#212529',
+        primary_font: "'Inter', sans-serif",
+        heading_font: "'Inter', sans-serif",
+        support_email: 'support@go4itacademy.netlify.app',
+        website_url: 'https://go4itacademy.netlify.app',
+        footer_text: '© 2025 Go4it Sports Academy. All rights reserved.',
+        logo_url: '/static/images/default-logo.png',
+        small_logo_url: '/static/images/default-logo-small.png',
+        favicon_url: '/static/favicon.ico'
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const updateBranding = (newBranding) => {
+    setBranding(newBranding)
+
+    // Update CSS variables
+    if (newBranding.css_variables) {
+      const style = document.createElement('style')
+      style.textContent = newBranding.css_variables
+      document.head.appendChild(style)
+    }
+  }
+
+  const value = {
+    branding,
+    loading,
+    error,
+    updateBranding,
+    refreshBranding: fetchBranding
+  }
+
+  return (
+    <BrandingContext.Provider value={value}>
+      {children}
+    </BrandingContext.Provider>
+  )
+}

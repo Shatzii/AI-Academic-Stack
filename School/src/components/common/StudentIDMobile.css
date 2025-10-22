@@ -1,0 +1,604 @@
+/* Mobile Student ID Styles */
+.mobile-id-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Digital Card Styles */
+.digital-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.digital-card .card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.digital-card .school-logo {
+  opacity: 0.8;
+}
+
+.digital-card .card-status .status-badge {
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.digital-card .card-status .status-badge.active {
+  background: rgba(40, 167, 69, 0.2);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.digital-card .card-status .status-badge.inactive {
+  background: rgba(108, 117, 125, 0.2);
+  color: #6c757d;
+  border: 1px solid #6c757d;
+}
+
+.digital-card .card-status .status-badge.lost,
+.digital-card .card-status .status-badge.stolen {
+  background: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.digital-card .card-status .status-badge.expired {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid #ffc107;
+}
+
+.digital-card .card-body {
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.digital-card .student-photo {
+  flex-shrink: 0;
+}
+
+.digital-card .student-photo .photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #667eea;
+}
+
+.digital-card .student-photo .photo-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  border: 2px solid #dee2e6;
+}
+
+.digital-card .student-info {
+  flex: 1;
+}
+
+.digital-card .student-info .student-name {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.digital-card .student-info .student-id {
+  margin: 0 0 5px 0;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #667eea;
+  font-size: 1rem;
+}
+
+.digital-card .student-info .student-email {
+  margin: 0 0 5px 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.digital-card .student-info .card-type {
+  margin: 0;
+  color: #28a745;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.digital-card .card-footer {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.digital-card .card-footer .validity-info {
+  margin: 0;
+  color: #6c757d;
+  text-align: center;
+}
+
+/* Quick Actions */
+.quick-actions {
+  margin-bottom: 30px;
+}
+
+.quick-actions .action-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.quick-actions .action-btn {
+  background: white;
+  border: none;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  color: #333;
+  text-decoration: none;
+}
+
+.quick-actions .action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.quick-actions .action-btn i {
+  font-size: 1.5rem;
+  color: #667eea;
+}
+
+.quick-actions .action-btn span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.quick-actions .action-btn.qr-btn i {
+  color: #28a745;
+}
+
+.quick-actions .action-btn.barcode-btn i {
+  color: #dc3545;
+}
+
+.quick-actions .action-btn.attendance-btn i {
+  color: #ffc107;
+}
+
+.quick-actions .action-btn.emergency-btn i {
+  color: #dc3545;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.modal-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #6c757d;
+  padding: 5px;
+}
+
+.modal-body {
+  padding: 30px 20px;
+}
+
+.qr-code-display,
+.barcode-display {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.qr-placeholder,
+.barcode-placeholder {
+  padding: 40px;
+  color: #6c757d;
+}
+
+/* Recent Activity */
+.recent-activity {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.recent-activity .section-title {
+  margin: 0 0 20px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.recent-activity .activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.recent-activity .activity-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.recent-activity .activity-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recent-activity .activity-details {
+  flex: 1;
+}
+
+.recent-activity .activity-type {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+}
+
+.recent-activity .activity-meta {
+  color: #6c757d;
+  font-size: 0.8rem;
+}
+
+.recent-activity .activity-meta .location {
+  color: #667eea;
+}
+
+.recent-activity .activity-status {
+  flex-shrink: 0;
+}
+
+.recent-activity .status-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.recent-activity .status-indicator.valid {
+  background: #28a745;
+  color: white;
+}
+
+.recent-activity .status-indicator.invalid {
+  background: #dc3545;
+  color: white;
+}
+
+.recent-activity .no-activity {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+/* Emergency Contact */
+.emergency-contact {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-contact .section-title {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.emergency-contact .contact-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.emergency-contact .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.emergency-contact .contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.emergency-contact .contact-item i {
+  width: 20px;
+  color: #667eea;
+}
+
+.emergency-contact .contact-item .call-btn {
+  margin-left: auto;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+/* Danger Zone */
+.danger-zone {
+  margin-bottom: 30px;
+}
+
+.danger-zone .btn-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+.danger-zone .btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+}
+
+/* No Card State */
+.no-card-state {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.no-card-state .icon-container {
+  margin-bottom: 20px;
+}
+
+.no-card-state h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.no-card-state p {
+  margin: 0 0 20px 0;
+  color: #6c757d;
+}
+
+.no-card-state .btn {
+  border-radius: 25px;
+  padding: 12px 30px;
+  font-weight: 600;
+}
+
+/* Mobile Footer */
+.mobile-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.mobile-footer .btn {
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.mobile-footer .version {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .mobile-id-container {
+    padding: 15px;
+  }
+
+  .digital-card .card-body {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .quick-actions .action-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .quick-actions .action-btn {
+    padding: 15px;
+  }
+
+  .quick-actions .action-btn i {
+    font-size: 1.2rem;
+  }
+
+  .quick-actions .action-btn span {
+    font-size: 0.8rem;
+  }
+
+  .modal-overlay {
+    padding: 15px;
+  }
+
+  .modal-content {
+    max-height: 85vh;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .digital-card,
+  .quick-actions .action-btn,
+  .recent-activity,
+  .emergency-contact,
+  .no-card-state {
+    background: #2d3748;
+    color: white;
+  }
+
+  .digital-card .card-footer {
+    background: #4a5568;
+    border-top-color: #718096;
+  }
+
+  .digital-card .student-info .student-name,
+  .recent-activity .section-title,
+  .emergency-contact .section-title {
+    color: white;
+  }
+
+  .digital-card .student-info .student-email,
+  .digital-card .card-footer .validity-info,
+  .recent-activity .activity-meta {
+    color: #a0aec0;
+  }
+
+  .recent-activity .activity-item {
+    background: #4a5568;
+    border-left-color: #667eea;
+  }
+
+  .recent-activity .activity-type {
+    color: white;
+  }
+
+  .emergency-contact .contact-card {
+    background: #4a5568;
+  }
+
+  .emergency-contact .contact-item {
+    color: white;
+  }
+}
+
+/* iOS-style Animations */
+@media (max-width: 768px) {
+  .digital-card,
+  .quick-actions .action-btn,
+  .recent-activity,
+  .emergency-contact {
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s ease;
+  }
+
+  .quick-actions .action-btn:active {
+    transform: scale(0.95);
+  }
+
+  .modal-content {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .mobile-id-container {
+    background: white !important;
+  }
+
+  .quick-actions,
+  .modal-overlay,
+  .danger-zone,
+  .mobile-footer {
+    display: none !important;
+  }
+
+  .digital-card {
+    box-shadow: none !important;
+    border: 2px solid #333 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

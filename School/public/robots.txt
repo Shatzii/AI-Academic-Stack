@@ -1,0 +1,23 @@
+# Robots.txt for OpenEdTex
+# Allow all web crawlers to access the site
+
+User-agent: *
+Allow: /
+
+# Disallow access to admin areas (if any)
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Disallow access to private user data
+Disallow: /api/user/*/private
+Disallow: /api/user/*/sensitive
+
+# Allow access to public API endpoints
+Allow: /api/courses/
+Allow: /api/public/
+
+# Crawl delay to be respectful to server resources
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://openedtex.com/sitemap.xml
