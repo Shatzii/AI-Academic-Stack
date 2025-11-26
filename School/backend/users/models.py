@@ -10,6 +10,8 @@ class User(AbstractUser):
     ROLE_CHOICES = [
         ('student', 'Student'),
         ('teacher', 'Teacher'),
+        ('principal', 'Principal'),
+        ('superintendent', 'Superintendent'),
         ('admin', 'Administrator'),
         ('parent', 'Parent'),
     ]
@@ -83,6 +85,14 @@ class User(AbstractUser):
     @property
     def is_teacher(self):
         return self.role == 'teacher'
+
+    @property
+    def is_principal(self):
+        return self.role == 'principal'
+
+    @property
+    def is_superintendent(self):
+        return self.role == 'superintendent'
 
     @property
     def is_admin(self):
