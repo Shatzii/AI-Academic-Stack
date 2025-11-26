@@ -1,0 +1,46 @@
+runtime: nodejs20
+
+# Google App Engine configuration for AI-Academic-Stack
+env: standard
+
+instance_class: F2
+
+# Environment variables (sensitive values should be set via Secret Manager)
+env_variables:
+  NODE_ENV: "production"
+  PORT: "8080"
+
+# Automatic scaling configuration
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.65
+  min_instances: 1
+  max_instances: 10
+  min_idle_instances: 1
+  max_idle_instances: 2
+  min_pending_latency: 30ms
+  max_pending_latency: automatic
+  max_concurrent_requests: 80
+
+# Health checks
+liveness_check:
+  path: "/api/health"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+readiness_check:
+  path: "/api/health"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: 300
+
+# Handlers
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
